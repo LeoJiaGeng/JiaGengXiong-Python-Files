@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>595</height>
+    <width>753</width>
+    <height>674</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,7 +49,10 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>后缀名：</string>
+           <string>后缀名:</string>
+          </property>
+          <property name="pixmap">
+           <pixmap>:/ico/pictures/icos/DM_20230815124713_024.png</pixmap>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -169,15 +172,31 @@
      <property name="title">
       <string>输出区</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QTextBrowser" name="content_show"/>
+       <widget class="QTextBrowser" name="content_show">
+        <property name="styleSheet">
+         <string notr="true">QPlainTextEdit{
+	backgroud-color:rgb(255, 255, 127);
+	color:rgb(85, 255, 0);
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QScrollBar" name="verticalScrollBar">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resoure/ico.qrc"/>
+ </resources>
  <connections/>
 </ui>

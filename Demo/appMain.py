@@ -6,17 +6,24 @@ Created on Sun Apr  3 21:53:27 2022
 """
 
 import sys
-sys.path.append(r"D:\Document\Python_Files\Project\Public")
 from PyQt5.QtWidgets import QApplication, QFileDialog
 from PyQt5.QtCore import pyqtSlot, QCoreApplication, Qt, QDir, QThread, pyqtSignal
 from ui_Start import QmyWidget
-from Files import ReFilenames, SaveFile
-from Decoration import Decorator
+from Public.Files import ReFilenames, SaveFile
+from Public.Decoration import Decorator
+from Public.Config import Config
+from common import *
 
 class QmyApp(QmyWidget):
     def __init__(self):
         super().__init__()
         self.saveFlag = False
+        self.config_init()
+
+    def config_init(self):
+        self.config = Config("config.ini")
+        self.ui.edit_filename.setText(self.config.get_config("input", "file_name")["data"])
+        self.ui.edit_suffix.setText(self.config.get_config("input", "suffix")["data"])
 
     @pyqtSlot()
     def on_btn_search_clicked(self):
@@ -24,7 +31,7 @@ class QmyApp(QmyWidget):
         file_name = self.ui.edit_filename.text()
         checked = self.ui.check_onlyname.isChecked()
 
-        if (suffix == "" or file_name == ""):
+        if check_or_none(suffix, file_name):
             self.MsgWarning("请同时输入文件夹和后缀名")
         else:
             self.new_line = TestMultiple(suffix, file_name, self.saveFlag, checked)
@@ -34,6 +41,9 @@ class QmyApp(QmyWidget):
             self.new_line.sinOut_Bar_fullValue_msg.connect(self.on_normal_msginfo)
             self.new_line.sinOut_Bar_fullValue_msg[int].connect(self.on_set_progressBar_fullRange)
             self.new_line.start()
+        
+        self.config.set_config("input", "suffix", suffix)
+        self.config.set_config("input", "file_name", file_name)
     
     @pyqtSlot()
     def on_btn_clear_clicked(self):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\Document\Python_Files\Project\Gui\Tools\..\Demo\Search.ui'
+# Form implementation generated from reading ui file 'd:\Document\Python_Files\Project\Gui\Tools\..\Demo\Search.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(640, 595)
+        Form.resize(753, 674)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.groupBox = QtWidgets.QGroupBox(Form)
@@ -40,6 +40,7 @@ class Ui_Form(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_2 = QtWidgets.QLabel(self.groupBox)
+        self.label_2.setPixmap(QtGui.QPixmap(":/ico/pictures/icos/DM_20230815124713_024.png"))
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout_2.addWidget(self.label_2)
@@ -93,11 +94,19 @@ class Ui_Form(object):
         self.verticalLayout_4.addWidget(self.groupBox_3)
         self.groupBox_2 = QtWidgets.QGroupBox(Form)
         self.groupBox_2.setObjectName("groupBox_2")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.groupBox_2)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.groupBox_2)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.content_show = QtWidgets.QTextBrowser(self.groupBox_2)
+        self.content_show.setStyleSheet("QPlainTextEdit{\n"
+"    backgroud-color:rgb(255, 255, 127);\n"
+"    color:rgb(85, 255, 0);\n"
+"}")
         self.content_show.setObjectName("content_show")
-        self.verticalLayout_3.addWidget(self.content_show)
+        self.horizontalLayout_4.addWidget(self.content_show)
+        self.verticalScrollBar = QtWidgets.QScrollBar(self.groupBox_2)
+        self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
+        self.verticalScrollBar.setObjectName("verticalScrollBar")
+        self.horizontalLayout_4.addWidget(self.verticalScrollBar)
         self.verticalLayout_4.addWidget(self.groupBox_2)
 
         self.retranslateUi(Form)
@@ -109,7 +118,7 @@ class Ui_Form(object):
         self.groupBox.setTitle(_translate("Form", "输入区"))
         self.label.setText(_translate("Form", "文件夹："))
         self.pushButton.setText(_translate("Form", "选择文件夹"))
-        self.label_2.setText(_translate("Form", "后缀名："))
+        self.label_2.setText(_translate("Form", "后缀名:"))
         self.label_3.setText(_translate("Form", "进度："))
         self.check_onlyname.setText(_translate("Form", "仅输出文件名"))
         self.groupBox_3.setTitle(_translate("Form", "功能按钮"))
@@ -117,3 +126,4 @@ class Ui_Form(object):
         self.btn_clear.setText(_translate("Form", "清空"))
         self.btn_saveLog.setText(_translate("Form", "存日志"))
         self.groupBox_2.setTitle(_translate("Form", "输出区"))
+import ico_rc
