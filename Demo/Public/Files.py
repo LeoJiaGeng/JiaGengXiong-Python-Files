@@ -1,7 +1,7 @@
 '''查找文件夹内所有文件，当前目录，删除，重命名，指定的文件是否在其中
 '''
 import os
-from Decoration import Decorator
+#from Decoration import Decorator
 
 class ReFilenames():
     '''读取指定文件内，包括子文件夹所有的后缀名'''

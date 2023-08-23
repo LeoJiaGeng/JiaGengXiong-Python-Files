@@ -9,10 +9,11 @@ import sys
 from PyQt5.QtWidgets import QApplication, QFileDialog
 from PyQt5.QtCore import pyqtSlot, QCoreApplication, Qt, QDir, QThread, pyqtSignal
 from ui_Start import QmyWidget
+
 from Public.Files import ReFilenames, SaveFile
 from Public.Decoration import Decorator
 from Public.Config import Config
-from common import *
+from Public.common import *
 
 class QmyApp(QmyWidget):
     def __init__(self):
@@ -111,7 +112,6 @@ class TestMultiple(QThread):
             self.sinOut_Bar_fullValue_msg.emit()
         else:
             self.sinOut_content_progressBar[str].emit("未匹配到该文件后缀名！")
-
 
 if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)

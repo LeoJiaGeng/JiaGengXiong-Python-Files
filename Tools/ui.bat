@@ -5,7 +5,7 @@ set UI_PY_NAME=ui_Search.py
 set ICO_PY_NAME=ico_rc.py
 set PROJECT_NAME=%~dp0..\Demo
 set UI_WORKPATH="%PROJECT_NAME%"
-set ICO_WORKPATH=%~dp0..\Resource
+set ICO_WORKPATH=%~dp0..\Demo\Resource
 
 ::echo %UI_WORKPATH%
 dir /b %UI_WORKPATH%\*.ui>temp.txt

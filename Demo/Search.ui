@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>753</width>
+    <width>790</width>
     <height>674</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,8,1">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,8,2">
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
@@ -45,14 +45,11 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1,1,6,1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1,1,6,2">
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>后缀名:</string>
-          </property>
-          <property name="pixmap">
-           <pixmap>:/ico/pictures/icos/DM_20230815124713_024.png</pixmap>
+           <string>后缀名：</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -80,12 +77,30 @@
           <property name="value">
            <number>0</number>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="check_onlyname">
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+          <property name="tabletTracking">
+           <bool>false</bool>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::DefaultContextMenu</enum>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
           <property name="text">
-           <string>仅输出文件名</string>
+           <string>   仅输出文件名</string>
           </property>
          </widget>
         </item>
@@ -123,11 +138,37 @@
          </widget>
         </item>
         <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QPushButton" name="btn_clear">
           <property name="text">
            <string>清空</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item>
          <widget class="QPushButton" name="btn_saveLog">
@@ -196,7 +237,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resoure/ico.qrc"/>
+  <include location="Resource/ico.qrc"/>
  </resources>
  <connections/>
 </ui>
