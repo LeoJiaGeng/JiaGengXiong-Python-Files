@@ -10,9 +10,9 @@ from PyQt5.QtWidgets import QApplication, QFileDialog
 from PyQt5.QtCore import pyqtSlot, QCoreApplication, Qt, QDir, QThread, pyqtSignal
 from ui_Start import QmyWidget
 
-from Public.Files import ReFilenames, SaveFile
-from Public.Decoration import Decorator
-from Public.Config import Config
+from Public.files import ReFilenames, SaveFile
+from Public.decoration import Decorator
+from config_adapt import Config_Adapt
 from Public.common import *
 
 class QmyApp(QmyWidget):
@@ -22,7 +22,7 @@ class QmyApp(QmyWidget):
         self.config_init()
 
     def config_init(self):
-        self.config = Config("config.ini")
+        self.config = Config_Adapt("config.ini")
         self.ui.edit_filename.setText(self.config.get_config("input", "file_name")["data"])
         self.ui.edit_suffix.setText(self.config.get_config("input", "suffix")["data"])
 

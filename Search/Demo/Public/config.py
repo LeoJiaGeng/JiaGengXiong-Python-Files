@@ -1,18 +1,10 @@
 from configparser import ConfigParser
-import os
 
 class Config():
     def __init__(self, file_name= 'config.ini'):
         self.file_name = file_name
         self.config = ConfigParser()
-        if self.file_name not in os.listdir(os.getcwd()):
-            self.create_file()
         self.config.read(self.file_name, encoding="utf-8")
-
-    def create_file(self):
-        self.add_section("input")
-        self.set_config("input", "file_name", "D:/Document")
-        self.set_config("input", "suffix", "py")
 
     def save(self):
         """Save the configuration"""

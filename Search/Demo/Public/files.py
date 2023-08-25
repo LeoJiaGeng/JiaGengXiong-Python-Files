@@ -1,7 +1,6 @@
 '''查找文件夹内所有文件，当前目录，删除，重命名，指定的文件是否在其中
 '''
 import os
-#from Decoration import Decorator
 
 class ReFilenames():
     '''读取指定文件内，包括子文件夹所有的后缀名'''
@@ -23,7 +22,6 @@ class ReFilenames():
     def suffix(self, name):
         self.__format_end = name
     
-    #@Decorator.exe_execute
     def get_all_files(self, dir, only_name = False):
         '''获取文件夹内及其子文件夹中所有带有后缀为self.__format_end的文件'''
         self.file_list = []

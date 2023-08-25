@@ -2,7 +2,7 @@
 '''
 import xlrd
 import xlwt
-from Decoration import Decorator
+from decoration import Decorator
 import pandas as pd
 
 class Excels():

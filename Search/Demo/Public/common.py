@@ -1,4 +1,4 @@
-
+__all__ =["check_or_none"]
 
 def check_or_none(*args):
     """Check if the given arguments are not None"""
