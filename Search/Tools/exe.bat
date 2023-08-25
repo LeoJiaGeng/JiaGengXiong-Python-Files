@@ -2,7 +2,7 @@
 mode con cols=50 lines=50
 
 :: 需要编译的文件和执行编译的软件位置
-set MAIN_PY_NAME=appMain.py
+set MAIN_PY_NAME=app.py
 set SOFT_PATHS="D:\Document\Python_Files\Python_virtual\Scripts"
 
 :: 设置文件夹
