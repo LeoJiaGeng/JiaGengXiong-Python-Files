@@ -4,8 +4,8 @@ class Decorator(object):
     def __init__(self):
         pass
 
-    @classmethod
-    def exe_time(cls, content):
+    @staticmethod
+    def exe_time(content):
         def recorder(func):
             def wrapper(*args, **kwargs):
                 start = time.time()
@@ -15,8 +15,8 @@ class Decorator(object):
             return wrapper
         return recorder
     
-    @classmethod
-    def exe_execute(cls, func):
+    @staticmethod
+    def exe_execute(func):
         def wrapper(*args, **kwargs):
             print("文件开始写入")
             ret = func(*args, **kwargs)
@@ -25,8 +25,8 @@ class Decorator(object):
         
         return wrapper
 
-    @classmethod
-    def write_log(cls, name):
+    @staticmethod
+    def write_log(name):
         def exe_execute(func):
             def wrapper(*args, **kwargs):
                 print(name)
