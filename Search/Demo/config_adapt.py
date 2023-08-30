@@ -1,5 +1,5 @@
 
-from Public.config import Config
+from config import Config
 import os
 
 class Config_Adapt(Config):

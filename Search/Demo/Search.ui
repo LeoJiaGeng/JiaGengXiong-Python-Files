@@ -237,7 +237,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="Resource/ico.qrc"/>
+  <include location="../Resource/ico.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\Document\Python_Files\GitCode\JiaGengXiong-Python-Files_1\Tools\..\Demo\Search.ui'
+# Form implementation generated from reading ui file 'D:\Document\Python_Files\GitCode\JiaGengXiong-Python-Files\Search\Tools\..\Demo\Search.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #

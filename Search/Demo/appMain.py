@@ -5,15 +5,16 @@ Created on Sun Apr  3 21:53:27 2022
 @author: 41137
 """
 
-import sys
+import sys, os
+sys.path.append(os.path.join(os.getcwd(), "..\Public"))
 from PyQt5.QtWidgets import QApplication, QFileDialog
 from PyQt5.QtCore import pyqtSlot, QCoreApplication, Qt, QDir, QThread, pyqtSignal
 from ui_Start import QmyWidget
 
-from Public.files import ReFilenames, SaveFile
-from Public.decoration import Decorator
+from files import ReFilenames, SaveFile
+from decoration import Decorator
 from config_adapt import Config_Adapt
-from Public.common import *
+from common import *
 
 class QmyApp(QmyWidget):
     def __init__(self):
