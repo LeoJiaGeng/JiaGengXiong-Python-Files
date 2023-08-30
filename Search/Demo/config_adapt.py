@@ -1,6 +1,5 @@
-
-from config import Config
 import os
+from Public.config import Config
 
 class Config_Adapt(Config):
     def __init__(self, file_name):
