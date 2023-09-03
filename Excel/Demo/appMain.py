@@ -26,7 +26,7 @@ class QmyApp(QmyWidget):
         self.connecter_init() # Initialize signals and slots
 
     def config_init(self):
-        self.config = Config_Adapt("config")
+        self.config = Config_Adapt("config.ini")
         self.ui.line_edit_files.setText(self.config.get_config("input", "file_name")["data"])
         self.ui.line_edit_num.setText(self.config.get_config("input", "num")["data"])
 
