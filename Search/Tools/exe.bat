@@ -7,8 +7,8 @@ set SOFT_PATHS="D:\Document\Python_Files\Python_virtual\Scripts"
 
 :: 设置文件夹
 set PROJECT_NAME=%~dp0..
-set PY_WORKPATH="%PROJECT_NAME%\Demo" 
-set PY_VERSION="%PROJECT_NAME%\Demo\%MAIN_PY_NAME%"
+set PY_WORKPATH="%PROJECT_NAME%\Demo"
+set PY_VERSION="%PY_WORKPATH%\%MAIN_PY_NAME%"
 set RELEASE_PATHS="%PROJECT_NAME%\release"
 
 :: 查看是否存在文件夹
