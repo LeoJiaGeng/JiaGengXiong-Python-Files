@@ -13,12 +13,12 @@ from ui_Start import QmyWidget
 
 from sort_file import SortFiles
 from config_adapt import Config_Adapt
+from Public.common import*
 
 class QmyApp(QmyWidget):
     def __init__(self):
         super().__init__()
         self.init()
-        self.convert = SortFiles()
         
     def init(self):
         self.config_init() # Initialize config file
@@ -34,6 +34,7 @@ class QmyApp(QmyWidget):
         self.read_type = 0
         self.write_type = 0
         self.suffix = 'xls'
+        self.convert = SortFiles()
 
     def connecter_init(self):
         self.ui.radio_btn_read_col.clicked.connect(self.do_set_read_type)
@@ -67,22 +68,39 @@ class QmyApp(QmyWidget):
 
     @pyqtSlot()
     def on_btn_convert_clicked(self):
+        if check_or_none(self.ui.line_edit_files.text(), self.ui.line_edit_num.text()):
+            self.MsgWarning("请同时输入文件夹和提取行/列数")
+            return
+        
         self.ui.plainTextEdit.appendPlainText("正在统计... ...")
-
         file_name = self.ui.line_edit_files.text()
+        self.config.set_config("input", "file_name", file_name)
         num_list = [int(self.ui.line_edit_num.text())]
-        self.convert.main_function(self.suffix, file_name, num_list, self.read_type, self.write_type)
+        self.config.set_config("input", "num", str(num_list[0]))
 
-        self.ui.plainTextEdit.appendPlainText("统计完成！")
+        ret = self.convert.main_function(self.suffix, file_name, num_list, self.read_type, self.write_type)
+        if ret:
+            self.ui.plainTextEdit.appendPlainText("统计完成！")
+        else:
+            self.MsgWarning("未找到指定后缀名的文件")
+            self.ui.plainTextEdit.appendPlainText("统计失败！")
 
     @pyqtSlot()
     def on_btn_csv_xlsx_clicked(self):
+        if check_or_none(self.ui.line_edit_files.text()):
+            self.MsgWarning("请同时输入文件夹")
+            return
+        
         self.ui.plainTextEdit.appendPlainText("正在转换... ...")
         
         file_name = self.ui.line_edit_files.text()
-        self.convert.main_convert(file_name)
+        ret = self.convert.main_convert(file_name)
 
-        self.ui.plainTextEdit.appendPlainText("转换完成！")
+        if ret:
+            self.ui.plainTextEdit.appendPlainText("转换完成！")
+        else:
+            self.MsgWarning("未找到csv的文件")
+            self.ui.plainTextEdit.appendPlainText("转换失败！")        
 
 if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)

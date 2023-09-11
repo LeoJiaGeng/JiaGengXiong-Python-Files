@@ -13,21 +13,31 @@ class SortFiles(object):
         all_data = [] 
 
         all_file_names = root.get_all_files(file_name) # 默认是全路径
+        if (not all_file_names):
+            return False
+
         for name in all_file_names:  # 循环所有文件名
             data = self.excel.read_excel_lines(name, list_num, read_type, sheet_num, row_start_num)
             # 获取每个文件中的数据       
             all_data.extend(data)
             
         self.excel.write_excel_lines(all_data, write_type)
-
+        return True
+    
     def main_convert(self, file_name):
         root = ReFilenames("csv")
         all_file_full_names = root.get_all_files(file_name) # 默认是全路径
-        all_file_names = root.get_all_files(file_name, True) #
+        all_file_names = root.get_all_files(file_name, True) 
+
+        if (not all_file_names):
+            return False
+        
         for full_name, name in zip(all_file_full_names,all_file_names):  # 循环所有文件名
             xlsx_name = str(name.split(".")[0]) + ".xlsx"
-            self.excel.csv_to_excel(full_name, xlsx_name)        
-
+            self.excel.csv_to_excel(full_name, xlsx_name)   
+                 
+        return True
+    
 if __name__ == '__main__':   
     # 主程序开始
     name_type = 'xls'

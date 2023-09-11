@@ -62,8 +62,8 @@ class Excels():
         workbook.save(filename)    
 
     @Decorator.exe_time("csv转换xlsx")
-    def csv_to_excel(self):
-        pd.read_csv("file.csv").to_excel("file.xlsx", index=False)
+    def csv_to_excel(self, csv_filename, xlsx_filename):
+        pd.read_csv(csv_filename).to_excel(xlsx_filename, index=False)
 
     @Decorator.exe_time("txt转换xlsx")
     def txt_to_excel(self, column_index):
