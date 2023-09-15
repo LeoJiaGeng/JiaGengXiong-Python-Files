@@ -6,6 +6,7 @@ class Decorator(object):
 
     @staticmethod
     def exe_time(content):
+        """print the elapsed time of specified function"""
         def recorder(func):
             def wrapper(*args, **kwargs):
                 start = time.time()
@@ -15,6 +16,21 @@ class Decorator(object):
             return wrapper
         return recorder
     
+    @staticmethod
+    def raise_err():
+        """Raise an error for specified function"""
+        def recorder(func):
+            def wrapper(*args, **kwargs):
+                ret = {"data":[]}
+                try:
+                    ret = func(*args, **kwargs)
+                except Exception as e:
+                    ret["ret_val"] = False
+                    ret["info"] = str(e)
+                return ret
+            return wrapper
+        return recorder
+
     @staticmethod
     def exe_execute(func):
         def wrapper(*args, **kwargs):

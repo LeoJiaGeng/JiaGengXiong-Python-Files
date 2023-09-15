@@ -54,6 +54,25 @@ class SaveFile(object):
             for data in dataList:
                 file_obj.write(str(data) + "\n")
 
+class OpenFile(object):
+    def __init__(self):
+        pass
+
+    def read_file(self, file_name, location=None, length=-1):
+        with open(file_name) as file_obj:
+            file_obj.seek(location)
+            content = file_obj.read(length)
+            return content
+        
+class CreateFile(object):
+    def __init__(self):
+        pass
+
+    def creat_file(self, file_name):
+        
+        pass
+    
+
 if __name__ == "__main__":
     A = ReFilenames("ui")
     #print(A._read_all_files__format_end)

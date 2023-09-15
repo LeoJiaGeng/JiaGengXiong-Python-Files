@@ -1,41 +1,45 @@
-'''只为做一些小实用程序
-'''
 import xlrd
 import xlwt
-from decoration import Decorator
 import pandas as pd
+
+from decoration import Decorator
 
 class Excels():
     '''excel表格读写的操作'''
 
     def __init__(self):
         pass
-    
-    @Decorator.exe_time("读取excel")
+
+    @Decorator.raise_err()
     def read_excel_lines(self, filename, search_list, direction = 0, sheet_index = 0, get_start_rowx = 0, get_end_rowx = None):
-        '''读取表格中的某些行、列'''
-        print(f"开始读取{filename}文件")
+        '''输入: 1.文件名的绝对地址; 2.查找行/列的数组; 3.查找的方向; 4.表格的sheet
+           输出: 1.状态值; 2.二维数组; 3.过程信息'''
+        
+        ret = {"ret_val":True, "data":[], "info":"normal operation"}
 
         data = xlrd.open_workbook(r"" + filename)
         sheet = data.sheet_by_index(sheet_index)
-        read_list = []
 
-        for i in range(len(search_list)):
+        for one_list in search_list:
             if direction == 0:
                 # 读取行
-                read_list.append(sheet.col_values(search_list[i], start_rowx = get_start_rowx, end_rowx = get_end_rowx))
+                ret["data"].append(sheet.col_values(one_list, start_rowx = get_start_rowx, end_rowx = get_end_rowx))
             elif direction == 1:
-                # 读取列
-                read_list.append(sheet.row_values(search_list[i], start_colx = get_start_rowx, end_colx = get_end_rowx))   
+                ret["data"].append(sheet.row_values(one_list, start_colx = get_start_rowx, end_colx = get_end_rowx))   
             else:
-                print("输入有误") 
-                break           
+                ret["ret_val"] = False
+                ret["info"] = "input direction is wrong"
+                return ret                   
 
-        print(f"{filename}文件已经读取完毕")
-        return read_list
+        return ret
 
-    @Decorator.exe_time("写入excel")
+    @Decorator.raise_err()
     def write_excel_lines(self, get_list, direction = 0, filename = "提取的源文件.xls", set_start_row = 0, set_start_col = 0):
+        '''输入: 1.二维数组; 2.写入的方向; 3.新建的文件名; 
+           输出: 1.状态值; 2.空数组; 3.过程信息'''
+        
+        ret = {"ret_val":True, "data":[], "info":"normal operation"}
+
         workbook = xlwt.Workbook(encoding = 'utf-8')
         sheet = workbook.add_sheet('sheet0')
         
@@ -47,30 +51,42 @@ class Excels():
         style.alignment = alignment # Add Alignment to Style
 
         row_length = len(get_list)
-
         for row in range(row_length): 
             for col in range(len(get_list[row])):     
                 if direction == 0:
-                    # 写入行
-                    sheet.write(set_start_row + row, set_start_col + col, get_list[row][col])  
+                    sheet.write(set_start_row + row, set_start_col + col, get_list[row][col]) # 写入行
                 elif direction == 1:
-                    # 写入列
-                    sheet.write(set_start_row + col, set_start_col  + row, get_list[row][col])
+                    sheet.write(set_start_row + col, set_start_col + row, get_list[row][col]) # 写入列
                 else:
-                    print("写入方向输入有误") 
+                    ret["info"] = "input direction is wrong"
+                    return ret 
         
-        workbook.save(filename)    
+        workbook.save(filename)
+        return ret    
 
-    @Decorator.exe_time("csv转换xlsx")
-    def csv_to_excel(self):
-        pd.read_csv("file.csv").to_excel("file.xlsx", index=False)
+    @Decorator.raise_err()
+    def csv_to_excel(self, csv_filename, xlsx_filename):
+        '''输入: 1.csv文件绝对地址; 2.xlsx的绝对地址; 
+           输出: 1.状态值; 2.空数组; 3.过程信息'''
+        ret = {"ret_val":True, "data":[], "info":"normal operation"}
+        pd.read_csv(csv_filename).to_excel(xlsx_filename, index=False)
+        return ret
 
-    @Decorator.exe_time("txt转换xlsx")
+    @Decorator.raise_err()
     def txt_to_excel(self, column_index):
+        '''输入: 1.xlsx的文件头; 
+           输出: 1.状态值; 2.空数组; 3.过程信息'''
+        ret = {"ret_val":True, "data":[], "info":"normal operation"}
         pd.read_table("file.txt", sep=" ", header=None, names=column_index).to_excel("file.xlsx", index=False)
-
+        return ret
+    
 if __name__ == "__main__":
-    file_name = r"D:\Document\宝儿临时文件夹\副本广建大酒店三月收支.xlsx" 
+    file_name = r"D:\桌面文件夹\代码测试\测试文件\1.xlsx" 
     A = Excels()
-    print(A.read_excel_lines(file_name, [3,4], direction=0))
-    A.write_excel_lines([[1,2,5,67,5],[3,4],[4,5,6]], direction=1)
+    ret = A.read_excel_lines(file_name, [1,2], direction=1)
+    if not (ret["ret_val"]):
+        print(ret["info"])
+    else:
+        print(ret["data"])
+    print(A.txt_to_excel())
+    print(A.write_excel_lines([[1,2,5,5],[3,4],[4,5,6]], direction=1))

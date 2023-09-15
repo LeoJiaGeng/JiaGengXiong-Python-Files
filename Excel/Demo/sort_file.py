@@ -17,7 +17,7 @@ class SortFiles(object):
             return False
 
         for name in all_file_names:  # 循环所有文件名
-            data = self.excel.read_excel_lines(name, list_num, read_type, sheet_num, row_start_num)
+            data = self.excel.read_excel_lines(name, list_num, read_type, sheet_num, row_start_num)["data"]
             # 获取每个文件中的数据       
             all_data.extend(data)
             
