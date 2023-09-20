@@ -63,6 +63,15 @@ class OpenFile(object):
             file_obj.seek(location)
             content = file_obj.read(length)
             return content
+        
+class CreateFile(object):
+    def __init__(self):
+        pass
+
+    def creat_file(self, file_name):
+        
+        pass
+    
 
 if __name__ == "__main__":
     A = ReFilenames("ui")
