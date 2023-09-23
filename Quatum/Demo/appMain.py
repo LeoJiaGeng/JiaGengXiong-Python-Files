@@ -22,13 +22,21 @@ class QmyApp(QmyWidget):
         self.ui.edit_files.setText(self.config.get_config("save", "file_name")["data"])
         self.ui.edit_file.setText(self.config.get_config("search", "file_name")["data"])
 
+    def save_edit_files_config(self, content):
+        """Save the contents of the line edit in saving window"""
+        self.config.set_config("save", "file_name", content)    
+
+    def save_edit_file_config(self, content):
+        """Save the contents of the line edit in searching window"""
+        self.config.set_config("search", "file_name", content)
+
     @pyqtSlot()
     def on_btn_open_files_clicked(self):
         curPath = QDir.currentPath()
         dlgTitle = "选择一个目录"
         selectedDir = QFileDialog.getExistingDirectory(self, dlgTitle, curPath, QFileDialog.ShowDirsOnly)
         self.ui.edit_files.setText(selectedDir)
-        self.config.set_config("save", "file_name", selectedDir)
+        self.save_edit_files_config(selectedDir)
 
     @pyqtSlot()
     def on_btn_open_file_clicked(self):
@@ -37,7 +45,7 @@ class QmyApp(QmyWidget):
         filt = "所有文件(*.*);;文本文件(*.txt);;图片文件(*.jpg *.gif *.png)"
         fileList, filt = QFileDialog.getOpenFileName(self, dlgTitle, curPath, filt)
         self.ui.edit_file.setText(fileList)
-        self.config.set_config("search", "file_name", fileList)
+        self.save_edit_file_config(fileList)
 
     @pyqtSlot()
     def on_btn_save_energy_clicked(self):
@@ -46,6 +54,7 @@ class QmyApp(QmyWidget):
         self.quant = Quantum("log",file_name)
         self.quant.save_energy()
         self.save_content_show("Save OK!")
+        self.save_edit_files_config(file_name)
 
     @pyqtSlot()
     def on_btn_save_freq_clicked(self):
@@ -54,6 +63,7 @@ class QmyApp(QmyWidget):
         self.quant = Quantum("log",file_name)
         self.quant.save_freq()
         self.save_content_show("Save OK!")
+        self.save_edit_files_config(file_name)
 
     @pyqtSlot()
     def on_btn_save_coord_clicked(self):
@@ -62,6 +72,7 @@ class QmyApp(QmyWidget):
         self.quant = Quantum("log",file_name)
         self.quant.save_cor()
         self.save_content_show("Save OK!")
+        self.save_edit_files_config(file_name)
 
     @pyqtSlot()
     def on_btn_find_ver_clicked(self):
@@ -72,6 +83,7 @@ class QmyApp(QmyWidget):
         for content in self.quant.print_eigenvectors():
             self.search_content_show(content)
         self.search_content_show("Search OK!")
+        self.save_edit_file_config(file_name)
 
     @pyqtSlot()
     def on_btn_find_yes_clicked(self):
@@ -82,6 +94,7 @@ class QmyApp(QmyWidget):
         for content in self.quant.print_eigenvectors_YES():
             self.search_content_show(content)
         self.search_content_show("Search OK!")
+        self.save_edit_file_config(file_name)
 
 class QuaThread(QThread):
     sinOut = pyqtSignal(str)  

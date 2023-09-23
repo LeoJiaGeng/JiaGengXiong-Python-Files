@@ -19,12 +19,14 @@ class QmyApp(QmyWidget):
     def __init__(self):
         super().__init__()
         self.saveFlag = False
+        self.content_show_flag = False
         self.config_init()
 
     def config_init(self):
         self.config = Config_Adapt("config.ini")
         self.ui.edit_filename.setText(self.config.get_config("input", "file_name")["data"])
         self.ui.edit_suffix.setText(self.config.get_config("input", "suffix")["data"])
+        self.ui.edit_re_search.setText(self.config.get_config("input", "re_search")["data"])
 
     @pyqtSlot()
     def on_btn_search_clicked(self):
@@ -79,6 +81,25 @@ class QmyApp(QmyWidget):
     @pyqtSlot(int)
     def on_set_progressBar_fullRange(self, value):
         self.ui.progressBar.setMaximum(value)
+
+    @pyqtSlot()
+    def on_content_show_textChanged(self):
+        self.content_show_flag = False
+        
+    @pyqtSlot()
+    def on_btn_re_search_clicked(self):
+        """move mouse cursor to re_search result"""
+        filter_content = self.ui.edit_re_search.text()
+        all_str = self.ui.content_show.toPlainText()
+        all_list = list(all_str.split('\n'))
+
+        for content in all_list:
+            if filter_content in content:
+                self.on_content_show("\n" + content)
+        # 
+        if self.content_show_flag:
+            self.on_content_show("没有搜索到指定的内容！")
+        self.config.set_config("input", "re_search", filter_content)
 
 class TestMultiple(QThread):
     sinOut_content_progressBar = pyqtSignal([str], [int])  

@@ -4,7 +4,7 @@
 
 from Public.Files import ReFilenames
 from Public.Excel import Excels
-from Public.Decoration import Decorator
+from Public.decoration import Decorator
 from Public.FindData import FindInfo
 
 class Quantum(ReFilenames):

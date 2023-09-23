@@ -209,6 +209,42 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="minimumSize">
+      <size>
+       <width>20</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>高级搜索</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_7">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,8,1">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>结果内搜索：</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="edit_re_search"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_re_search">
+          <property name="text">
+           <string>再次搜索</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>输出区</string>

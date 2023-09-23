@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\Document\Python_Files\GitCode\JiaGengXiong-Python-Files\Search\Tools\..\Demo\Search.ui'
+# Form implementation generated from reading ui file 'e:\Python_Files\codehub\JiaGengXiong-Python-Files_9.23\Search\Tools\..\Demo\Search.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -101,6 +101,27 @@ class Ui_Form(object):
         self.horizontalLayout_3.addItem(spacerItem3)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
         self.verticalLayout_4.addWidget(self.groupBox_3)
+        self.groupBox_5 = QtWidgets.QGroupBox(Form)
+        self.groupBox_5.setMinimumSize(QtCore.QSize(20, 50))
+        self.groupBox_5.setObjectName("groupBox_5")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.groupBox_5)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.label_4 = QtWidgets.QLabel(self.groupBox_5)
+        self.label_4.setObjectName("label_4")
+        self.horizontalLayout_6.addWidget(self.label_4)
+        self.edit_re_search = QtWidgets.QLineEdit(self.groupBox_5)
+        self.edit_re_search.setObjectName("edit_re_search")
+        self.horizontalLayout_6.addWidget(self.edit_re_search)
+        self.btn_re_search = QtWidgets.QPushButton(self.groupBox_5)
+        self.btn_re_search.setObjectName("btn_re_search")
+        self.horizontalLayout_6.addWidget(self.btn_re_search)
+        self.horizontalLayout_6.setStretch(0, 1)
+        self.horizontalLayout_6.setStretch(1, 8)
+        self.horizontalLayout_6.setStretch(2, 1)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_6)
+        self.verticalLayout_4.addWidget(self.groupBox_5)
         self.groupBox_2 = QtWidgets.QGroupBox(Form)
         self.groupBox_2.setObjectName("groupBox_2")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.groupBox_2)
@@ -134,5 +155,8 @@ class Ui_Form(object):
         self.btn_search.setText(_translate("Form", "搜索"))
         self.btn_clear.setText(_translate("Form", "清空"))
         self.btn_saveLog.setText(_translate("Form", "存日志"))
+        self.groupBox_5.setTitle(_translate("Form", "高级搜索"))
+        self.label_4.setText(_translate("Form", "结果内搜索："))
+        self.btn_re_search.setText(_translate("Form", "再次搜索"))
         self.groupBox_2.setTitle(_translate("Form", "输出区"))
 import ico_rc

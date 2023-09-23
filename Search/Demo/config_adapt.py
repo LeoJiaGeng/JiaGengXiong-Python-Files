@@ -11,9 +11,10 @@ class Config_Adapt(Config):
         self.add_section("input")
         self.set_config("input", "file_name", "D:/Document/Python_Files")
         self.set_config("input", "suffix", "py")
+        self.set_config("input", "re_search", "ico")
 
 if __name__ == "__main__":
-    config = Config_Adapt()
+    config = Config_Adapt("config.ini")
     print(config.get_config("input", "suffix"))
 
                     
