@@ -19,7 +19,7 @@ class QmyApp(QmyWidget):
     def __init__(self):
         super().__init__()
         self.saveFlag = False
-        self.content_show_flag = False
+        self.content_show_flag = True
         self.config_init()
 
     def config_init(self):
@@ -92,13 +92,14 @@ class QmyApp(QmyWidget):
         filter_content = self.ui.edit_re_search.text()
         all_str = self.ui.content_show.toPlainText()
         all_list = list(all_str.split('\n'))
+        self.content_show_flag = True
 
         for content in all_list:
             if filter_content in content:
                 self.on_content_show("\n" + content)
         # 
         if self.content_show_flag:
-            self.on_content_show("没有搜索到指定的内容！")
+            self.on_content_show("\n没有搜索到指定的内容！")
         self.config.set_config("input", "re_search", filter_content)
 
 class TestMultiple(QThread):

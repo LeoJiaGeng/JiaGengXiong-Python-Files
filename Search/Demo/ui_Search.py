@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(790, 674)
+        Form.resize(790, 786)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.groupBox = QtWidgets.QGroupBox(Form)
@@ -133,10 +133,6 @@ class Ui_Form(object):
 "}")
         self.content_show.setObjectName("content_show")
         self.horizontalLayout_4.addWidget(self.content_show)
-        self.verticalScrollBar = QtWidgets.QScrollBar(self.groupBox_2)
-        self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
-        self.verticalScrollBar.setObjectName("verticalScrollBar")
-        self.horizontalLayout_4.addWidget(self.verticalScrollBar)
         self.verticalLayout_4.addWidget(self.groupBox_2)
 
         self.retranslateUi(Form)
