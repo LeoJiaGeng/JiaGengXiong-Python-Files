@@ -28,9 +28,22 @@ class Quantum(ReFilenames):
                 full_data.append(tranList)
             # 开始写入数据
             root_write = Excels()
+            # 在此处修改，增加判断，乱得很，后续修改
+            if head_data[0][0] == "文件名(Hartree)":
+                gibbs_list = []
+
+                for gibbs_energy in full_data:
+                    gibbs_list.append(gibbs_energy[4])
+                gibbs_list = gibbs_list[1:]
+
+                gibbs_min_energy = min(gibbs_list)
+                for index in range(len(gibbs_list)):
+                    full_data[index + 1].append((gibbs_list[index] - gibbs_min_energy)*627.5095)
+
             root_write.write_excel_lines(full_data, filename = new_filename)
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def save_content(self, name, type):
@@ -45,21 +58,18 @@ class Quantum(ReFilenames):
             return False
 
     @Decorator.exe_time("读取文件频率")
-    def save_freq(self):
+    def save_freq(self, filename = "整理好的量化频率文件.xls"):
         full_data = [[ "文件名(cm-1)","频率"]]
-        filename = "整理好的量化频率文件.xls"
         return self.save_frame(full_data, filename, self.FREQ)
 
     @Decorator.exe_time("读取文件能量")
-    def save_energy(self):
-        full_data = [["文件名(Hartree)","Cor-Zero","Cor-Gibbs","HF","Gibbs","E"]]
-        filename = "整理好的量化能量文件.xls"
+    def save_energy(self, filename = "整理好的量化能量文件.xls"):
+        full_data = [["文件名(Hartree)","Cor-Zero","Cor-Gibbs","HF","Gibbs","E", "Rel_Gibbs"]]
         return self.save_frame(full_data, filename, self.ENERGY)        
 
     @Decorator.exe_time("读取文件坐标")
-    def save_cor(self):
-        full_data = [["文件名(Hartree)"]]
-        filename = "整理好的量化坐标文件.xls"
+    def save_cor(self, filename = "整理好的量化坐标文件.xls"):
+        full_data = [["文件名(xyz)"]]
         return self.save_frame(full_data, filename, self.COORD)  
     
     @Decorator.exe_time("查找虚频")

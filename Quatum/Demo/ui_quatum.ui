@@ -53,6 +53,12 @@
            <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,8,1">
             <item>
              <widget class="QLabel" name="label_2">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -66,6 +72,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btn_open_files">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="text">
                <string>打开文件夹</string>
               </property>
@@ -77,6 +89,15 @@
            <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,8,1">
             <item>
              <widget class="QLabel" name="label_3">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
               <property name="text">
                <string>保存文件夹：</string>
               </property>
@@ -87,6 +108,12 @@
             </item>
             <item>
              <widget class="QPushButton" name="btn_open_savefiles">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="text">
                <string>选择文件夹</string>
               </property>
@@ -170,7 +197,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="btn_save_clear">
               <property name="text">
                <string>清空</string>
               </property>
@@ -349,16 +376,6 @@
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QPlainTextEdit" name="search_plainTextEdit"/>
-          </item>
-          <item>
-           <widget class="QProgressBar" name="progressBar">
-            <property name="value">
-             <number>0</number>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>

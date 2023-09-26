@@ -21,6 +21,7 @@ class QmyApp(QmyWidget):
         self.config = Config("quatum_config.ini")
         self.ui.edit_files.setText(self.config.get_config("save", "file_name")["data"])
         self.ui.edit_file.setText(self.config.get_config("search", "file_name")["data"])
+        self.ui.edit_save_files.setText(self.config.get_config("save", "save_file_name")["data"])
 
     def save_edit_files_config(self, content):
         """Save the contents of the line edit in saving window"""
@@ -29,6 +30,16 @@ class QmyApp(QmyWidget):
     def save_edit_file_config(self, content):
         """Save the contents of the line edit in searching window"""
         self.config.set_config("search", "file_name", content)
+    @pyqtSlot()
+    def on_btn_open_savefiles_clicked(self):
+        curPath = QDir.currentPath()
+        dlgTitle = "选择一个目录"
+        selectedDir = QFileDialog.getExistingDirectory(self, dlgTitle, curPath, QFileDialog.ShowDirsOnly)
+        self.ui.edit_save_files.setText(selectedDir)
+        self.config.set_config("save", "save_file_name", selectedDir)
+    @pyqtSlot()
+    def on_btn_save_clear_clicked(self):
+        self.ui.save_plainTextEdit.clear()
 
     @pyqtSlot()
     def on_btn_open_files_clicked(self):

@@ -12,6 +12,7 @@ class Config():
     def create_file(self):
         self.add_section("save")
         self.set_config("save", "file_name", "D:/Document")
+        self.set_config("save", "save_file_name", "D:/Document")
         self.add_section("search")
         self.set_config("search", "file_name", "D:/Document")
 
