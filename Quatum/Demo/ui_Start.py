@@ -15,7 +15,7 @@ class QmyWidget(QWidget):
         super().__init__(parent)
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-        self.setWindowTitle("Quatum")
+        self.setWindowTitle("Quantum")
 
     def MsgWarning(self, msg):
         dlgTitle = "Warning消息框"
