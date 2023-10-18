@@ -3,12 +3,11 @@ Saving personal python file
 
 ## function
 
-Searching specific suffix in the specified folder
+1. extract specific columns or rows from many similar excel files to make up a new excel file
+2. transform csv to xlsx
 
 ## step
 
-1. 编辑ui文件
-2. 运行ui.bat
-3. 修改适配层ui_Start.py文件
-4. 运行appMain.py看效果
-5. 运行exe.bat，发布版本
+1. select the type of file: xls or xlsx
+2. input the columns or rows you want to extract and check the direaction you what to read and write
+3. click the botton of convert
