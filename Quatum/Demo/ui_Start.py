@@ -31,8 +31,23 @@ class QmyWidget(QWidget):
     def search_content_show(self, strCont):
         self.ui.search_plainTextEdit.appendPlainText(strCont)
 
-    def on_btn_clear_clicked(self):
+    def trans_origin_content_show(self, strCont):
+        self.ui.plainTextEdit_trans_origin.appendPlainText(strCont)
+
+    def trans_new_content_show(self, strCont):
+        self.ui.plainTextEdit_trans_new.appendPlainText(strCont)
+
+    def save_content_clear(self):
+        self.ui.save_plainTextEdit.clear()
+
+    def table_content_clear(self):
+        self.ui.tableInfo.clearContents()
+
+    def search_content_clear(self):
         self.ui.search_plainTextEdit.clear()
+
+    def trans_log_show(self, strCont):
+        self.ui.plainTextEdit_trans_log.appendPlainText(strCont)
 
     @property
     def content_show(self):
@@ -40,26 +55,19 @@ class QmyWidget(QWidget):
     
     @content_show.setter
     def content_show(self, value):
-        self.ui.content_show = value
+        self.ui.content_show = value 
 
-    @pyqtSlot()
-    def on_btn_save_energy_clicked(self):
-        print("parent class")
-        pass
+    def open_folder(self):
+        curPath = QDir.currentPath()
+        dlgTitle = "选择一个目录"
+        selectedDir = QFileDialog.getExistingDirectory(self, dlgTitle, curPath, QFileDialog.ShowDirsOnly)
+        return selectedDir
 
-    @pyqtSlot()
-    def on_btn_save_freq_clicked(self):
-        print("parent class")
-        pass
-
-    @pyqtSlot()
-    def on_btn_save_coord_clicked(self):
-        print("parent class")
-        pass    
-
-    def MsgWarning(self, msg):
-        dlgTitle = "Warning消息框"
-        QMessageBox.warning(self, dlgTitle, msg)
+    def open_file(self):
+        curPath = QDir.currentPath()
+        dlgTitle = "选择一个文件"
+        filt = "所有文件(*.*);;文本文件(*.txt);;图片文件(*.jpg *.gif *.png)"
+        return QFileDialog.getOpenFileName(self, dlgTitle, curPath, filt)
 
     def dragEnterEvent(self, event) -> None:
         if (event.mimeData().hasUrls()):
@@ -79,6 +87,22 @@ class QmyWidget(QWidget):
         realname = filename[1:cnt]
         self.ui.edit_file.setText(realname)
         event.accept()
+
+    @pyqtSlot()
+    def on_btn_save_energy_clicked(self):
+        print("parent class")
+        pass
+
+    @pyqtSlot()
+    def on_btn_save_freq_clicked(self):
+        print("parent class")
+        pass
+
+    @pyqtSlot()
+    def on_btn_save_coord_clicked(self):
+        print("parent class")
+        pass   
+
 if __name__ == "__main__":
     QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication(sys.argv)

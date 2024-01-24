@@ -11,40 +11,37 @@ class Quantum(ReFilenames):
     ENERGY = 0
     FREQ = 1
     COORD = 2
-    def __init__(self, type, file_name):
+    def __init__(self, type, file_name, standard_data=0.0):
         super().__init__(type)
         self.file_name = file_name
         self.files_names = self.get_all_files(file_name)
-        self.files_only_names = self.get_all_files(file_name, True)
-        self.length = len(self) # 用于显示进度条的
+        self.files_only_names = self.get_all_files(file_name, only_name = True, without_suffix = True)
+        self.standard_data = float(standard_data) 
 
     def save_frame(self, head_data, new_filename, save_type):
         # 储存框架！！！
         full_data = head_data
-        try:
-            for full_name, name in zip(self.files_names, self.files_only_names):
-                tranList = []
-                tranList = [name] + self.save_content(full_name, save_type)   
-                full_data.append(tranList)
-            # 开始写入数据
-            root_write = Excels()
-            # 在此处修改，增加判断，乱得很，后续修改
-            if head_data[0][0] == "文件名(Hartree)":
-                gibbs_list = []
 
-                for gibbs_energy in full_data:
-                    gibbs_list.append(gibbs_energy[4])
-                gibbs_list = gibbs_list[1:]
+        for full_name, name in zip(self.files_names, self.files_only_names):
+            tranList = []
+            tranList = [name] + self.save_content(full_name, save_type)   
+            full_data.append(tranList)
+        # 开始写入数据
+        root_write = Excels()
+        # 在此处修改，增加判断，乱得很，后续修改
+        if head_data[0][0] == "文件名(Hartree)":
+            gibbs_list = []
 
-                gibbs_min_energy = min(gibbs_list)
-                for index in range(len(gibbs_list)):
-                    full_data[index + 1].append((gibbs_list[index] - gibbs_min_energy)*627.5095)
+            for gibbs_energy in full_data:
+                gibbs_list.append(gibbs_energy[4])
+            gibbs_list = gibbs_list[1:]
 
-            root_write.write_excel_lines(full_data, filename = new_filename)
-            return True
-        except Exception as e:
-            print(e)
-            return False
+            for index in range(len(gibbs_list)):
+                append_data = round((gibbs_list[index] - self.standard_data)*627.5095,2)
+                full_data[index + 1].append(append_data)
+
+        root_write.write_excel_lines(full_data, filename = new_filename)
+        return full_data[1:]
 
     def save_content(self, name, type):
         """"传入不同的文件名，返回不同的序列"""

@@ -22,7 +22,7 @@ class ReFilenames():
     def suffix(self, name):
         self.__format_end = name
     
-    def get_all_files(self, dir, only_name = False):
+    def get_all_files(self, dir, only_name = False, without_suffix = False):
         '''获取文件夹内及其子文件夹中所有带有后缀为self.__format_end的文件'''
         self.file_list = []
         for root_dir, sub_dir, files in os.walk(dir):
@@ -35,9 +35,12 @@ class ReFilenames():
                         file_name = os.path.join(root_dir, file)
                         # 拼接文件名和根目录
                         self.file_list.append(file_name)
-                    elif only_name:
+                    elif only_name and (not without_suffix):
                         # 直接输出文件名
                         self.file_list.append(file) 
+                    else:
+                        only_file_name = file.split(".")[0]
+                        self.file_list.append(only_file_name)
         if self.file_list == []:
             print("没有匹配到该后缀名的文件")             
         return self.file_list
@@ -74,10 +77,10 @@ class CreateFile(object):
     
 
 if __name__ == "__main__":
-    A = ReFilenames("ui")
+    A = ReFilenames("log")
     #print(A._read_all_files__format_end)
     print(A)
     #print(A.get_all_files(r"D:\Document\Python_Files\Project"))
     print(len(A))
     B = SaveFile()
-    B.save("save.txt",A.get_all_files(r"D:\Document\Python_Files\Project"))
+    B.save("save.txt",A.get_all_files(r"C:\Users\DELL\Desktop\C4xianan\TFAA\extract data", True, True))

@@ -1,6 +1,7 @@
 """
 查找log文件文件里面的零点能、吉布斯、HF的能量和虚频以及YES，返回数组!!!
 """
+import math
 
 class FindInfo():
     # 字典用于查找能量
@@ -73,9 +74,9 @@ class FindInfo():
                     energy_list[3] = self.gibbs_energy(line)
                     energy_check_count += 1
         
-        energy_list[2] = float(energy_list[3]) - float(energy_list[1])
+        energy_list[2] = round((energy_list[3] - energy_list[1]),6)
         energy_check_count += 1
-        energy_list[4] = energy_list[2] + energy_list[0]
+        energy_list[4] = round((energy_list[2] + energy_list[0]),6)
         energy_check_count += 1
         print("文件{}能量查找完毕\n".format(self.filename))
         # 进行文件检查
@@ -94,8 +95,13 @@ class FindInfo():
                     line = line.strip()
                     line = line.split(" ")
                     tran_list = [item for item in line if len(item.split(".")) == 2]
+                    if (float(tran_list[0]) < 0.0):
+                        tran_list[0] = str(math.fabs(float(tran_list[0]))) + "i"
                     freq_list.extend(tran_list)
-               
+        # 转变成一个数据填入       
+        one_str = ",".join(freq_list)
+        freq_list.clear()
+        freq_list.append(one_str)
         print("文件{}频率查找完毕\n".format(self.filename))
         if freq_list == []:
             print("未找到能量数据")

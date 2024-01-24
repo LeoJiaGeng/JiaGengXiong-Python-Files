@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['E:\\Python_Files\\codehub\\JiaGengXiong-Python-Files_9.23\\Quatum\\Tools\\..\\Demo\\app.py'],
+    ['e:\\Python_Files\\codehub\\JiaGengXiong-Python-Files12.2\\Quatum\\Tools\\..\\Demo\\app.py'],
     pathex=[],
     binaries=[],
     datas=[],
