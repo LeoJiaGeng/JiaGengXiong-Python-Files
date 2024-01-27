@@ -109,6 +109,22 @@ class QmyApp(QmyWidget):
             self.save_content_show("Save ERR!")
 
     @pyqtSlot()
+    def on_btn_save_cbs_energy_clicked(self): # save cbs energy button and configuration
+        try:
+            self.save_content_show("Saving cbs energy... ...")
+            folder_name = self.ui.edit_folder.text()
+            self.quant = Quantum("log",folder_name, self.ui.edit_standard.text())
+            write_file_name = self.ui.edit_save_filename.text() + ".xls"
+            write_file_path = os.path.join(folder_name, write_file_name)
+            self.energy_list = self.quant.save_cbs_energy(write_file_path)
+            self.save_content_show("Save OK!")
+            self.save_saving_config()
+            self.table_show(True)
+        except Exception as e:
+            self.save_content_show(str(e))
+            self.save_content_show("Save ERR!")
+
+    @pyqtSlot()
     def on_btn_save_freq_clicked(self):  # save frequency button and configuration
         try:
             self.save_content_show("Saving frequency... ...")

@@ -11,6 +11,7 @@ class Quantum(ReFilenames):
     ENERGY = 0
     FREQ = 1
     COORD = 2
+    CBS_ENERGY = 3
     def __init__(self, type, file_name, standard_data=0.0):
         super().__init__(type)
         self.file_name = file_name
@@ -51,6 +52,11 @@ class Quantum(ReFilenames):
             return FindInfo(name).get_freq() 
         elif (type == self.COORD):
             return FindInfo(name).get_coord()
+        elif (type == self.CBS_ENERGY):
+            try:
+                return FindInfo(name).get_cbs_energy()
+            except:
+                return FindInfo(name).get_rocbs_energy()
         else:
             return False
 
@@ -68,7 +74,12 @@ class Quantum(ReFilenames):
     def save_cor(self, filename = "整理好的量化坐标文件.xls"):
         full_data = [["文件名(xyz)"]]
         return self.save_frame(full_data, filename, self.COORD)  
-    
+
+    @Decorator.exe_time("读取文件cbs能量")
+    def save_cbs_energy(self, filename = "整理好的量化cbs能量文件.xls"):
+        full_data = [["文件名()","MP4","CCSD(T)","MP4","MP2","HF","Int","OIii","E"]]
+        return self.save_frame(full_data, filename, self.CBS_ENERGY)  
+
     @Decorator.exe_time("查找虚频")
     def print_eigenvectors(self):
         return FindInfo(self.file_name).eigenvectors() 
@@ -79,10 +90,10 @@ class Quantum(ReFilenames):
 
 if __name__ == "__main__":
     nameType = "log"
-    file_names = r"D:\data\C4F7N\C4\g09\cbs"
-    file_name = r"D:\data\C2F2O\C2F2_1.log"
-    A = Quantum(nameType, file_names)
-    B = Quantum(nameType, file_name)
-    print(B.print_eigenvectors())
-    A.save_cor()
-    print(A.length)
+    file_folder = r"E:\Organized Files\2022_10_10\all_data\TFAA\DL-CBS"
+    # file_name = r"D:\data\C2F2O\C2F2_1.log"
+    A = Quantum(nameType, file_folder)
+    # B = Quantum(nameType, file_name)
+    # print(B.print_eigenvectors())
+    A.save_cbs_energy()
+    # print(A.length)
