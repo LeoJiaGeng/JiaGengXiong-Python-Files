@@ -4,7 +4,7 @@ mode con cols=50 lines=50
 :: 需要编译的文件和执行编译的软件位置
 set MAIN_PY_NAME=app.py
 set SOFT_PATHS="E:\Pyqt5_Python\Scripts"
-set SOFT_VERSION=v1.0.0.rar
+set SOFT_VERSION=v1.0.0.zip
 
 :: 设置文件夹
 set PROJECT_NAME=%~dp0..
@@ -15,6 +15,7 @@ set RELEASE_VERSION_PATHS="%PROJECT_NAME%\release\dist"
 
 :: 查看是否存在文件夹
 cd %PY_WORKPATH%
+rd /s /q %RELEASE_PATHS%
 if not exist %RELEASE_PATHS% (mkdir %RELEASE_PATHS%)
 
 :: 激活虚拟环境

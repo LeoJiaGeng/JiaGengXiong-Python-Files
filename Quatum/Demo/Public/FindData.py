@@ -187,7 +187,7 @@ class FindInfo():
                     break
 
         delta_ccsd = cbs_energy_list[1] - cbs_energy_list[0] 
-        delta_cbs = cbs_energy_list[3] - cbs_energy_list[2] 
+        delta_cbs = cbs_energy_list[2] - cbs_energy_list[3] 
         mp2 = cbs_energy_list[4] + cbs_energy_list[5] - cbs_energy_list[6]*0.00579
         final_energy = round((delta_ccsd + delta_cbs + mp2), 6)
         cbs_energy_list.append(final_energy)    
@@ -241,7 +241,7 @@ class FindInfo():
                     break
 
         delta_ccsd = cbs_energy_list[1] - cbs_energy_list[0] 
-        delta_cbs = cbs_energy_list[3] - cbs_energy_list[2] 
+        delta_cbs = cbs_energy_list[2] - cbs_energy_list[3] 
         mp2 = cbs_energy_list[4] + cbs_energy_list[5] - cbs_energy_list[6]*0.00579
         final_energy = round((delta_ccsd + delta_cbs + mp2), 6)
         cbs_energy_list.append(final_energy)    

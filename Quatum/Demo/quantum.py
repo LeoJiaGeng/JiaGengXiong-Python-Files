@@ -54,9 +54,9 @@ class Quantum(ReFilenames):
             return FindInfo(name).get_coord()
         elif (type == self.CBS_ENERGY):
             try:
-                return FindInfo(name).get_cbs_energy()
-            except:
                 return FindInfo(name).get_rocbs_energy()
+            except:
+                return FindInfo(name).get_cbs_energy()
         else:
             return False
 
