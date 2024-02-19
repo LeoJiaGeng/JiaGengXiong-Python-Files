@@ -6,6 +6,7 @@ from Public.Files import ReFilenames
 from Public.Excel import Excels
 from Public.decoration import Decorator
 from Public.FindData import FindInfo
+from Public.common import *
 
 class Quantum(ReFilenames):
     ENERGY = 0
@@ -46,6 +47,7 @@ class Quantum(ReFilenames):
 
     def save_content(self, name, type):
         """"传入不同的文件名，返回不同的序列"""
+        compare_list = []
         if (type == self.ENERGY):
             return FindInfo(name).get_energy()
         elif (type == self.FREQ):
@@ -53,10 +55,11 @@ class Quantum(ReFilenames):
         elif (type == self.COORD):
             return FindInfo(name).get_coord()
         elif (type == self.CBS_ENERGY):
-            try:
-                return FindInfo(name).get_rocbs_energy()
-            except:
+            compare_list = FindInfo(name).get_rocbs_energy()
+            if check_list_all_zero(compare_list):
                 return FindInfo(name).get_cbs_energy()
+            else:
+                return compare_list
         else:
             return False
 
@@ -77,7 +80,7 @@ class Quantum(ReFilenames):
 
     @Decorator.exe_time("读取文件cbs能量")
     def save_cbs_energy(self, filename = "整理好的量化cbs能量文件.xls"):
-        full_data = [["文件名()","MP4","CCSD(T)","MP4","MP2","HF","Int","OIii","E"]]
+        full_data = [["文件名()","MP4","CCSD(T)","MP2","MP4","HF","Int","OIii","E"]]
         return self.save_frame(full_data, filename, self.CBS_ENERGY)  
 
     @Decorator.exe_time("查找虚频")

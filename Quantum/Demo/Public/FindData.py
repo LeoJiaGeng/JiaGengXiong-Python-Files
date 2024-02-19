@@ -148,52 +148,50 @@ class FindInfo():
 
     def get_rocbs_energy(self):
         """查找振动频率"""
-        cbs_energy_list = []
+        cbs_energy_list = [0]*(len(self.rocbs_key)+1) 
         flag = 0
         with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
             file_lines = fileObj.readlines()
             for line in file_lines:
                 if self.rocbs_key[0] in line and flag == 0: # MP4
                     energy = list(line.strip().split(" "))[-1]
-                    cbs_energy_list.append(self.str_to_digit(energy))
+                    cbs_energy_list[0] = (self.str_to_digit(energy))
                     flag = 1
                 if self.rocbs_key[1] in line and flag == 1 and len(line) < 30: # CCSD
                     energy = list(line.strip().split("= "))[-1]
-                    cbs_energy_list.append(self.str_to_digit(energy))      
+                    cbs_energy_list[1] = (self.str_to_digit(energy))      
                 if "Normal termination" in line and flag != 3 and flag != 4:
                     flag = 2             
                 if self.rocbs_key[2] in line and flag == 2: # MP2
                     energy = list(line.strip().split(" "))[-1]
-                    cbs_energy_list.append(self.str_to_digit(energy))
+                    cbs_energy_list[2] = (self.str_to_digit(energy))
                     flag = 3   
                 if self.rocbs_key[3] in line and flag == 3: # MP4
                     energy = list(line.strip().split(" "))[-1]
-                    cbs_energy_list.append(self.str_to_digit(energy))
+                    cbs_energy_list[3] = (self.str_to_digit(energy))
                 if "Normal termination" in line and flag != 2:
                     flag = 4   
                 if self.rocbs_key[4] in line and flag == 4: # hf
                     energy = list(line.strip().split(" "))[6]
-                    cbs_energy_list.append(float(energy))
+                    cbs_energy_list[4] = (float(energy))
                     flag = 5    
                 if self.cbs_key[5] in line and flag == 5: # INT
                     energy = list(line.strip().split(" "))
                     e2_cbs = float(energy[6])
                     cbs_int = float(energy[14])
-                    cbs_energy_list.append(e2_cbs + cbs_int)
+                    cbs_energy_list[5] = (e2_cbs + cbs_int)
                     flag = 6                    
                 if self.cbs_key[6] in line and flag == 6: # OIII
                     energy = list(line.strip().split(" "))[-1]
-                    cbs_energy_list.append(float(energy))
+                    cbs_energy_list[6] = (float(energy))
                     break
 
         delta_ccsd = cbs_energy_list[1] - cbs_energy_list[0] 
-        delta_cbs = cbs_energy_list[2] - cbs_energy_list[3] 
+        delta_cbs = cbs_energy_list[3] - cbs_energy_list[2] 
         mp2 = cbs_energy_list[4] + cbs_energy_list[5] - cbs_energy_list[6]*0.00579
         final_energy = round((delta_ccsd + delta_cbs + mp2), 6)
-        cbs_energy_list.append(final_energy)    
+        cbs_energy_list[7] = (final_energy)    
         print("文件{}cbs能量查找完毕\n".format(self.filename))
-        if cbs_energy_list == []:
-            print("未找到能量数据")
         return cbs_energy_list
 
     def str_to_digit(self, str_cont):
@@ -201,53 +199,51 @@ class FindInfo():
         return round((float(cont_list[0])*10**int(cont_list[1])),6)
 
     def get_cbs_energy(self):
-        """查找振动频率"""
-        cbs_energy_list = []
+        """查找CBS能量"""
+        cbs_energy_list = [0]*(len(self.rocbs_key)+1) 
         flag = 0
         with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
             file_lines = fileObj.readlines()
             for line in file_lines:
                 if self.cbs_key[0] in line and flag == 0: # MP4
                     energy = list(line.strip().split(" "))[-1]
-                    cbs_energy_list.append(self.str_to_digit(energy))
+                    cbs_energy_list[0] = (self.str_to_digit(energy))
                     flag = 1
                 if self.cbs_key[1] in line and flag == 1 and len(line) < 30: # CCSD
                     energy = list(line.strip().split("= "))[-1]
-                    cbs_energy_list.append(self.str_to_digit(energy))      
+                    cbs_energy_list[1] = (self.str_to_digit(energy))      
                 if "Normal termination" in line and flag != 3 and flag != 4:
                     flag = 2             
                 if self.cbs_key[2] in line and flag == 2: # MP2
                     energy = list(line.strip().split(" "))[-1]
-                    cbs_energy_list.append(self.str_to_digit(energy))
+                    cbs_energy_list[2] = (self.str_to_digit(energy))
                     flag = 3   
                 if self.cbs_key[3] in line and flag == 3: # MP4
                     energy = list(line.strip().split(" "))[-1]
-                    cbs_energy_list.append(self.str_to_digit(energy))
+                    cbs_energy_list[3] = (self.str_to_digit(energy))
                 if "Normal termination" in line and flag != 2:
                     flag = 4   
                 if self.cbs_key[4] in line and flag == 4: # hf
                     energy = list(line.strip().split(" "))[6]
-                    cbs_energy_list.append(float(energy))
+                    cbs_energy_list[4] = (float(energy))
                     flag = 5    
                 if self.cbs_key[6] in line and flag == 5: # INT
                     energy = list(line.strip().split(" "))
                     e2_cbs = float(energy[6])
                     cbs_int = float(energy[14])
-                    cbs_energy_list.append(e2_cbs + cbs_int)
+                    cbs_energy_list[5] = (e2_cbs + cbs_int)
                     flag = 6                    
                 if self.cbs_key[5] in line and flag == 6: # OIII
                     energy = list(line.strip().split(" "))[-1]
-                    cbs_energy_list.append(float(energy))
+                    cbs_energy_list[6] = (float(energy))
                     break
 
         delta_ccsd = cbs_energy_list[1] - cbs_energy_list[0] 
-        delta_cbs = cbs_energy_list[2] - cbs_energy_list[3] 
+        delta_cbs = cbs_energy_list[3] - cbs_energy_list[2] 
         mp2 = cbs_energy_list[4] + cbs_energy_list[5] - cbs_energy_list[6]*0.00579
         final_energy = round((delta_ccsd + delta_cbs + mp2), 6)
-        cbs_energy_list.append(final_energy)    
+        cbs_energy_list[7] = (final_energy)    
         print("文件{}cbs能量查找完毕\n".format(self.filename))
-        if cbs_energy_list == []:
-            print("未找到能量数据")
         return cbs_energy_list
 
     def check_OK(self):

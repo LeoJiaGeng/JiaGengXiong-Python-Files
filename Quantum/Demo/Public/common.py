@@ -1,4 +1,4 @@
-__all__ = ["check_or_none","check_list_all_int", "check_list_all_digit"]
+__all__ = ["check_or_none","check_list_all_int", "check_list_all_digit", "check_list_all_zero"]
 
 def check_or_none(*args):
     """Check if the given arguments are not None"""
@@ -18,6 +18,15 @@ def check_list_all_digit(check_list):
             return False
         return True
 
+def check_list_all_zero(check_list):
+    for num in check_list:
+        if str(int(num)) != "0":
+            return False
+        return True
+
+
 if __name__ == "__main__":
     a = [1, 2, 3]
     print(check_list_all_digit(a))
+    a = [0.0, "0", 0.00]
+    print(check_list_all_zero(a))
