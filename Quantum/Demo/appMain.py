@@ -130,7 +130,7 @@ class QmyApp(QmyWidget):
             self.save_content_show("Saving frequency... ...")
             folder_name = self.ui.edit_folder.text()
             self.quant = Quantum("log",folder_name)
-            write_file_name = self.ui.edit_save_filename.text() + ".xls"
+            write_file_name = self.ui.edit_save_filename.text() + ".docx"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.freq_list = self.quant.save_freq(write_file_path)
             self.save_content_show("Save OK!")
@@ -146,7 +146,7 @@ class QmyApp(QmyWidget):
             self.save_content_show("Saving coordinates... ...")
             folder_name = self.ui.edit_folder.text()
             self.quant = Quantum("log",folder_name)
-            write_file_name = self.ui.edit_save_filename.text() + ".xls"
+            write_file_name = self.ui.edit_save_filename.text() + ".docx"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.quant.save_cor(write_file_path)
             self.save_content_show("Save OK!")

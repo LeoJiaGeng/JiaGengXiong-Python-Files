@@ -113,7 +113,7 @@ class FindInfo():
                 if self.freq_key[0] in line and self.freq_key[1] not in line:
                     line = line.strip()
                     line = line.split(" ")
-                    tran_list = [item for item in line if len(item.split(".")) == 2]
+                    tran_list = self.str_list_to_2float([item for item in line if len(item.split(".")) == 2])
                     if (float(tran_list[0]) < 0.0):
                         tran_list[0] = str(math.fabs(float(tran_list[0]))) + "i"
                     freq_list.extend(tran_list)
@@ -195,8 +195,16 @@ class FindInfo():
         return cbs_energy_list
 
     def str_to_digit(self, str_cont):
+        """Converts a string with letter D+- to a digit"""
         cont_list = list(str_cont.strip().split("D+"))
         return round((float(cont_list[0])*10**int(cont_list[1])),6)
+
+    def str_list_to_2float(self, str_list):
+        """Converts a string list to a digit"""
+        ret_list = []
+        for num in str_list:
+            ret_list.append(str(round(float(num),2)))
+        return ret_list
 
     def get_cbs_energy(self):
         """查找CBS能量"""

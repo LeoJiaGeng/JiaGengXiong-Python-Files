@@ -4,6 +4,7 @@
 
 from Public.Files import ReFilenames
 from Public.Excel import Excels
+from Public.Word import WordDriver
 from Public.decoration import Decorator
 from Public.FindData import FindInfo
 from Public.common import *
@@ -29,7 +30,8 @@ class Quantum(ReFilenames):
             tranList = [name] + self.save_content(full_name, save_type)   
             full_data.append(tranList)
         # 开始写入数据
-        root_write = Excels()
+        root_write_xls = Excels()
+        root_write_docx = WordDriver()
         # 在此处修改，增加判断，乱得很，后续修改
         if head_data[0][0] == "文件名(Hartree)":
             gibbs_list = []
@@ -42,8 +44,16 @@ class Quantum(ReFilenames):
                 append_data = round((gibbs_list[index] - self.standard_data)*627.5095,2)
                 full_data[index + 1].append(append_data)
 
-        root_write.write_excel_lines(full_data, filename = new_filename)
+        if head_data[0][0] == "文件名(cm-1)":
+            root_write_docx.write_table(full_data, filename = new_filename)
+            return full_data[1:]
+        if head_data[0][0] == "文件名(xyz)":
+            root_write_docx.write_content(full_data, filename = new_filename)
+            return full_data[1:]
+        
+        root_write_xls.write_excel_lines(full_data, filename = new_filename)
         return full_data[1:]
+
 
     def save_content(self, name, type):
         """"传入不同的文件名，返回不同的序列"""
@@ -64,7 +74,7 @@ class Quantum(ReFilenames):
             return False
 
     @Decorator.exe_time("读取文件频率")
-    def save_freq(self, filename = "整理好的量化频率文件.xls"):
+    def save_freq(self, filename = "整理好的量化频率文件.docx"):
         full_data = [[ "文件名(cm-1)","频率"]]
         return self.save_frame(full_data, filename, self.FREQ)
 
@@ -74,8 +84,8 @@ class Quantum(ReFilenames):
         return self.save_frame(full_data, filename, self.ENERGY)        
 
     @Decorator.exe_time("读取文件坐标")
-    def save_cor(self, filename = "整理好的量化坐标文件.xls"):
-        full_data = [["文件名(xyz)"]]
+    def save_cor(self, filename = "整理好的量化坐标文件.docx"):
+        full_data = [["文件名(xyz)", "具体坐标"]]
         return self.save_frame(full_data, filename, self.COORD)  
 
     @Decorator.exe_time("读取文件cbs能量")
