@@ -5,7 +5,7 @@ Created on Sun Apr  3 21:53:27 2022
 @author: jxiong@whu.edu.cn
 """
 
-import sys, os
+import sys, os, platform
 from PyQt5.QtWidgets import QApplication, QTableWidgetItem
 from PyQt5.QtCore import pyqtSlot, QCoreApplication, Qt, QThread, pyqtSignal
 from enum import Enum  ##枚举类型
@@ -24,6 +24,7 @@ class CellType(Enum):    ##各单元格的类型
    ct_Gibbs=1004
    ct_Energy=1005
    ct_delta_G=1006
+   ct_delta_E=1007
 
 class FieldColNum(Enum):   ##各字段在表格中的列号
     col_name=0
@@ -33,10 +34,12 @@ class FieldColNum(Enum):   ##各字段在表格中的列号
     col_Gibbs=4
     col_Energy=5
     col_delta_G=6
+    col_delta_E=7
 
 class QmyApp(QmyWidget):
     def __init__(self): # initialize config file and class parameters
         super().__init__()
+        self.save_content_show(f"Python的版本为: {platform.python_version()}")
         self.config_init()
         self.params_init()
 
@@ -47,7 +50,8 @@ class QmyApp(QmyWidget):
 
         self.ui.edit_folder.setText(self.config.get_config("save", "save_folder")["data"])
         self.ui.edit_save_filename.setText(self.config.get_config("save", "save_file_name")["data"])
-        self.ui.edit_standard.setText(self.config.get_config("save", "standard_data")["data"])
+        self.ui.edit_standard_G.setText(self.config.get_config("save", "standard_Gdata")["data"])
+        self.ui.edit_standard_E.setText(self.config.get_config("save", "standard_Edata")["data"])
         
         self.ui.edit_file.setText(self.config.get_config("search", "search_file_name")["data"])
         #未修改变量名
@@ -59,8 +63,9 @@ class QmyApp(QmyWidget):
         """Save the content of the line edit in saving window"""
         self.config.set_config("save", "save_folder", self.ui.edit_folder.text())  
         self.config.set_config("save", "save_file_name", self.ui.edit_save_filename.text())
-        self.config.set_config("save", "standard_data", self.ui.edit_standard.text())  
-
+        self.config.set_config("save", "standard_Gdata", self.ui.edit_standard_G.text())  
+        self.config.set_config("save", "standard_Edata", self.ui.edit_standard_E.text()) 
+        
     def save_search_config(self): # store configuration in search interface
         """Save the contents of the line edit in searching window"""
         self.config.set_config("search", "search_file_name", self.ui.edit_file.text())
@@ -97,7 +102,7 @@ class QmyApp(QmyWidget):
         try:
             self.save_content_show("Saving energy... ...")
             folder_name = self.ui.edit_folder.text()
-            self.quant = Quantum("log",folder_name, self.ui.edit_standard.text())
+            self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text())
             write_file_name = self.ui.edit_save_filename.text() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.energy_list = self.quant.save_energy(write_file_path)
@@ -113,7 +118,7 @@ class QmyApp(QmyWidget):
         try:
             self.save_content_show("Saving cbs energy... ...")
             folder_name = self.ui.edit_folder.text()
-            self.quant = Quantum("log",folder_name, self.ui.edit_standard.text())
+            self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text())
             write_file_name = self.ui.edit_save_filename.text() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.energy_list = self.quant.save_cbs_energy(write_file_path)
@@ -141,7 +146,7 @@ class QmyApp(QmyWidget):
             self.save_content_show("Save ERR!")
 
     @pyqtSlot()
-    def on_btn_save_coord_clicked(self):
+    def on_btn_save_coord_clicked(self): # save coordinate button and configuration
         try:
             self.save_content_show("Saving coordinates... ...")
             folder_name = self.ui.edit_folder.text()
@@ -176,17 +181,18 @@ class QmyApp(QmyWidget):
                 Gibbs = row_list[FieldColNum.col_Gibbs.value]
                 Energy = row_list[FieldColNum.col_Energy.value]
                 delta_G = row_list[FieldColNum.col_delta_G.value]
-                self.__createItemsARow(row_num,name,zpe,cor_G,hf,Gibbs,Energy,delta_G)
+                delta_E = row_list[FieldColNum.col_delta_E.value]
+                self.__createItemsARow(row_num,name,zpe,cor_G,hf,Gibbs,Energy,delta_G,delta_E)
                 row_num += 1
         else:
             for row_list in self.freq_list:
                 self.ui.tableInfo.insertRow(row_num)
                 name = row_list[FieldColNum.col_name.value]
                 freq = row_list[FieldColNum.col_zpe.value]
-                self.__createItemsARow(row_num,name,freq,0,0,0,0,0)
+                self.__createItemsARow(row_num,name,freq,0,0,0,0,0,0)
                 row_num += 1
 
-    def __createItemsARow(self,rowNo,name,zpe,cor_G,hf,Gibbs,Energy,delta_G): ## create items in a row
+    def __createItemsARow(self,rowNo,name,zpe,cor_G,hf,Gibbs,Energy,delta_G,delta_E): ## create items in a row
         str_content=str(name)
         item=QTableWidgetItem(str_content,CellType.ct_name.value)
         item.setTextAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
@@ -221,7 +227,12 @@ class QmyApp(QmyWidget):
         item=QTableWidgetItem(str_content,CellType.ct_delta_G.value)
         item.setTextAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         self.ui.tableInfo.setItem(rowNo,FieldColNum.col_delta_G.value,item)
-    
+
+        str_content=str(delta_E)
+        item=QTableWidgetItem(str_content,CellType.ct_delta_E.value)
+        item.setTextAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        self.ui.tableInfo.setItem(rowNo,FieldColNum.col_delta_E.value,item)
+
     @pyqtSlot(bool)
     def on_btn_auto_adapt_clicked(self, checked):
         self.ui.tableInfo.resizeRowsToContents() # resize rows
@@ -279,7 +290,7 @@ class QmyApp(QmyWidget):
         self.save_transfer_config()
         # 开始转换
 
-    def show_trans_origin_content(self): 
+    def show_trans_origin_content(self): # show origin content
         folder = self.ui.edit_trans_folder.text()
         self.origin_name_list = [name for name in os.listdir(folder) if os.path.isfile(os.path.join(folder,name))] 
         for name in self.origin_name_list:
@@ -319,7 +330,7 @@ class QmyApp(QmyWidget):
     def safety_backup(self): # refresh next time
         pass
 
-class QuaThread(QThread):
+class QuaThread(QThread): # create thread
     sinOut = pyqtSignal(str)  
 
     def __init__(self):

@@ -14,12 +14,13 @@ class Quantum(ReFilenames):
     FREQ = 1
     COORD = 2
     CBS_ENERGY = 3
-    def __init__(self, type, file_name, standard_data=0.0):
+    def __init__(self, type, file_name, standard_data1=0.0, standard_data2=0.0):
         super().__init__(type)
         self.file_name = file_name
         self.files_names = self.get_all_files(file_name)
         self.files_only_names = self.get_all_files(file_name, only_name = True, without_suffix = True)
-        self.standard_data = float(standard_data) 
+        self.standard_data1 = float(standard_data1) 
+        self.standard_data2 = float(standard_data2)
 
     def save_frame(self, head_data, new_filename, save_type):
         # 储存框架！！！
@@ -35,14 +36,19 @@ class Quantum(ReFilenames):
         # 在此处修改，增加判断，乱得很，后续修改
         if head_data[0][0] == "文件名(Hartree)":
             gibbs_list = []
+            energy_list = []
 
-            for gibbs_energy in full_data:
-                gibbs_list.append(gibbs_energy[4])
+            for energy in full_data:
+                gibbs_list.append(energy[4])
+                energy_list.append(energy[5])
             gibbs_list = gibbs_list[1:]
+            energy_list = energy_list[1:]
 
             for index in range(len(gibbs_list)):
-                append_data = round((gibbs_list[index] - self.standard_data)*627.5095,2)
-                full_data[index + 1].append(append_data)
+                append_data1 = round((gibbs_list[index] - self.standard_data1)*627.5095,2)
+                append_data2 = round((energy_list[index] - self.standard_data2)*627.5095,2)
+                full_data[index + 1].append(append_data1)
+                full_data[index + 1].append(append_data2)
 
         if head_data[0][0] == "文件名(cm-1)":
             root_write_docx.write_table(full_data, filename = new_filename)
@@ -80,7 +86,7 @@ class Quantum(ReFilenames):
 
     @Decorator.exe_time("读取文件能量")
     def save_energy(self, filename = "整理好的量化能量文件.xls"):
-        full_data = [["文件名(Hartree)","Cor-Zero","Cor-Gibbs","HF","Gibbs","E", "Rel_Gibbs"]]
+        full_data = [["文件名(Hartree)","Cor_Zero","Cor_Gibbs","HF","Gibbs","E","Rel_Gibbs","Rel_E"]]
         return self.save_frame(full_data, filename, self.ENERGY)        
 
     @Decorator.exe_time("读取文件坐标")
@@ -90,7 +96,7 @@ class Quantum(ReFilenames):
 
     @Decorator.exe_time("读取文件cbs能量")
     def save_cbs_energy(self, filename = "整理好的量化cbs能量文件.xls"):
-        full_data = [["文件名()","MP4","CCSD(T)","MP2","MP4","HF","Int","OIii","E"]]
+        full_data = [["文件名()","MP4","CCSD(T)","MP2","MP4","HF","Int","OIii","T1","E"]]
         return self.save_frame(full_data, filename, self.CBS_ENERGY)  
 
     @Decorator.exe_time("查找虚频")

@@ -37,6 +37,7 @@ class FindInfo():
                "SCF Done:  E(ROHF)",
                "CBS-Int",
                "OIii",
+               "T1 Diagnostic"
                ]
     
     cbs_key = ["UMP4(SDQ)",
@@ -46,6 +47,7 @@ class FindInfo():
                "SCF Done:  E(RHF)",
                "CBS-Int",
                "OIii",
+               "T1 Diagnostic"
                ]
     
     def __init__(self, filename):
@@ -99,10 +101,11 @@ class FindInfo():
         energy_check_count += 1
         print("文件{}能量查找完毕\n".format(self.filename))
         # 进行文件检查
-        if self.energy_check(energy_list, energy_check_count):
-            return energy_list
-        else:
-            return [0] * len(self.energy_key_word)
+        # if self.energy_check(energy_list, energy_check_count):
+        #     return energy_list
+        # else:
+        #     return [0] * len(self.energy_key_word)
+        return energy_list
 
     def get_freq(self):
         """查找振动频率"""
@@ -147,8 +150,8 @@ class FindInfo():
         return coordinates
 
     def get_rocbs_energy(self):
-        """查找振动频率"""
-        cbs_energy_list = [0]*(len(self.rocbs_key)+1) 
+        """查找DL-ROCBS-Q的能量"""
+        cbs_energy_list = [0]*(len(self.rocbs_key)+1) # 加上总计值 
         flag = 0
         with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
             file_lines = fileObj.readlines()
@@ -185,12 +188,16 @@ class FindInfo():
                     energy = list(line.strip().split(" "))[-1]
                     cbs_energy_list[6] = (float(energy))
                     break
+                if self.cbs_key[7] in line: # T1 value
+                    energy = list(line.strip().split(" "))[-1]
+                    cbs_energy_list[7] = (float(energy))
 
         delta_ccsd = cbs_energy_list[1] - cbs_energy_list[0] 
         delta_cbs = cbs_energy_list[3] - cbs_energy_list[2] 
         mp2 = cbs_energy_list[4] + cbs_energy_list[5] - cbs_energy_list[6]*0.00579
         final_energy = round((delta_ccsd + delta_cbs + mp2), 6)
-        cbs_energy_list[7] = (final_energy)    
+        cbs_energy_list[8] = (final_energy)  
+
         print("文件{}cbs能量查找完毕\n".format(self.filename))
         return cbs_energy_list
 
@@ -207,7 +214,7 @@ class FindInfo():
         return ret_list
 
     def get_cbs_energy(self):
-        """查找CBS能量"""
+        """查找CBS-QB3能量"""
         cbs_energy_list = [0]*(len(self.rocbs_key)+1) 
         flag = 0
         with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
@@ -245,12 +252,15 @@ class FindInfo():
                     energy = list(line.strip().split(" "))[-1]
                     cbs_energy_list[6] = (float(energy))
                     break
+                if self.cbs_key[7] in line: # T1 value
+                    energy = list(line.strip().split(" "))[-1]
+                    cbs_energy_list[7] = (float(energy))
 
         delta_ccsd = cbs_energy_list[1] - cbs_energy_list[0] 
         delta_cbs = cbs_energy_list[3] - cbs_energy_list[2] 
         mp2 = cbs_energy_list[4] + cbs_energy_list[5] - cbs_energy_list[6]*0.00579
         final_energy = round((delta_ccsd + delta_cbs + mp2), 6)
-        cbs_energy_list[7] = (final_energy)    
+        cbs_energy_list[8] = (final_energy)    
         print("文件{}cbs能量查找完毕\n".format(self.filename))
         return cbs_energy_list
 
@@ -320,11 +330,9 @@ class FindInfo():
                 
 if __name__ == "__main__":
     energy_dict_test = {}
-    A= FindInfo(r"E:\Organized Files\template\CBS-test\reappear\C4F7N-TS1-g09-cbs-1.log")
-    try:
-        print(A.get_cbs_energy())
-    except:
-        print(A.get_rocbs_energy())
+    A= FindInfo(r"E:\Python_Files\codehub\JiaGengXiong-Python-Files2.21\2TFA-scrf-cbs_new.log")
+    print(A.get_cbs_energy())
+    print(A.get_rocbs_energy())
         
 
 
