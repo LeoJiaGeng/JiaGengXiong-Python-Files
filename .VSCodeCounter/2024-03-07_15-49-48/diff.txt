@@ -1,0 +1,98 @@
+Date : 2024-03-07 15:49:48
+Directory : e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum
+Total : 44 files,  -25689 codes, -124 comments, -395 blanks, all -26208 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| Ini              |          2 |        -14 |          0 |         -6 |        -20 |
+| Markdown         |          3 |        -32 |          0 |        -22 |        -54 |
+| YAML             |          1 |        -34 |        -37 |        -14 |        -85 |
+| pip requirements |          1 |        -35 |          0 |         -2 |        -37 |
+| Batch            |          4 |       -117 |        -16 |        -39 |       -172 |
+| XML              |          6 |       -757 |          0 |         -5 |       -762 |
+| Python           |         27 |    -24,700 |        -71 |       -307 |    -25,078 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                               | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                  |         44 |    -25,689 |       -124 |       -395 |    -26,208 |
+| ..                                                                                                                 |         44 |    -25,689 |       -124 |       -395 |    -26,208 |
+| .. (Files)                                                                                                         |          3 |        -63 |          0 |        -18 |        -81 |
+| ..\.github                                                                                                         |          1 |        -34 |        -37 |        -14 |        -85 |
+| ..\.github\workflows                                                                                               |          1 |        -34 |        -37 |        -14 |        -85 |
+| ..\Excel                                                                                                           |         20 |    -12,845 |        -48 |       -184 |    -13,077 |
+| ..\Excel (Files)                                                                                                   |          1 |         -9 |          0 |         -5 |        -14 |
+| ..\Excel\Demo                                                                                                      |         17 |    -12,776 |        -40 |       -159 |    -12,975 |
+| ..\Excel\Demo (Files)                                                                                              |          8 |     -6,574 |        -25 |        -79 |     -6,678 |
+| ..\Excel\Demo\Public                                                                                               |          6 |       -268 |         -9 |        -68 |       -345 |
+| ..\Excel\Demo\Resource                                                                                             |          3 |     -5,934 |         -6 |        -12 |     -5,952 |
+| ..\Excel\Demo\Resource (Files)                                                                                     |          2 |     -5,929 |         -6 |        -12 |     -5,947 |
+| ..\Excel\Demo\Resource\pictures                                                                                    |          1 |         -5 |          0 |          0 |         -5 |
+| ..\Excel\Demo\Resource\pictures\icos                                                                               |          1 |         -5 |          0 |          0 |         -5 |
+| ..\Excel\Tools                                                                                                     |          2 |        -60 |         -8 |        -20 |        -88 |
+| ..\Search                                                                                                          |         20 |    -12,747 |        -39 |       -179 |    -12,965 |
+| ..\Search (Files)                                                                                                  |          1 |         -6 |          0 |         -5 |        -11 |
+| ..\Search\Demo                                                                                                     |         17 |    -12,684 |        -31 |       -155 |    -12,870 |
+| ..\Search\Demo (Files)                                                                                             |          8 |     -6,482 |        -16 |        -75 |     -6,573 |
+| ..\Search\Demo\Public                                                                                              |          6 |       -268 |         -9 |        -68 |       -345 |
+| ..\Search\Demo\Resource                                                                                            |          3 |     -5,934 |         -6 |        -12 |     -5,952 |
+| ..\Search\Demo\Resource (Files)                                                                                    |          2 |     -5,929 |         -6 |        -12 |     -5,947 |
+| ..\Search\Demo\Resource\pictures                                                                                   |          1 |         -5 |          0 |          0 |         -5 |
+| ..\Search\Demo\Resource\pictures\icos                                                                              |          1 |         -5 |          0 |          0 |         -5 |
+| ..\Search\Tools                                                                                                    |          2 |        -57 |         -8 |        -19 |        -84 |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                                           | language         | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\.github\workflows\codeql.yml                                 | YAML             |        -34 |        -37 |        -14 |        -85 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Public\__init__.py                                | Python           |          0 |          0 |         -1 |         -1 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Public\common.py                                  | Python           |        -19 |          0 |         -4 |        -23 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Public\config.py                                  | Python           |        -63 |          0 |        -19 |        -82 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Public\decoration.py                              | Python           |        -53 |          0 |         -9 |        -62 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Public\excel.py                                   | Python           |        -73 |         -2 |        -18 |        -93 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Public\files.py                                   | Python           |        -60 |         -7 |        -17 |        -84 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Resource\ico.qrc                                  | XML              |        -62 |          0 |         -1 |        -63 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Resource\ico_rc.py                                | Python           |     -5,867 |         -6 |        -11 |     -5,884 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\Resource\pictures\icos\DM_20230815124713_071.svg  | XML              |         -5 |          0 |          0 |         -5 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\app.py                                            | Python           |        -10 |          0 |         -4 |        -14 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\appMain.py                                        | Python           |        -87 |         -1 |        -23 |       -111 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\config_adapt.py                                   | Python           |        -14 |          0 |         -7 |        -21 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\ico_rc.py                                         | Python           |     -5,866 |         -6 |        -11 |     -5,883 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\sort_file.py                                      | Python           |        -41 |        -10 |        -18 |        -69 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\ui_Excel.py                                       | Python           |       -181 |         -7 |         -8 |       -196 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\ui_Start.py                                       | Python           |        -24 |         -1 |         -6 |        -31 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Demo\ui_excel.ui                                       | XML              |       -351 |          0 |         -2 |       -353 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\README.md                                              | Markdown         |         -9 |          0 |         -5 |        -14 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Tools\exe.bat                                          | Batch            |        -38 |         -6 |        -11 |        -55 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Excel\Tools\ui.bat                                           | Batch            |        -22 |         -2 |         -9 |        -33 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\README.md                                                    | Markdown         |        -17 |          0 |        -12 |        -29 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Public\__init__.py                               | Python           |          0 |          0 |         -1 |         -1 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Public\common.py                                 | Python           |        -19 |          0 |         -4 |        -23 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Public\config.py                                 | Python           |        -63 |          0 |        -19 |        -82 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Public\decoration.py                             | Python           |        -53 |          0 |         -9 |        -62 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Public\excel.py                                  | Python           |        -73 |         -2 |        -18 |        -93 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Public\files.py                                  | Python           |        -60 |         -7 |        -17 |        -84 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Resource\ico.qrc                                 | XML              |        -62 |          0 |         -1 |        -63 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Resource\ico_rc.py                               | Python           |     -5,867 |         -6 |        -11 |     -5,884 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Resource\pictures\icos\DM_20230815124713_071.svg | XML              |         -5 |          0 |          0 |         -5 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\Search.ui                                        | XML              |       -272 |          0 |         -1 |       -273 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\app.py                                           | Python           |        -10 |          0 |         -4 |        -14 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\appMain.py                                       | Python           |       -115 |         -2 |        -27 |       -144 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\config.ini                                       | Ini              |         -3 |          0 |         -2 |         -5 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\config_adapt.py                                  | Python           |        -15 |          0 |         -6 |        -21 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\ico_rc.py                                        | Python           |     -5,867 |         -6 |        -11 |     -5,884 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\ui_Search.py                                     | Python           |       -144 |         -7 |         -8 |       -159 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Demo\ui_Start.py                                      | Python           |        -56 |         -1 |        -16 |        -73 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\README.md                                             | Markdown         |         -6 |          0 |         -5 |        -11 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Tools\exe.bat                                         | Batch            |        -35 |         -6 |        -10 |        -51 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Search\Tools\ui.bat                                          | Batch            |        -22 |         -2 |         -9 |        -33 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\quantum_config.ini                                           | Ini              |        -11 |          0 |         -4 |        -15 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\requirements.txt                                             | pip requirements |        -35 |          0 |         -2 |        -37 |
+| Total                                                                                                              |                  |    -25,689 |       -124 |       -395 |    -26,208 |
++--------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+

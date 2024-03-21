@@ -136,15 +136,20 @@ class FindInfo():
         # 遇到冗余内坐标开始记录
         with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
             file_lines = fileObj.readlines()
-            start = 0
+            start_flag = 0
+            count = 0
             for line in file_lines:
-                if self.coordinates_key[1] in line:
-                    break            
-                if start == 1:
-                    line = line.strip()
-                    coordinates.append(line)
-                if self.coordinates_key[0] in line:
-                    start = 1
+                # 防止出现从check文件导入，出现同样关键词干扰，因此大于300
+                if count > 300:
+                    # 必须要start_flag=1之后，代表写完才可以退出，不然则遍历整个文件结束
+                    if self.coordinates_key[1] in line and start_flag == 1:
+                        break            
+                    if start_flag == 1: 
+                        line = line.strip()
+                        coordinates.append(line)
+                    if self.coordinates_key[0] in line:
+                        start_flag = 1
+                count += 1
 
         print("文件{}坐标查找完毕\n".format(self.filename))
         return coordinates
@@ -330,9 +335,9 @@ class FindInfo():
                 
 if __name__ == "__main__":
     energy_dict_test = {}
-    A= FindInfo(r"E:\Python_Files\codehub\JiaGengXiong-Python-Files2.21\2TFA-scrf-cbs_new.log")
-    print(A.get_cbs_energy())
-    print(A.get_rocbs_energy())
+    A= FindInfo(r"C:\Users\DELL\Desktop\C4xianan\TFAA-1py-E\extract data\e-IM2.log")
+    print(A.get_coord())
+    # print(A.get_rocbs_energy())
         
 
 

@@ -1,0 +1,63 @@
+Date : 2024-03-07 15:49:48
+Directory : e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum
+Total : 26 files,  14802 codes, 80 comments, 286 blanks, all 15168 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Python   |         19 |     13,491 |         74 |        261 |     13,826 |
+| XML      |          3 |      1,248 |          0 |          2 |      1,250 |
+| Batch    |          2 |         48 |          6 |         14 |         68 |
+| Ini      |          1 |          9 |          0 |          4 |         13 |
+| Markdown |          1 |          6 |          0 |          5 |         11 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                   |         26 |     14,802 |         80 |        286 |     15,168 |
+| . (Files)                                                                                                           |          1 |          6 |          0 |          5 |         11 |
+| Demo                                                                                                                |         23 |     14,748 |         74 |        267 |     15,089 |
+| Demo (Files)                                                                                                        |          8 |      8,120 |         29 |        121 |      8,270 |
+| Demo\Public                                                                                                         |         12 |        694 |         39 |        134 |        867 |
+| Demo\Resource                                                                                                       |          3 |      5,934 |          6 |         12 |      5,952 |
+| Demo\Resource (Files)                                                                                               |          2 |      5,929 |          6 |         12 |      5,947 |
+| Demo\Resource\pictures                                                                                              |          1 |          5 |          0 |          0 |          5 |
+| Demo\Resource\pictures\icos                                                                                         |          1 |          5 |          0 |          0 |          5 |
+| Tools                                                                                                               |          2 |         48 |          6 |         14 |         68 |
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                            | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\Excel.py                                  | Python   |         73 |          2 |         18 |         93 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\Files.py                                  | Python   |         63 |          7 |         17 |         87 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\FindData.py                               | Python   |        282 |         24 |         33 |        339 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\Rename.py                                 | Python   |         20 |          6 |          5 |         31 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\Word.py                                   | Python   |         32 |          0 |          6 |         38 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\__init__.py                               | Python   |          1 |          0 |          0 |          1 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\common.py                                 | Python   |         26 |          0 |          6 |         32 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\config.ini                                | Ini      |          9 |          0 |          4 |         13 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\config.py                                 | Python   |         79 |          0 |         20 |         99 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\config_adapt.py                           | Python   |         22 |          0 |          6 |         28 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\decoration.py                             | Python   |         53 |          0 |          9 |         62 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Public\offical example.py                        | Python   |         34 |          0 |         10 |         44 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Resource\ico.qrc                                 | XML      |         62 |          0 |          1 |         63 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Resource\ico_rc.py                               | Python   |      5,867 |          6 |         11 |      5,884 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\Resource\pictures\icos\DM_20230815124713_071.svg | XML      |          5 |          0 |          0 |          5 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\app.py                                           | Python   |         10 |          0 |          3 |         13 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\appMain.py                                       | Python   |        285 |          8 |         53 |        346 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\app_test.py                                      | Python   |         10 |          0 |          4 |         14 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\ico_rc.py                                        | Python   |      5,866 |          6 |         11 |      5,883 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\quantum.py                                       | Python   |         94 |          7 |         18 |        119 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\ui_Quatum.py                                     | Python   |        586 |          7 |          8 |        601 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\ui_Start.py                                      | Python   |         88 |          1 |         23 |        112 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Demo\ui_quatum.ui                                     | XML      |      1,181 |          0 |          1 |      1,182 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\README.md                                             | Markdown |          6 |          0 |          5 |         11 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Tools\exe.bat                                         | Batch    |         35 |          6 |          9 |         50 |
+| e:\Python_Files\codehub\JiaGengXiong-Python-Files_3.7\Quantum\Tools\ui_qua.bat                                      | Batch    |         13 |          0 |          5 |         18 |
+| Total                                                                                                               |          |     14,802 |         80 |        286 |     15,168 |
++---------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

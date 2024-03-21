@@ -1,4 +1,5 @@
 import time
+from functools import cache
 
 class Decorator(object):
     def __init__(self):
@@ -52,10 +53,42 @@ class Decorator(object):
                 return ret
             return wrapper        
         return exe_execute
+    
+    @staticmethod
+    def retry(times=3, timeout=0.1):
+        """ attempting many times with time gap after fail operation """
+        def recorder(func):
+            def wrapper(*args, **kwargs):
+                for i in range(times):
+                    try:
+                        ret = func(*args, **kwargs)
+                        break
+                    except Exception as e:
+                        print(f"after {i+1} time try, there is a err: {e}")
+                        time.sleep(timeout)
+                return ret
+            return wrapper
+        return recorder
 
-@Decorator.exe_time("测试")
+@Decorator.retry()
 def test_fun(x):
     time.sleep(x)
+    time.abc(1)
+    print("cehsiyici")
+
+@cache
+def test_function(a):
+    if not a:
+        time.sleep(2)
+    else:
+        time.sleep(3)
+    return a
+
 
 if __name__ == "__main__":
-    test_fun(1)
+    print(test_function(0.1)) 
+    print(test_function(0.1))
+    print(test_function(0.1))
+    print(test_function(0.2))
+    print(test_function.cache_info())
+    print(test_function.cache_clear())

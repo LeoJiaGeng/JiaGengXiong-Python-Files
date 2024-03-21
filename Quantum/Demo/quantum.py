@@ -17,28 +17,43 @@ class Quantum(ReFilenames):
     def __init__(self, type, file_name, standard_data1=0.0, standard_data2=0.0):
         super().__init__(type)
         self.file_name = file_name
+        self.full_data = []
         self.files_names = self.get_all_files(file_name)
         self.files_only_names = self.get_all_files(file_name, only_name = True, without_suffix = True)
         self.standard_data1 = float(standard_data1) 
         self.standard_data2 = float(standard_data2)
 
-    def save_frame(self, head_data, new_filename, save_type):
+    def read_file(self, head_data, save_type):
         # 储存框架！！！
-        full_data = head_data
+        self.full_data = head_data
 
         for full_name, name in zip(self.files_names, self.files_only_names):
             tranList = []
             tranList = [name] + self.save_content(full_name, save_type)   
-            full_data.append(tranList)
+            self.full_data.append(tranList)
+
+    def save_frame(self, head_data, new_filename, save_type):
+
+        self.read_file(head_data, save_type)
         # 开始写入数据
         root_write_xls = Excels()
         root_write_docx = WordDriver()
         # 在此处修改，增加判断，乱得很，后续修改
         if head_data[0][0] == "文件名(Hartree)":
+            temp_list = []
+            for energy in self.full_data[1:]:
+                cont_1 = "ZPE = " + str(energy[1])
+                cont_2 = "HF = " + str(energy[3])
+                temp_cont = [energy[0], cont_1, cont_2]
+                temp_list.append(temp_cont)
+            root_write_docx.write_table(temp_list, filename = new_filename)
+            return self.full_data[1:]
+
+
             gibbs_list = []
             energy_list = []
 
-            for energy in full_data:
+            for energy in self.full_data:
                 gibbs_list.append(energy[4])
                 energy_list.append(energy[5])
             gibbs_list = gibbs_list[1:]
@@ -47,19 +62,18 @@ class Quantum(ReFilenames):
             for index in range(len(gibbs_list)):
                 append_data1 = round((gibbs_list[index] - self.standard_data1)*627.5095,2)
                 append_data2 = round((energy_list[index] - self.standard_data2)*627.5095,2)
-                full_data[index + 1].append(append_data1)
-                full_data[index + 1].append(append_data2)
+                self.full_data[index + 1].append(append_data1)
+                self.full_data[index + 1].append(append_data2)
 
         if head_data[0][0] == "文件名(cm-1)":
-            root_write_docx.write_table(full_data, filename = new_filename)
-            return full_data[1:]
+            root_write_docx.write_table(self.full_data, filename = new_filename)
+            return self.full_data[1:]
         if head_data[0][0] == "文件名(xyz)":
-            root_write_docx.write_content(full_data, filename = new_filename)
-            return full_data[1:]
+            root_write_docx.write_table(self.full_data, filename = new_filename)
+            return self.full_data[1:]
         
-        root_write_xls.write_excel_lines(full_data, filename = new_filename)
-        return full_data[1:]
-
+        root_write_xls.write_excel_lines(self.full_data, filename = new_filename)
+        return self.full_data[1:]
 
     def save_content(self, name, type):
         """"传入不同的文件名，返回不同的序列"""
@@ -91,7 +105,7 @@ class Quantum(ReFilenames):
 
     @Decorator.exe_time("读取文件坐标")
     def save_cor(self, filename = "整理好的量化坐标文件.docx"):
-        full_data = [["文件名(xyz)", "具体坐标"]]
+        full_data = [["文件名(xyz)", "Coordinates (x, y, z in Å) "]]
         return self.save_frame(full_data, filename, self.COORD)  
 
     @Decorator.exe_time("读取文件cbs能量")
