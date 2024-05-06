@@ -83,7 +83,7 @@ class Quantum(ReFilenames):
         elif (type == self.FREQ):
             return FindInfo(name).get_freq() 
         elif (type == self.COORD):
-            return FindInfo(name).get_coord()
+            return FindInfo(name).get_coord()[:-1]
         elif (type == self.CBS_ENERGY):
             compare_list = FindInfo(name).get_rocbs_energy()
             if check_list_all_zero(compare_list):

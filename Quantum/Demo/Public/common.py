@@ -13,8 +13,10 @@ def check_list_all_int(check_list):
         return True
 
 def check_list_all_digit(check_list):
+    if len(check_list) == 1:
+        return False
     for num in check_list:
-        if not str(num).isdigit():
+        if not ((str(num).isdigit()) or (num[0]=='-' and num[1:].isdigit())):
             return False
         return True
 

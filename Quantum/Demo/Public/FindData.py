@@ -130,13 +130,14 @@ class FindInfo():
         return freq_list
 
     def get_coord(self):
-        """查找坐标"""
+        """查找坐标，最后一个元素是文件类别，电荷和自旋多重度"""
         coordinates = []
         # 遇到恢复词，不写入，直接终止循环
         # 遇到冗余内坐标开始记录
         with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
             file_lines = fileObj.readlines()
             start_flag = 0
+            type_flag = 0
             count = 0
             for line in file_lines:
                 # 防止出现从check文件导入，出现同样关键词干扰，因此大于300
@@ -149,8 +150,33 @@ class FindInfo():
                         coordinates.append(line)
                     if self.coordinates_key[0] in line:
                         start_flag = 1
+                # 记录文件类型
+                if "#" in line and type_flag == 0:
+                    if ("TS" in line) or ("ts" in line):
+                        type = "TS"
+                        type_flag = 1
+                    elif ("OPT" in line) or ("opt" in line):
+                        type = "OPT"
+                        type_flag = 1
+                    else:
+                        type = "Unknown"
+                    if ("ModRedundant" in line) or ("modredundant" in line) or ("maxpoints" in line):
+                        type = "Unknown"
+                        type_flag = 1
+                # 记录文件电荷和自旋多重度，有的文件有bug，居然没对齐！！！
+                if "Multiplicity" in line:
+                    line_list = list(line.strip().split(" "))
+                    if len(line_list) == 6:
+                        charge = line_list[2]
+                        multiplicity = line_list[5]
+                    elif len(line_list) == 7:
+                        charge = line_list[3]
+                        multiplicity = line_list[6]
+                    else:
+                        charge = 0
+                        multiplicity = 1                        
                 count += 1
-
+            coordinates.append([type,charge,multiplicity])
         print("文件{}坐标查找完毕\n".format(self.filename))
         return coordinates
 

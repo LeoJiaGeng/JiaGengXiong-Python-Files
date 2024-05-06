@@ -48,14 +48,29 @@ class ReFilenames():
     def sort_file_names(self):
         self.file_list.sort()
 
+    def filename_and_fileabsroute(self, foldername):
+        '''获取文件夹内所有文件的名字和绝对路径'''
+        filename_list = self.get_all_files(foldername, True, True)
+        fileroute_list = self.get_all_files(foldername)
+        return zip(filename_list, fileroute_list)
+
 class SaveFile(object):
     def __init__(self):
         pass
 
-    def save(self, filename, dataList):
+    def save_n(self, filename, dataList):
         with open(filename, mode="+a", encoding="utf-8") as file_obj:
             for data in dataList:
-                file_obj.write(str(data) + "\n")
+                file_obj.write(str(data)+"\n")
+            file_obj.close()
+
+    def save(self, filename, dataList):
+        if os.path.exists(filename):
+            os.remove(filename)
+        with open(filename, mode="+a", encoding="utf-8") as file_obj:
+            for data in dataList:
+                file_obj.write(str(data))
+            file_obj.close()
 
 class OpenFile(object):
     def __init__(self):
