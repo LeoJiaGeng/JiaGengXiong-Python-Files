@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>930</width>
+    <width>867</width>
     <height>885</height>
    </rect>
   </property>
@@ -20,8 +20,11 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="save">
       <attribute name="icon">
@@ -771,9 +774,21 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,8,1">
             <item>
              <widget class="QLabel" name="label_5">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
               <property name="text">
                <string>待转换文件：</string>
               </property>
@@ -800,13 +815,13 @@
              </size>
             </property>
             <property name="autoFillBackground">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
             <property name="frameShape">
-             <enum>QFrame::Box</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
@@ -828,32 +843,75 @@
               <number>0</number>
              </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,2,2,2,2,1">
                <item>
-                <widget class="QRadioButton" name="radioButton">
+                <widget class="QLabel" name="label_11">
+                 <property name="minimumSize">
+                  <size>
+                   <width>60</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
                  <property name="text">
-                  <string>full-IRC</string>
+                  <string>请选择功能：</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton_2">
+                <widget class="QRadioButton" name="radbtn_chalevel">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
                  <property name="text">
-                  <string>r-IRC</string>
+                  <string>Change-Level(TS/OPT)</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton_6">
+                <widget class="QRadioButton" name="radbtn_fullirc">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
                  <property name="text">
-                  <string>freeze-ACT</string>
+                  <string>Full-IRC(TS)</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton_3">
+                <widget class="QRadioButton" name="radbtn_apartirc">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
                  <property name="text">
-                  <string>f-IRC</string>
+                  <string>Apart-IRC</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radbtn_frozopt">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Frozen-Opt</string>
                  </property>
                 </widget>
                </item>
@@ -885,9 +943,13 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="btn_creat_gauinput">
               <property name="text">
-               <string>生成</string>
+               <string>生成输入文件</string>
+              </property>
+              <property name="icon">
+               <iconset resource="Resource/ico.qrc">
+                <normaloff>:/ico/pictures/icos/DM_20230815124713_047.png</normaloff>:/ico/pictures/icos/DM_20230815124713_047.png</iconset>
               </property>
              </widget>
             </item>
@@ -905,9 +967,13 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="btn_trans_clear">
               <property name="text">
-               <string>没想好</string>
+               <string>清空列表</string>
+              </property>
+              <property name="icon">
+               <iconset resource="Resource/ico.qrc">
+                <normaloff>:/ico/pictures/icos/DM_20230815124713_061.png</normaloff>:/ico/pictures/icos/DM_20230815124713_061.png</iconset>
               </property>
              </widget>
             </item>
@@ -941,6 +1007,12 @@
              <widget class="QLabel" name="label_6">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
               </property>
               <property name="text">
                <string> 文件路径：</string>
@@ -978,6 +1050,12 @@
                 <width>0</width>
                 <height>23</height>
                </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
               </property>
               <property name="text">
                <string> 修改要求：</string>
@@ -1099,7 +1177,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_trans_clear">
+                  <widget class="QPushButton" name="btn_trans_return">
                    <property name="text">
                     <string>撤销</string>
                    </property>
