@@ -34,6 +34,9 @@ class QmyWidget(QWidget):
     def trans_origin_content_show(self, strCont):
         self.ui.plainTextEdit_trans_origin.appendPlainText(strCont)
 
+    def trans_origin_content_clear(self):
+        self.ui.plainTextEdit_trans_origin.clear()
+
     def trans_new_content_show(self, strCont):
         self.ui.plainTextEdit_trans_new.appendPlainText(strCont)
 

@@ -9,9 +9,11 @@ set SOFT_VERSION=v2.0.4.zip
 :: 设置文件夹
 set PROJECT_NAME=%~dp0..
 set PY_WORKPATH="%PROJECT_NAME%\Demo"
+set GAU_TEMPLATE="%PROJECT_NAME%\Demo\Template"
 set PY_VERSION="%PY_WORKPATH%\%MAIN_PY_NAME%"
 set RELEASE_PATHS="%PROJECT_NAME%\release"
 set RELEASE_VERSION_PATHS="%PROJECT_NAME%\release\dist"
+set RELEASE_VERSION_APP_PATHS="%PROJECT_NAME%\release\dist\app"
 
 :: 查看是否存在文件夹
 cd %PY_WORKPATH%
@@ -29,8 +31,13 @@ call pyinstaller.exe -Dw %PY_VERSION%
 if %ERRORLEVEL% == 1 (
     goto Failure1
 ) else (
-    echo exe file has been converted 
-    ::发行版本
+    echo exe file has been converted
+    :: 复制文件
+    cd %RELEASE_VERSION_APP_PATHS% 
+    mkdir "Template"
+    copy %GAU_TEMPLATE%\ Template\
+    echo template files have been copied
+    :: 发行版本
     cd %RELEASE_VERSION_PATHS%
     call rar.exe a %RELEASE_PATHS%\%SOFT_VERSION% "app"
 

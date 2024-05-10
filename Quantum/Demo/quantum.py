@@ -40,15 +40,15 @@ class Quantum(ReFilenames):
         root_write_docx = WordDriver()
         # 在此处修改，增加判断，乱得很，后续修改
         if head_data[0][0] == "文件名(Hartree)":
-            temp_list = []
-            for energy in self.full_data[1:]:
-                cont_1 = "ZPE = " + str(energy[1])
-                cont_2 = "HF = " + str(energy[3])
-                temp_cont = [energy[0], cont_1, cont_2]
-                temp_list.append(temp_cont)
-            root_write_docx.write_table(temp_list, filename = new_filename)
-            return self.full_data[1:]
-
+            # 放置在words中，这个后续更新一下吧！！！
+            # temp_list = []
+            # for energy in self.full_data[1:]:
+                # cont_1 = "ZPE = " + str(energy[1])
+                # cont_2 = "HF = " + str(energy[3])
+                # temp_cont = [energy[0], cont_1, cont_2]
+                # temp_list.append(temp_cont)
+            # root_write_docx.write_table(temp_list, filename = new_filename)
+            # return self.full_data[1:]
 
             gibbs_list = []
             energy_list = []

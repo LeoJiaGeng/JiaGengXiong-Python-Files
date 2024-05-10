@@ -24,7 +24,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="save">
       <attribute name="icon">
@@ -308,7 +308,7 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="1,0,2,0,1,0,0">
+              <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="1,0,1,0,1,0,1">
                <item>
                 <spacer name="horizontalSpacer_13">
                  <property name="orientation">
@@ -614,6 +614,11 @@
            <height>100</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QGroupBox{
+	color: rgb(0, 0, 255);
+}</string>
+         </property>
          <property name="title">
           <string>功能区</string>
          </property>
@@ -625,6 +630,12 @@
            <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,7,2">
             <item alignment="Qt::AlignHCenter">
              <widget class="QLabel" name="label">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
               <property name="text">
                <string>文件路径：</string>
               </property>
@@ -740,6 +751,11 @@
        </item>
        <item>
         <widget class="QGroupBox" name="show">
+         <property name="styleSheet">
+          <string notr="true">QGroupBox{
+	color: rgb(0, 170, 0);
+}</string>
+         </property>
          <property name="title">
           <string>显示区</string>
          </property>
@@ -752,7 +768,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="transfer">
       <attribute name="icon">
        <iconset resource="Resource/ico.qrc">
         <normaloff>:/ico/pictures/icos/DM_20230815124713_050.png</normaloff>:/ico/pictures/icos/DM_20230815124713_050.png</iconset>
@@ -763,18 +779,38 @@
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
         <widget class="QGroupBox" name="groupBox_3">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>150</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QGroupBox{
+	color: rgb(0, 0, 255);
+}</string>
+         </property>
          <property name="title">
           <string>输入文件</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
+         <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0,0">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,8,1">
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,7,2">
+            <property name="spacing">
+             <number>7</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QLabel" name="label_5">
               <property name="minimumSize">
@@ -795,12 +831,16 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit"/>
+             <widget class="QLineEdit" name="edit_update_folder"/>
             </item>
             <item>
              <widget class="QPushButton" name="btn_sel_file">
               <property name="text">
                <string>选择文件</string>
+              </property>
+              <property name="icon">
+               <iconset resource="Resource/ico.qrc">
+                <normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</iconset>
               </property>
              </widget>
             </item>
@@ -844,6 +884,9 @@
              </property>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,2,2,2,2,1">
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
                <item>
                 <widget class="QLabel" name="label_11">
                  <property name="minimumSize">
@@ -873,6 +916,9 @@
                  </property>
                  <property name="text">
                   <string>Change-Level(TS/OPT)</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -997,12 +1043,17 @@
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_4">
+         <property name="styleSheet">
+          <string notr="true">QGroupBox{
+	color: rgb(0, 0, 255);
+}</string>
+         </property>
          <property name="title">
           <string>批量转换</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_12">
+           <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,7,2">
             <item>
              <widget class="QLabel" name="label_6">
               <property name="enabled">
@@ -1039,7 +1090,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_16">
+           <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="1,7,2">
             <item>
              <widget class="QLabel" name="label_10">
               <property name="enabled">
@@ -1080,6 +1131,11 @@
           </item>
           <item>
            <widget class="QGroupBox" name="groupBox_9">
+            <property name="styleSheet">
+             <string notr="true">QGroupBox{
+	color: rgb(0, 170, 0);
+}</string>
+            </property>
             <property name="title">
              <string>文件显示</string>
             </property>
@@ -1177,7 +1233,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_trans_return">
+                  <widget class="QPushButton" name="btn_trans_retract">
                    <property name="text">
                     <string>撤销</string>
                    </property>
@@ -1242,6 +1298,95 @@
              </item>
             </layout>
            </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="icon">
+       <iconset resource="Resource/ico.qrc">
+        <normaloff>:/ico/pictures/icos/DM_20230815124713_004.png</normaloff>:/ico/pictures/icos/DM_20230815124713_004.png</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>运行</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_18">
+       <item>
+        <widget class="QGroupBox" name="groupBox_11">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 0, 0);</string>
+         </property>
+         <property name="title">
+          <string>外部运行</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_16">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,7,2">
+            <item>
+             <widget class="QLabel" name="label_12">
+              <property name="text">
+               <string>输入指令1：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineTest"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnTest">
+              <property name="text">
+               <string>运行</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="1,7,2">
+            <item>
+             <widget class="QLabel" name="label_13">
+              <property name="text">
+               <string>输入指令2：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineTest_2"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnTest_2">
+              <property name="text">
+               <string>运行</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_20" stretch="1,7,2">
+            <item>
+             <widget class="QLabel" name="label_14">
+              <property name="text">
+               <string>输入指令3：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineTest_3"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnTest_3">
+              <property name="text">
+               <string>运行</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="exe_plainTextEdit"/>
           </item>
          </layout>
         </widget>

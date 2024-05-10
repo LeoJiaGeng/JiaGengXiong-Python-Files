@@ -12,9 +12,10 @@ from enum import Enum  ##枚举类型
 
 from ui_Start import QmyWidget
 from quantum import Quantum
+from gausInput import GauInput
 
 from Public.config_adapt import Config_Adapt
-from Public.Rename import rename
+from Public.Rename import rename, back_folder, recover_folder
 
 class CellType(Enum):    ##各单元格的类型
    ct_name=1000
@@ -55,7 +56,7 @@ class QmyApp(QmyWidget):
         
         self.ui.edit_file.setText(self.config.get_config("search", "search_file_name")["data"])
         #未修改变量名
-        self.ui.lineEdit.setText(self.config.get_config("transfer", "trans_file_name")["data"])
+        self.ui.edit_update_folder.setText(self.config.get_config("transfer", "trans_update_folder")["data"])
         self.ui.edit_trans_folder.setText(self.config.get_config("transfer", "trans_folder_name")["data"])
         self.ui.edit_trans_ruler.setText(self.config.get_config("transfer", "trans_ruler")["data"])
 
@@ -74,6 +75,7 @@ class QmyApp(QmyWidget):
         """Save the contents of the line edit in searching window"""
         self.config.set_config("transfer", "trans_folder_name", self.ui.edit_trans_folder.text())
         self.config.set_config("transfer", "trans_ruler", self.ui.edit_trans_ruler.text())
+        self.config.set_config("transfer", "trans_update_folder", self.ui.edit_update_folder.text())
 
 ##  ========== the function of params ================== 
 
@@ -280,6 +282,34 @@ class QmyApp(QmyWidget):
         self.ui.search_plainTextEdit.clear()
 
 #========== the function of transferring window ==================
+
+    @pyqtSlot()
+    def on_btn_sel_file_clicked(self): # select a folder save configuration and list files name
+        selectedDir = self.open_folder()
+        if selectedDir != "":
+            self.ui.edit_update_folder.setText(selectedDir)
+            self.save_transfer_config()
+        # requirement: when give it up , keep old recoder 
+
+    @pyqtSlot()
+    def on_btn_creat_gauinput_clicked(self): # set gaussian input
+        folder = self.ui.edit_update_folder.text()
+        gausiput_obj = GauInput()
+        pre = ""
+        suf = ""
+        if (self.ui.radbtn_chalevel.isChecked()):
+            execType = "Unknow"
+            suf = "-new"
+        elif (self.ui.radbtn_fullirc.isChecked()):
+            execType = "IRC"
+            suf = "-irc"
+        elif (self.ui.radbtn_apartirc.isChecked()):
+            execType = "IRC-SPLIT"
+        elif (self.ui.radbtn_frozopt.isChecked()):
+            execType = "F-OPT"
+
+        gausiput_obj.create_gjfs(foldername=folder, prefix = pre, suffix = suf, file_type=execType)    
+
     @pyqtSlot()
     def on_btn_trans_open_folder_clicked(self): # select a folder save configuration and list files name
         self.ui.plainTextEdit_trans_origin.clear()
@@ -288,7 +318,6 @@ class QmyApp(QmyWidget):
             self.ui.edit_trans_folder.setText(selectedDir)
             self.show_trans_origin_content()
         self.save_transfer_config()
-        # 开始转换
 
     def show_trans_origin_content(self): # show origin content
         folder = self.ui.edit_trans_folder.text()
@@ -298,15 +327,24 @@ class QmyApp(QmyWidget):
 
     @pyqtSlot()
     def on_btn_transfer_clicked(self): # show the process of transfer 
-        rename(self.ui.edit_trans_folder.text(), self.origin_name_list, self.new_name_list)
-        for i, j in zip(self.origin_name_list, self.new_name_list):
-            log_content = i + " --> " + j
-            self.trans_log_show(i + " --> " + j)
-        self.save_transfer_config()
+        try:
+            self.back_temp = back_folder(self.ui.edit_trans_folder.text())
+            self.trans_log_show("文件已备份！")
+            rename(self.ui.edit_trans_folder.text(), self.origin_name_list, self.new_name_list)
+            for i, j in zip(self.origin_name_list, self.new_name_list):
+                log_content = i + " --> " + j
+                self.trans_log_show(log_content)
+            self.save_transfer_config()
+        except Exception as e:
+            self.trans_log_show(str(e))
 
     @pyqtSlot()
     def on_btn_trans_refresh_clicked(self): # only refresh original window
-        self.show_trans_origin_content()
+        self.trans_origin_content_clear()
+        try:
+            self.show_trans_origin_content()
+        except Exception as e:
+            self.trans_log_show(str(e))
 
     @pyqtSlot()
     def on_btn_trans_clear_clicked(self): # clear all windows
@@ -316,19 +354,48 @@ class QmyApp(QmyWidget):
 
     @pyqtSlot()
     def on_btn_check_new_name_clicked(self): # show new name list in the new window
-        self.ui.plainTextEdit_trans_new.clear() 
-        ruler_list = list(self.ui.edit_trans_ruler.text().split(','))
-        self.new_name_list = []
-        for ruler in ruler_list:
-            file_name = ruler.strip().split(" ")[0]
-            time = ruler.strip().split(" ")[1]
-            for i in range(int(time)):
-                self.new_name_list.append(file_name)
-                self.trans_new_content_show(file_name)
-        self.save_transfer_config()
+        try:
+            self.ui.plainTextEdit_trans_new.clear() 
+            ruler_list = list(self.ui.edit_trans_ruler.text().split(','))
+            self.new_name_list = []
+            for ruler in ruler_list:
+                file_name = ruler.strip().split(" ")[0]
+                time = ruler.strip().split(" ")[1]
+                for i in range(int(time)):
+                    self.new_name_list.append(file_name)
+                    self.trans_new_content_show(file_name)
+            self.save_transfer_config()
+        except Exception as e:
+            self.trans_log_show(str(e))
 
-    def safety_backup(self): # refresh next time
-        pass
+    @pyqtSlot()
+    def on_btn_trans_retract_clicked(self): # refresh next time
+        try:
+            old_folder = self.ui.edit_trans_folder.text()
+            recover_folder(self.back_temp, old_folder)
+            self.trans_log_show(f"文件夹从{self.back_temp}成功恢复到{old_folder}！")
+        except Exception as e:
+            self.trans_log_show(str(e))
+
+# ========== the function of test window ==================
+    @pyqtSlot()
+    def on_btnTest_clicked(self): 
+        route = self.ui.lineTest.text() 
+        # cmd = "kindia.exe surface.xyz 1 2000 "
+        print(os.system(route))
+        self.ui.exe_plainTextEdit.appendPlainText("指令1运行已完成")
+
+    @pyqtSlot()
+    def on_btnTest_2_clicked(self): 
+        route = self.ui.lineTest_2.text() 
+        print(os.system(route))
+        self.ui.exe_plainTextEdit.appendPlainText("指令2运行已完成")
+
+    @pyqtSlot()
+    def on_btnTest_3_clicked(self): 
+        route = self.ui.lineTest_3.text() 
+        print(os.system(route))
+        self.ui.exe_plainTextEdit.appendPlainText("指令3运行已完成")
 
 class QuaThread(QThread): # create thread
     sinOut = pyqtSignal(str)  

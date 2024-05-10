@@ -118,7 +118,8 @@ class GauInput():
 
 if __name__ == '__main__':
     A = GauInput()
-    B = A.create_gjfs(r"E:\CF3SO2F\KF_SO2Cl\new\Gas",file_type="Unknow")
+    B = A.create_gjfs(r"C:\Users\DELL\Desktop\transfer\test",suffix = "-irc",file_type="IRC")
+    # B = A.create_gjfs(r"C:\Users\DELL\Desktop\transfer\test",file_type="IRC")
     # C = A.read_coord_inputfile(r"E:\CF3SO2F\KF_SO2Cl\new\Gas\o-TS1-gas.gjf",True)
     # print (C)
     # D = A.replace_contents("A.gjf",C,"OPT")
