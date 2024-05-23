@@ -9,10 +9,19 @@ class GauInput():
         pass
 
     # This function is called by the Gaussian
-    def create_gjfs(self, foldername, prefix = "", suffix = "-gas", file_type="Unknow"):
+    def create_gjfs(self, foldername, prefix = "", suffix = "", file_type="Unknow", read_type="OUTFILE"):
         """读取指定文件夹内所有log文件，替换成新模板的输入文件，IRC和柔性SCAN自动屏蔽"""
-        name_obj = ReFilenames("log")
+        if read_type == "GauOutFile":
+            name_obj = ReFilenames("log")
+        elif read_type == "GauInFile":
+            name_obj = ReFilenames("gjf")
         write_file = SaveFile()
+
+        # 设置文件的前后缀，默认gif文件
+        if prefix != "":
+            prefix = prefix + "-"
+        if suffix != "":
+            suffix = "-" + suffix
 
         # 未传参则以读取文件为准，传参优先级最高！
         type_flag = False
@@ -21,7 +30,12 @@ class GauInput():
 
         for name, fileabsroute in name_obj.filename_and_fileabsroute(foldername):
             file_type == "Unknow"
-            read_file = self.read_from_outfile(fileabsroute)
+            if read_type == "GauOutFile":
+                read_file = self.read_from_outfile(fileabsroute)
+            elif read_type == "GauInFile":
+                read_file = self.read_from_inputfile(fileabsroute)
+            else:
+                print("Err! Unknow file type")
 
             # 判断文件如果读取失败，则不生成文件！有输出提醒
             if len(read_file) == 1:
@@ -31,7 +45,6 @@ class GauInput():
             if type_flag:
                 file_type = read_file[-1][0]
 
-            # 设置文件的前后缀，默认gif文件
             chk_name = prefix + name + suffix 
             new_file_name = chk_name + ".gjf"
 
@@ -49,6 +62,10 @@ class GauInput():
                 chk_name_r = chk_name + "-r" 
                 new_file_name_r = chk_name_r + ".gjf"
                 write_file.save(new_file_name_r, self.replace_contents(chk_name_r,read_file,"IRC-R"))
+            elif file_type == "HIGH-SP":
+                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"HIGH-SP"))
+            elif file_type == "INPUT":
+                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"INPUT"))
             else:
                 print("Err! Unknow file type")
 
@@ -67,6 +84,10 @@ class GauInput():
             file_template = os.path.join(self.cur_folder, "Template/TS-template.txt")
         elif type == "OPT":
             file_template = os.path.join(self.cur_folder, "Template/OPT-template.txt")
+        elif type == "HIGH-SP":
+            file_template = os.path.join(self.cur_folder, "Template/HIGH-SP-template.txt")
+        elif type == "INPUT":
+            file_template = os.path.join(self.cur_folder, "Template/INPUT-template.txt")
         else:
             print("err! unknow file type")
             return []
@@ -100,9 +121,9 @@ class GauInput():
         ret_list.append(read_file[-1])
         return ret_list
 
-    # 从单个gjf文件中读取信息，用途不确定，有点忘记了，后续增加读取电荷和自选多重
-    def read_from_inputfile(self, filename, only_corrds=False):
-        coordinate_list = []
+    # 从单个gjf文件中读取信息，返回坐标、电荷和自旋多重度，方便在view操作后批量更改
+    def read_from_inputfile(self, filename, only_corrds=True):
+        ret_list = []
         write_flag = False
         with open(filename) as file_obj:
             for line in file_obj.readlines():
@@ -111,10 +132,13 @@ class GauInput():
                     if write_flag == True and line == '\n':
                         write_flag = False
                 if write_flag:
-                    coordinate_list.append(line[:-1])
+                    ret_list.append(line[:-1]) # 去掉末尾的换行符
+                    # 通过电荷和自旋多重度的数字特性来判断位置是否开始
                 if check_list_all_digit(list(line.strip().split(" "))):
                     write_flag = True
-        return coordinate_list
+                    charge,multiplicity = list(line.strip().split(" "))
+        ret_list.append(["INPUT", charge, multiplicity])
+        return ret_list
 
 if __name__ == '__main__':
     A = GauInput()

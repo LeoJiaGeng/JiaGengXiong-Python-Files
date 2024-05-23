@@ -16,6 +16,7 @@ from gausInput import GauInput
 
 from Public.config_adapt import Config_Adapt
 from Public.Rename import rename, back_folder, recover_folder
+from enum import Enum
 
 class CellType(Enum):    ##各单元格的类型
    ct_name=1000
@@ -55,10 +56,12 @@ class QmyApp(QmyWidget):
         self.ui.edit_standard_E.setText(self.config.get_config("save", "standard_Edata")["data"])
         
         self.ui.edit_file.setText(self.config.get_config("search", "search_file_name")["data"])
-        #未修改变量名
+        
         self.ui.edit_update_folder.setText(self.config.get_config("transfer", "trans_update_folder")["data"])
         self.ui.edit_trans_folder.setText(self.config.get_config("transfer", "trans_folder_name")["data"])
         self.ui.edit_trans_ruler.setText(self.config.get_config("transfer", "trans_ruler")["data"])
+        self.ui.edit_trans_pre.setText(self.config.get_config("transfer", "trans_prefix")["data"])
+        self.ui.edit_trans_suf.setText(self.config.get_config("transfer", "trans_suffix")["data"])
 
     def save_saving_config(self): # store configuration in saving interface
         """Save the content of the line edit in saving window"""
@@ -76,6 +79,8 @@ class QmyApp(QmyWidget):
         self.config.set_config("transfer", "trans_folder_name", self.ui.edit_trans_folder.text())
         self.config.set_config("transfer", "trans_ruler", self.ui.edit_trans_ruler.text())
         self.config.set_config("transfer", "trans_update_folder", self.ui.edit_update_folder.text())
+        self.config.set_config("transfer", "trans_prefix", self.ui.edit_trans_pre.text())
+        self.config.set_config("transfer", "trans_suffix", self.ui.edit_trans_suf.text())
 
 ##  ========== the function of params ================== 
 
@@ -295,20 +300,23 @@ class QmyApp(QmyWidget):
     def on_btn_creat_gauinput_clicked(self): # set gaussian input
         folder = self.ui.edit_update_folder.text()
         gausiput_obj = GauInput()
-        pre = ""
-        suf = ""
+        pre = self.ui.edit_trans_pre.text()
+        suf = self.ui.edit_trans_suf.text()
         if (self.ui.radbtn_chalevel.isChecked()):
             execType = "Unknow"
-            suf = "-new"
         elif (self.ui.radbtn_fullirc.isChecked()):
             execType = "IRC"
-            suf = "-irc"
         elif (self.ui.radbtn_apartirc.isChecked()):
             execType = "IRC-SPLIT"
         elif (self.ui.radbtn_frozopt.isChecked()):
             execType = "F-OPT"
+        elif (self.ui.radbtn_highsp.isChecked()):
+            execType = "HIGH-SP"
 
-        gausiput_obj.create_gjfs(foldername=folder, prefix = pre, suffix = suf, file_type=execType)    
+        read_file_type = self.ui.combo_trans_read_type.currentText()
+        gausiput_obj.create_gjfs(foldername=folder, prefix = pre, suffix = suf, file_type=execType, read_type=read_file_type)   
+        self.trans_log_show("文件创建成功！")
+        self.save_transfer_config() # save configuration after success
 
     @pyqtSlot()
     def on_btn_trans_open_folder_clicked(self): # select a folder save configuration and list files name

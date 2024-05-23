@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>867</width>
+    <width>811</width>
     <height>885</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="save">
       <attribute name="icon">
@@ -799,9 +799,9 @@
          <property name="title">
           <string>输入文件</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0,0">
+         <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,7,2">
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,7,3">
             <property name="spacing">
              <number>7</number>
             </property>
@@ -815,7 +815,7 @@
              <widget class="QLabel" name="label_5">
               <property name="minimumSize">
                <size>
-                <width>60</width>
+                <width>70</width>
                 <height>20</height>
                </size>
               </property>
@@ -836,7 +836,7 @@
             <item>
              <widget class="QPushButton" name="btn_sel_file">
               <property name="text">
-               <string>选择文件</string>
+               <string>选择文件夹</string>
               </property>
               <property name="icon">
                <iconset resource="Resource/ico.qrc">
@@ -883,7 +883,7 @@
               <number>0</number>
              </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,2,2,2,2,1">
+              <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,2,2,2,2,2">
                <property name="bottomMargin">
                 <number>0</number>
                </property>
@@ -891,7 +891,7 @@
                 <widget class="QLabel" name="label_11">
                  <property name="minimumSize">
                   <size>
-                   <width>60</width>
+                   <width>70</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -906,13 +906,25 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item alignment="Qt::AlignHCenter">
                 <widget class="QRadioButton" name="radbtn_chalevel">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
                    <height>20</height>
                   </size>
+                 </property>
+                 <property name="accessibleName">
+                  <string/>
+                 </property>
+                 <property name="accessibleDescription">
+                  <string/>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
                  </property>
                  <property name="text">
                   <string>Change-Level(TS/OPT)</string>
@@ -922,7 +934,7 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item alignment="Qt::AlignHCenter">
                 <widget class="QRadioButton" name="radbtn_fullirc">
                  <property name="minimumSize">
                   <size>
@@ -930,12 +942,43 @@
                    <height>20</height>
                   </size>
                  </property>
+                 <property name="accessibleName">
+                  <string/>
+                 </property>
+                 <property name="accessibleDescription">
+                  <string comment="自动检测TS和OPT" extracomment="自动检测TS和OPT"/>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>Full-IRC(TS)</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item alignment="Qt::AlignHCenter">
+                <widget class="QRadioButton" name="radbtn_highsp">
+                 <property name="accessibleName">
+                  <string/>
+                 </property>
+                 <property name="accessibleDescription">
+                  <string comment="自动检测TS和OPT" extracomment="自动检测TS和OPT"/>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>High-Level(TS/OPT)</string>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignHCenter">
                 <widget class="QRadioButton" name="radbtn_apartirc">
                  <property name="minimumSize">
                   <size>
@@ -943,12 +986,24 @@
                    <height>20</height>
                   </size>
                  </property>
+                 <property name="accessibleName">
+                  <string/>
+                 </property>
+                 <property name="accessibleDescription">
+                  <string comment="自动检测TS和OPT" extracomment="自动检测TS和OPT"/>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
-                  <string>Apart-IRC</string>
+                  <string>Apart-IRC(TS)</string>
                  </property>
                 </widget>
                </item>
-               <item>
+               <item alignment="Qt::AlignHCenter">
                 <widget class="QRadioButton" name="radbtn_frozopt">
                  <property name="minimumSize">
                   <size>
@@ -956,15 +1011,20 @@
                    <height>20</height>
                   </size>
                  </property>
-                 <property name="text">
-                  <string>Frozen-Opt</string>
+                 <property name="accessibleName">
+                  <string/>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="checkBox">
+                 <property name="accessibleDescription">
+                  <string comment="自动检测TS和OPT" extracomment="自动检测TS和OPT"/>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
-                  <string>没想好</string>
+                  <string>Frozen-Opt(OPT)</string>
                  </property>
                 </widget>
                </item>
@@ -972,6 +1032,87 @@
              </item>
             </layout>
            </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="1,2,2,2,2,2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_15">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text">
+               <string>前 缀 名：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="edit_trans_pre"/>
+            </item>
+            <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+             <widget class="QLabel" name="label_16">
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text">
+               <string>后 缀 名：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="edit_trans_suf"/>
+            </item>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QLabel" name="label_17">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="text">
+               <string>读取文件类型：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="combo_trans_read_type">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>GauOutFile</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>GauInFile</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="2,1,2,1,2">
@@ -1055,9 +1196,15 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,7,2">
             <item>
-             <widget class="QLabel" name="label_6">
+             <widget class="QLabel" name="label_18">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>23</height>
+               </size>
               </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
@@ -1066,10 +1213,7 @@
                <enum>QFrame::Sunken</enum>
               </property>
               <property name="text">
-               <string> 文件路径：</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
+               <string>文件路径：</string>
               </property>
              </widget>
             </item>
