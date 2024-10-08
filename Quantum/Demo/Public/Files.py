@@ -4,7 +4,7 @@ import os
 
 class ReFilenames():
     '''读取指定文件内，包括子文件夹所有的后缀名'''
-    def __init__(self, format_end):
+    def __init__(self, format_end="log"):
         self.__format_end = format_end
         self.file_list = []
 
@@ -54,6 +54,55 @@ class ReFilenames():
         fileroute_list = self.get_all_files(foldername)
         return zip(filename_list, fileroute_list)
 
+    def get_all_files_in_folder(self, foldername):
+        '''获取文件夹内所有文件'''
+        file_list = []
+        for root_dir, sub_dir, files in os.walk(foldername):
+            # 对文件列表中的每一个文件夹进行处理
+            for file in files:
+                # 对每个文件夹中的文件进行处理
+                file_list.append(os.path.join(root_dir, file))
+        return file_list
+
+    def delete_file(self, filename):
+        '''删除文件'''
+        if os.path.exists(filename):
+            os.remove(filename)
+            print("文件删除成功")
+        else:
+            print("文件不存在")
+
+    def rename_file(self, old_name, new_name):
+        '''重命名文件'''
+        if os.path.exists(old_name):
+            os.rename(old_name, new_name)
+            print("文件重命名成功")
+        else:
+            print("文件不存在")
+
+    def is_file_in_folder(self, filename, foldername):
+        '''判断文件是否在文件夹内'''
+        file_list = self.get_all_files_in_folder(foldername)
+        if filename in file_list:
+            return True
+        else:
+            return False
+
+    def get_file_detail(self, filename):
+        '''获取文件详细信息'''
+        file_foler = os.path.split(filename)[0]
+        file_name = os.path.split(filename)[1]
+        raw_name = os.path.splitext(file_name)[0]
+        file_suffix = os.path.splitext(file_name)[1]
+        # file_size = os.path.getsize(filename)
+        # file_time = os.path.getctime(filename)
+        return file_foler, file_name, raw_name, file_suffix
+
+    def combine_file(self, file_foler, raw_name, file_suffix):
+        '''合并文件'''
+        new_name = os.path.join(file_foler, raw_name + file_suffix)
+        return new_name
+
 class SaveFile(object):
     def __init__(self):
         pass
@@ -82,6 +131,11 @@ class OpenFile(object):
             content = file_obj.read(length)
             return content
         
+    """在windows下打开文件，显示文件界面"""    
+    def open_file(self, file_location):
+        os.startfile(file_location)
+        print("finshed!")
+
 class CreateFile(object):
     def __init__(self):
         pass
@@ -92,10 +146,21 @@ class CreateFile(object):
     
 
 if __name__ == "__main__":
-    A = ReFilenames("log")
+    A = ReFilenames("chk")
     #print(A._read_all_files__format_end)
     print(A)
     #print(A.get_all_files(r"D:\Document\Python_Files\Project"))
-    print(len(A))
-    B = SaveFile()
-    B.save("save.txt",A.get_all_files(r"C:\Users\DELL\Desktop\C4xianan\TFAA\extract data", True, True))
+    fi = A.get_all_files(r"E:\Research\C4F7N\full-files")
+    for i in fi:
+        print(i)
+        # A.delete_file(i)
+    print(len(fi))
+
+    # A.rename_file(r"C:\Users\DELL\Desktop\transfer\1.txt", r"C:\Users\DELL\Desktop\transfer\2.txt")
+    # filename = r"C:\Users\DELL\Desktop\transfer\2.txt"
+    # print(filename.split("\\")[-1][0])
+    # a, b, c, d = A.get_file_detail(filename)
+    # print(a, b, c, d)
+    # print(A.combine_file(a, c, d))
+    # B = SaveFile()
+    # B.save("save.txt",A.get_all_files(r"C:\Users\DELL\Desktop\C4xianan\TFAA\extract data", True, True))

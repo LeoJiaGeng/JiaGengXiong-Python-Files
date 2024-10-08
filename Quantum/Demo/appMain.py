@@ -13,6 +13,7 @@ from enum import Enum  ##枚举类型
 from ui_Start import QmyWidget
 from quantum import Quantum
 from gausInput import GauInput
+from recifyName import RecifyName
 
 from Public.config_adapt import Config_Adapt
 from Public.Rename import rename, back_folder, recover_folder
@@ -63,6 +64,11 @@ class QmyApp(QmyWidget):
         self.ui.edit_trans_pre.setText(self.config.get_config("transfer", "trans_prefix")["data"])
         self.ui.edit_trans_suf.setText(self.config.get_config("transfer", "trans_suffix")["data"])
 
+        self.ui.edit_rename_folder.setText(self.config.get_config("rename", "rename_folder")["data"])
+        self.ui.edit_rename_loc1.setText(self.config.get_config("rename", "rename_loc1")["data"])
+        self.ui.edit_rename_loc2.setText(self.config.get_config("rename", "rename_loc2")["data"])
+        self.ui.edit_rename_addstr.setText(self.config.get_config("rename", "rename_addstr")["data"])
+
     def save_saving_config(self): # store configuration in saving interface
         """Save the content of the line edit in saving window"""
         self.config.set_config("save", "save_folder", self.ui.edit_folder.text())  
@@ -75,12 +81,19 @@ class QmyApp(QmyWidget):
         self.config.set_config("search", "search_file_name", self.ui.edit_file.text())
 
     def save_transfer_config(self): # store configuration in transferring interface
-        """Save the contents of the line edit in searching window"""
+        """Save the contents of the line edit in transferring window"""
         self.config.set_config("transfer", "trans_folder_name", self.ui.edit_trans_folder.text())
         self.config.set_config("transfer", "trans_ruler", self.ui.edit_trans_ruler.text())
         self.config.set_config("transfer", "trans_update_folder", self.ui.edit_update_folder.text())
         self.config.set_config("transfer", "trans_prefix", self.ui.edit_trans_pre.text())
         self.config.set_config("transfer", "trans_suffix", self.ui.edit_trans_suf.text())
+
+    def save_rename_config(self): # store configuration in renaming interface
+        """Save the contents of the line edit in renaming window"""
+        self.config.set_config("rename", "rename_folder", self.ui.edit_rename_folder.text())
+        self.config.set_config("rename", "rename_loc1", self.ui.edit_rename_loc1.text())
+        self.config.set_config("rename", "rename_loc2", self.ui.edit_rename_loc2.text())
+        self.config.set_config("rename", "rename_addstr", self.ui.edit_rename_addstr.text())
 
 ##  ========== the function of params ================== 
 
@@ -113,6 +126,7 @@ class QmyApp(QmyWidget):
             write_file_name = self.ui.edit_save_filename.text() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.energy_list = self.quant.save_energy(write_file_path)
+            os.startfile(write_file_path) # open the file with default application
             self.save_content_show("Save OK!")
             self.save_saving_config()
             self.table_show(True)
@@ -128,10 +142,14 @@ class QmyApp(QmyWidget):
             self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text())
             write_file_name = self.ui.edit_save_filename.text() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
-            self.energy_list = self.quant.save_cbs_energy(write_file_path)
-            self.save_content_show("Save OK!")
+            if self.ui.chebox_one_step.isChecked():
+                self.energy_list = self.quant.save_cbs_energy(write_file_path, "ONE_LINK")
+                self.save_content_show("Save OK! BUT NOT SHOW IN THE TABLE !!!")
+            else:
+                self.energy_list = self.quant.save_cbs_energy(write_file_path, "MULTI_LINKS")
+                self.table_show(True)
+                self.save_content_show("Save OK!")
             self.save_saving_config()
-            self.table_show(True)
         except Exception as e:
             self.save_content_show(str(e))
             self.save_content_show("Save ERR!")
@@ -308,7 +326,7 @@ class QmyApp(QmyWidget):
             execType = "IRC"
         elif (self.ui.radbtn_apartirc.isChecked()):
             execType = "IRC-SPLIT"
-        elif (self.ui.radbtn_frozopt.isChecked()):
+        elif (self.ui.radbtn_frozopt.isChecked()): # 功能有问题，待修复
             execType = "F-OPT"
         elif (self.ui.radbtn_highsp.isChecked()):
             execType = "HIGH-SP"
@@ -384,6 +402,93 @@ class QmyApp(QmyWidget):
             self.trans_log_show(f"文件夹从{self.back_temp}成功恢复到{old_folder}！")
         except Exception as e:
             self.trans_log_show(str(e))
+
+# ========== the function of rename window ==================
+    def rename_read_params(self): # read parameters from the rename window
+        if (self.ui.edit_rename_loc1.text() == ""):
+            self.edit_rename_loc1 = 0
+        else:
+            self.edit_rename_loc1 = int(self.ui.edit_rename_loc1.text())
+
+        if (self.ui.edit_rename_loc2.text() == ""):
+            self.edit_rename_loc2 = 0
+        else:
+            self.edit_rename_loc2 = int(self.ui.edit_rename_loc2.text())
+
+        self.rename_folder = self.ui.edit_rename_folder.text()
+        self.rename_add_str = self.ui.edit_rename_addstr.text()
+        self.rf = RecifyName()
+        if (self.ui.radbtn_pre.isChecked()):
+            self.ref_type = "PRE"
+        elif (self.ui.radbtn_suf.isChecked()):
+            self.ref_type = "SUF"
+        elif (self.ui.radbtn_med.isChecked()):
+            self.ref_type = "MED"
+        elif (self.ui.radbtn_both.isChecked()):
+            self.ref_type = "BOTH"
+        else:
+            print("error")
+            self.ui.plainTextEdit_rename_log.appendPlainText("传入参数有误！")
+            return 0
+
+    def rename_func(self, rename_type = "DEL", transfer_type = True):  # create rename window
+        self.rename_read_params() # read parameters frist
+        self.save_rename_config() # save parameters later
+
+        if (rename_type == "DEL"):
+            if transfer_type:
+                self.rf.del_filename(self.rename_folder, self.ref_type, self.edit_rename_loc1, self.edit_rename_loc2)
+                self.ui.plainTextEdit_rename_log.appendPlainText("删除文件名已完成！")
+            else:
+                return self.rf.del_filename(self.rename_folder, self.ref_type, self.edit_rename_loc1, self.edit_rename_loc2, False)
+
+        elif (rename_type == "ADD"):
+            if transfer_type:
+                self.rf.add_filename(self.rename_folder, self.ref_type, self.rename_add_str, self.edit_rename_loc1)
+                self.ui.plainTextEdit_rename_log.appendPlainText("增加文件名已完成！") 
+            else:
+                return self.rf.add_filename(self.rename_folder, self.ref_type, self.rename_add_str, self.edit_rename_loc1, False)       
+        else:
+            print("error")
+            self.ui.plainTextEdit_rename_log.appendPlainText("传入参数有误！") 
+            return 0  
+        
+    @pyqtSlot()
+    def on_btn_rename_open_folder_clicked(self): # select a folder not save configuration
+        selectedDir = self.open_folder()
+        self.ui.edit_rename_folder.setText(selectedDir)
+        self.config.set_config("rename", "rename_folder", self.ui.edit_rename_folder.text())
+
+    @pyqtSlot()
+    def on_btn_rename_refresh_clicked(self): # refresh the file list to reflect changes
+        if (self.ui.radbtn_del.isChecked()):
+            check_type = "DEL"
+        elif (self.ui.radbtn_add.isChecked()):
+            check_type = "ADD"
+        else:
+            print("error")
+            self.ui.plainTextEdit_rename_log.appendPlainText("传入参数有误！")
+            return 0
+        old_list, new_list = self.rename_func(check_type, False)
+        self.ui.plainTextEdit_rename_check.clear()
+        for i, j in zip(old_list, new_list):
+            log_content = i + "  ----->  " + j
+            self.ui.plainTextEdit_rename_check.appendPlainText(log_content)
+        self.ui.plainTextEdit_rename_log.appendPlainText("文件名预览，请检查！！！！！\n")
+
+    @pyqtSlot()
+    def on_btn_rename_del_clicked(self): # delete file name
+        try:
+            self.rename_func("DEL")
+        except Exception as e:
+            self.ui.plainTextEdit_rename_log.appendPlainText(str(e))
+        
+    @pyqtSlot()
+    def on_btn_rename_add_clicked(self):  # add file name
+        try:
+            self.rename_func("ADD")
+        except Exception as e:
+            self.ui.plainTextEdit_rename_log.appendPlainText(str(e))
 
 # ========== the function of test window ==================
     @pyqtSlot()

@@ -9,7 +9,7 @@ class GauInput():
         pass
 
     # This function is called by the Gaussian
-    def create_gjfs(self, foldername, prefix = "", suffix = "", file_type="Unknow", read_type="OUTFILE"):
+    def create_gjfs(self, foldername, prefix = "", suffix = "", file_type="Unknow", read_type="GauOutFile"):
         """读取指定文件夹内所有log文件，替换成新模板的输入文件，IRC和柔性SCAN自动屏蔽"""
         if read_type == "GauOutFile":
             name_obj = ReFilenames("log")
@@ -66,6 +66,8 @@ class GauInput():
                 write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"HIGH-SP"))
             elif file_type == "INPUT":
                 write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"INPUT"))
+            elif file_type == "F-OPT":
+                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"F-OPT"))
             else:
                 print("Err! Unknow file type")
 
@@ -88,6 +90,8 @@ class GauInput():
             file_template = os.path.join(self.cur_folder, "Template/HIGH-SP-template.txt")
         elif type == "INPUT":
             file_template = os.path.join(self.cur_folder, "Template/INPUT-template.txt")
+        elif type == "F-OPT":
+            file_template = os.path.join(self.cur_folder, "Template/F-OPT-template.txt")
         else:
             print("err! unknow file type")
             return []
@@ -125,6 +129,8 @@ class GauInput():
     def read_from_inputfile(self, filename, only_corrds=True):
         ret_list = []
         write_flag = False
+        # 只允许进入一次读取坐标
+        flag_times = 0
         with open(filename) as file_obj:
             for line in file_obj.readlines():
                 # 仅读取坐标，坐标空行后的信息丢弃
@@ -135,8 +141,10 @@ class GauInput():
                     ret_list.append(line[:-1]) # 去掉末尾的换行符
                     # 通过电荷和自旋多重度的数字特性来判断位置是否开始
                 if check_list_all_digit(list(line.strip().split(" "))):
-                    write_flag = True
-                    charge,multiplicity = list(line.strip().split(" "))
+                    if flag_times == 0:
+                        write_flag = True
+                        charge,multiplicity = list(line.strip().split(" "))
+                    flag_times += 1
         ret_list.append(["INPUT", charge, multiplicity])
         return ret_list
 

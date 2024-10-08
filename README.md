@@ -26,3 +26,7 @@ easy operation
 3. 修改适配层ui_Start.py文件
 4. 运行appMain.py看效果
 5. 运行exe.bat，发布版本
+
+## MS_script
+
+新增自己写的MS脚本和shell脚本，防止忘记！！！

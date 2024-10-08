@@ -13,7 +13,8 @@ class Quantum(ReFilenames):
     ENERGY = 0
     FREQ = 1
     COORD = 2
-    CBS_ENERGY = 3
+    CBS_ONE_ENERGY = 3
+    CBS_MULTI_ENERGY = 4
     def __init__(self, type, file_name, standard_data1=0.0, standard_data2=0.0):
         super().__init__(type)
         self.file_name = file_name
@@ -84,7 +85,9 @@ class Quantum(ReFilenames):
             return FindInfo(name).get_freq() 
         elif (type == self.COORD):
             return FindInfo(name).get_coord()[:-1]
-        elif (type == self.CBS_ENERGY):
+        elif (type == self.CBS_ONE_ENERGY):
+            return FindInfo(name).get_cbs_sp_energy()
+        elif (type == self.CBS_MULTI_ENERGY):
             compare_list = FindInfo(name).get_rocbs_energy()
             if check_list_all_zero(compare_list):
                 return FindInfo(name).get_cbs_energy()
@@ -109,9 +112,15 @@ class Quantum(ReFilenames):
         return self.save_frame(full_data, filename, self.COORD)  
 
     @Decorator.exe_time("读取文件cbs能量")
-    def save_cbs_energy(self, filename = "整理好的量化cbs能量文件.xls"):
-        full_data = [["文件名()","MP4","CCSD(T)","MP2","MP4","HF","Int","OIii","T1","E"]]
-        return self.save_frame(full_data, filename, self.CBS_ENERGY)  
+    def save_cbs_energy(self, filename = "整理好的量化cbs能量文件.xls", cbs_type="ONE_LINK"):
+        if cbs_type == "ONE_LINK":
+            full_data = [["文件名()","CBS_Energy"]]
+            return self.save_frame(full_data, filename, self.CBS_ONE_ENERGY)             
+        elif cbs_type == "MULTI_LINKS":
+            full_data = [["文件名()","MP4","CCSD(T)","MP2","MP4","HF","Int","OIii","T1","E"]]
+            return self.save_frame(full_data, filename, self.CBS_MULTI_ENERGY) 
+        else:
+            print("cbs_type error")
 
     @Decorator.exe_time("查找虚频")
     def print_eigenvectors(self):

@@ -84,11 +84,19 @@ def test_function(a):
         time.sleep(3)
     return a
 
+def progress_bar():
+    """progress bar"""
+    for i in range(11):
+        progress = "#" * i + "-" * (10-i)
+        print(f"\r\033[1;32m{progress}", end="")
+        time.sleep(0.5)
+
 
 if __name__ == "__main__":
-    print(test_function(0.1)) 
-    print(test_function(0.1))
-    print(test_function(0.1))
-    print(test_function(0.2))
-    print(test_function.cache_info())
-    print(test_function.cache_clear())
+    # print(test_function(0.1)) 
+    # print(test_function(0.1))
+    # print(test_function(0.1))
+    # print(test_function(0.2))
+    # print(test_function.cache_info())
+    # print(test_function.cache_clear())
+    progress_bar()

@@ -232,6 +232,19 @@ class FindInfo():
         print("文件{}cbs能量查找完毕\n".format(self.filename))
         return cbs_energy_list
 
+    def get_cbs_sp_energy(self):
+        """查找一步的CBS-SP的能量,返回一个查询完的列表 """
+        energy_list = [0] 
+        with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
+            file_lines = fileObj.readlines()
+            for line in file_lines:
+                if "E(CBS-QB3)=" in line:
+                    energy_list[0] = float(line.split()[1])
+                    # break
+
+        print("文件{}能量查找完毕\n".format(self.filename))
+        return energy_list
+
     def str_to_digit(self, str_cont):
         """Converts a string with letter D+- to a digit"""
         cont_list = list(str_cont.strip().split("D+"))
