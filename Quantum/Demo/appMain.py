@@ -51,18 +51,18 @@ class QmyApp(QmyWidget):
     def config_init(self): # read configuration from config file and initialization
         self.config = Config_Adapt("quantum_config.ini")
 
-        self.ui.edit_folder.setText(self.config.get_config("save", "save_folder")["data"])
-        self.ui.edit_save_filename.setText(self.config.get_config("save", "save_file_name")["data"])
+        self.ui.combo_save_folder.addItem(self.config.get_config("save", "save_folder")["data"])
+        self.ui.combo_save_filename.addItem(self.config.get_config("save", "save_file_name")["data"])
         self.ui.edit_standard_G.setText(self.config.get_config("save", "standard_Gdata")["data"])
         self.ui.edit_standard_E.setText(self.config.get_config("save", "standard_Edata")["data"])
         
         self.ui.edit_file.setText(self.config.get_config("search", "search_file_name")["data"])
         
-        self.ui.edit_update_folder.setText(self.config.get_config("transfer", "trans_update_folder")["data"])
+        self.ui.combo_update_folder.addItem(self.config.get_config("transfer", "trans_update_folder")["data"])
         self.ui.edit_trans_folder.setText(self.config.get_config("transfer", "trans_folder_name")["data"])
         self.ui.edit_trans_ruler.setText(self.config.get_config("transfer", "trans_ruler")["data"])
         self.ui.edit_trans_pre.setText(self.config.get_config("transfer", "trans_prefix")["data"])
-        self.ui.edit_trans_suf.setText(self.config.get_config("transfer", "trans_suffix")["data"])
+        self.ui.combo_trans_suf.addItem(self.config.get_config("transfer", "trans_suffix")["data"])
 
         self.ui.edit_rename_folder.setText(self.config.get_config("rename", "rename_folder")["data"])
         self.ui.edit_rename_loc1.setText(self.config.get_config("rename", "rename_loc1")["data"])
@@ -71,8 +71,8 @@ class QmyApp(QmyWidget):
 
     def save_saving_config(self): # store configuration in saving interface
         """Save the content of the line edit in saving window"""
-        self.config.set_config("save", "save_folder", self.ui.edit_folder.text())  
-        self.config.set_config("save", "save_file_name", self.ui.edit_save_filename.text())
+        self.config.set_config("save", "save_folder", self.ui.combo_save_folder.currentText()) 
+        self.config.set_config("save", "save_file_name", self.ui.combo_save_filename.currentText())
         self.config.set_config("save", "standard_Gdata", self.ui.edit_standard_G.text())  
         self.config.set_config("save", "standard_Edata", self.ui.edit_standard_E.text()) 
         
@@ -84,9 +84,9 @@ class QmyApp(QmyWidget):
         """Save the contents of the line edit in transferring window"""
         self.config.set_config("transfer", "trans_folder_name", self.ui.edit_trans_folder.text())
         self.config.set_config("transfer", "trans_ruler", self.ui.edit_trans_ruler.text())
-        self.config.set_config("transfer", "trans_update_folder", self.ui.edit_update_folder.text())
+        self.config.set_config("transfer", "trans_update_folder", self.ui.combo_update_folder.currentText())
         self.config.set_config("transfer", "trans_prefix", self.ui.edit_trans_pre.text())
-        self.config.set_config("transfer", "trans_suffix", self.ui.edit_trans_suf.text())
+        self.config.set_config("transfer", "trans_suffix", self.ui.combo_trans_suf.currentText())
 
     def save_rename_config(self): # store configuration in renaming interface
         """Save the contents of the line edit in renaming window"""
@@ -103,7 +103,17 @@ class QmyApp(QmyWidget):
         self.freq_list = [] # receiving frequency list
 
 ##  ========== the function of saving window ==================  
- 
+     
+    def insert_combo(self, combo_name, insert_str):
+	# insert str at the first in the combox, and refresh the combox list
+        read_data_list = []
+        for i in range(combo_name.count()):
+            read_data_list.append(combo_name.itemText(i))
+        if insert_str not in read_data_list:
+            read_data_list.insert(0, insert_str)
+            combo_name.clear()
+            combo_name.addItems(read_data_list)
+
     @pyqtSlot()
     def on_btn_save_clear_clicked(self): # clear saving interface
         self.save_content_clear()
@@ -115,15 +125,16 @@ class QmyApp(QmyWidget):
     @pyqtSlot()
     def on_btn_open_folder_clicked(self): # select a folder not save configuration
         selectedDir = self.open_folder()
-        self.ui.edit_folder.setText(selectedDir)
+        if selectedDir:
+            self.insert_combo(self.ui.combo_save_folder, selectedDir)
 
     @pyqtSlot()
     def on_btn_save_energy_clicked(self): # save energy button and configuration
         try:
             self.save_content_show("Saving energy... ...")
-            folder_name = self.ui.edit_folder.text()
+            folder_name = self.ui.combo_save_folder.currentText()
             self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text())
-            write_file_name = self.ui.edit_save_filename.text() + ".xls"
+            write_file_name = self.ui.combo_save_filename.currentText() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.energy_list = self.quant.save_energy(write_file_path)
             os.startfile(write_file_path) # open the file with default application
@@ -138,9 +149,9 @@ class QmyApp(QmyWidget):
     def on_btn_save_cbs_energy_clicked(self): # save cbs energy button and configuration
         try:
             self.save_content_show("Saving cbs energy... ...")
-            folder_name = self.ui.edit_folder.text()
+            folder_name = self.ui.combo_save_folder.currentText()
             self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text())
-            write_file_name = self.ui.edit_save_filename.text() + ".xls"
+            write_file_name = self.ui.combo_save_filename.currentText() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
             if self.ui.chebox_one_step.isChecked():
                 self.energy_list = self.quant.save_cbs_energy(write_file_path, "ONE_LINK")
@@ -158,9 +169,9 @@ class QmyApp(QmyWidget):
     def on_btn_save_freq_clicked(self):  # save frequency button and configuration
         try:
             self.save_content_show("Saving frequency... ...")
-            folder_name = self.ui.edit_folder.text()
+            folder_name = self.ui.combo_save_folder.currentText()
             self.quant = Quantum("log",folder_name)
-            write_file_name = self.ui.edit_save_filename.text() + ".docx"
+            write_file_name = self.ui.combo_save_filename.currentText() + ".docx"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.freq_list = self.quant.save_freq(write_file_path)
             self.save_content_show("Save OK!")
@@ -174,9 +185,9 @@ class QmyApp(QmyWidget):
     def on_btn_save_coord_clicked(self): # save coordinate button and configuration
         try:
             self.save_content_show("Saving coordinates... ...")
-            folder_name = self.ui.edit_folder.text()
+            folder_name = self.ui.combo_save_folder.currentText()
             self.quant = Quantum("log",folder_name)
-            write_file_name = self.ui.edit_save_filename.text() + ".docx"
+            write_file_name = self.ui.combo_save_filename.currentText() + ".docx"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.quant.save_cor(write_file_path)
             self.save_content_show("Save OK!")
@@ -264,6 +275,13 @@ class QmyApp(QmyWidget):
         self.ui.tableInfo.resizeColumnsToContents() # resize columns
         self.ui.tableInfo.horizontalHeader().setVisible(checked)  # show h_header 
         self.ui.tableInfo.verticalHeader().setVisible(checked) # show v_header
+
+    @pyqtSlot(str)
+    def on_comboBox_currentIndexChanged(self, text): # change combobox
+        pass
+
+
+
 ##  ========== the function of searching window ==================  
             
     @pyqtSlot()
@@ -310,16 +328,16 @@ class QmyApp(QmyWidget):
     def on_btn_sel_file_clicked(self): # select a folder save configuration and list files name
         selectedDir = self.open_folder()
         if selectedDir != "":
-            self.ui.edit_update_folder.setText(selectedDir)
+            self.insert_combo(self.ui.combo_update_folder, selectedDir)
             self.save_transfer_config()
         # requirement: when give it up , keep old recoder 
 
     @pyqtSlot()
     def on_btn_creat_gauinput_clicked(self): # set gaussian input
-        folder = self.ui.edit_update_folder.text()
+        folder = self.ui.combo_update_folder.currentText()
         gausiput_obj = GauInput()
         pre = self.ui.edit_trans_pre.text()
-        suf = self.ui.edit_trans_suf.text()
+        suf = self.ui.combo_trans_suf.currentText()
         if (self.ui.radbtn_chalevel.isChecked()):
             execType = "Unknow"
         elif (self.ui.radbtn_fullirc.isChecked()):

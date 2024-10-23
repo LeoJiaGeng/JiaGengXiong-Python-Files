@@ -1,4 +1,17 @@
 #!/bin/bash
+# Author: Leo 
+
+# Current version: 1.0
+# Update log 
+# 2024-10-23 Version: 1.0: The first version released by Leo
+# launch multiple g16 jobs at the same time
+
+###### Begin User INPUT ####################
+
+# write how many tasks you want to submit at the same time
+MAXNUM=4
+
+####### End User INPUT #####################
 
 rung16() {
     echo "Running ${1} ..."
@@ -14,8 +27,6 @@ rung16() {
     echo "${1} is finished"
 }
 
-# write how many process you want to submit
-MAXNUM=4
 COUNT=0
 echo $COUNT > count.tmp
 for inf in *.gjf

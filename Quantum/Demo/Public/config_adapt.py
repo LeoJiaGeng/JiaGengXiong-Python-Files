@@ -22,7 +22,7 @@ class Config_Adapt(Config):
         self.set_config("transfer", "trans_file_name", "D:/Document/Python_Files/ts1.log")
         self.set_config("transfer", "trans_folder_name", "D:/Document")
         self.set_config("transfer", "trans_ruler", "name1 2, name2 3")
-        self.set_config("transfer", "trans_suffix", "new")
+        self.set_config("transfer", "trans_suffix", "old") 
         self.set_config("transfer", "trans_prefix", "")
 
         self.add_section("rename")
