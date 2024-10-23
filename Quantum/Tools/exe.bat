@@ -4,7 +4,7 @@ mode con cols=50 lines=50
 :: 需要编译的文件和执行编译的软件位置
 set MAIN_PY_NAME=app.py
 set SOFT_PATHS="E:\Pyqt5_Python\Scripts"
-set SOFT_VERSION=v2.1.0.zip
+set SOFT_VERSION=v2.1.1.zip
 
 :: 设置文件夹
 set PROJECT_NAME=%~dp0..
