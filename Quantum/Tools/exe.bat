@@ -4,7 +4,7 @@ mode con cols=50 lines=50
 :: 需要编译的文件和执行编译的软件位置
 set MAIN_PY_NAME=app.py
 set SOFT_PATHS="E:\Pyqt5_Python\Scripts"
-set SOFT_VERSION=v2.1.1.zip
+set SOFT_VERSION=v2.2.0.zip
 
 :: 设置文件夹
 set PROJECT_NAME=%~dp0..
@@ -14,6 +14,7 @@ set PY_VERSION="%PY_WORKPATH%\%MAIN_PY_NAME%"
 set RELEASE_PATHS="%PROJECT_NAME%\release"
 set RELEASE_VERSION_PATHS="%PROJECT_NAME%\release\dist"
 set RELEASE_VERSION_APP_PATHS="%PROJECT_NAME%\release\dist\app"
+set RELEASE_INFO="%PROJECT_NAME%\Demo\Release_info"
 
 :: 查看是否存在文件夹
 cd %PY_WORKPATH%
@@ -26,7 +27,9 @@ call activate.bat
 
 ::编译文件
 cd %RELEASE_PATHS%
-call pyinstaller.exe -Dw %PY_VERSION%
+mkdir "Release_info"
+copy %RELEASE_INFO%\ Release_info\
+call pyinstaller.exe --version-file .\Release_info\version_info.txt --icon=.\Release_info\soft.ico --splash=.\Release_info\start.png -Dw %PY_VERSION%
 
 if %ERRORLEVEL% == 1 (
     goto Failure1
@@ -45,6 +48,10 @@ if %ERRORLEVEL% == 1 (
     echo rar file has been generated 
     exit
 )
+
+::删除多余文件
+cd %RELEASE_PATHS%
+rmdir "Release_info"
 
 :Failure1
 @echo exe file ERR

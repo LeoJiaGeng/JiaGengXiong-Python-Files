@@ -42,7 +42,15 @@ class Excels():
 
         workbook = xlwt.Workbook(encoding = 'utf-8')
         sheet = workbook.add_sheet('sheet0')
-        
+
+        # 设置列宽
+        sheet.col(0).width = 20 * 256 # 256是列宽的基本单位，20个字符宽度
+        for i in range(1, 6):
+            sheet.col(i).width = 13 * 256 # 256是列宽的基本单位，12个字符宽度
+        # 设置行高
+        # sheet.row(0).height_mismatch = True  # 允许行高不匹配
+        sheet.row(0).height = 12 * 20  # 设置第一行高度为30点      
+
         # 进行对齐，这个是格式
         alignment = xlwt.Alignment() # Create Alignment
         alignment.horz = xlwt.Alignment.HORZ_CENTER # May be: HORZ_GENERAL, HORZ_LEFT, HORZ_CENTER, HORZ_RIGHT, HORZ_FILLED, HORZ_JUSTIFIED, HORZ_CENTER_ACROSS_SEL, HORZ_DISTRIBUTED

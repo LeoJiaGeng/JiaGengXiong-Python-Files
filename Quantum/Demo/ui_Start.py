@@ -77,7 +77,7 @@ class QmyWidget(QWidget):
             filename = event.mimeData().urls()[0].fileName()
             basename,ext = os.path.splitext(filename)
             ext = ext.upper()
-            if (ext == ".LOG"):
+            if (ext == ".LOG" or ext == ".GJF" ):
                 event.acceptProposedAction()
             else:
                 event.ignore()
@@ -88,7 +88,10 @@ class QmyWidget(QWidget):
         filename = event.mimeData().urls()[0].path()
         cnt = len(filename)
         realname = filename[1:cnt]
-        self.ui.edit_file.setText(realname)
+        if self.ui.chebox_trans_sfile.isChecked():
+            self.ui.edit_trans_filename.setText(realname)
+        else:
+            self.ui.edit_file.setText(realname)
         event.accept()
 
     @pyqtSlot()

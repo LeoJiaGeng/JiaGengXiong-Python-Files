@@ -24,7 +24,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="save">
       <attribute name="icon">
@@ -698,7 +698,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="edit_file"/>
+             <widget class="QLineEdit" name="edit_file">
+              <property name="dragEnabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="btn_open_file">
@@ -844,7 +848,7 @@
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>150</height>
+           <height>200</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -857,7 +861,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,8,2">
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,7,3">
             <property name="spacing">
              <number>7</number>
             </property>
@@ -868,21 +872,9 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_5">
-              <property name="minimumSize">
-               <size>
-                <width>70</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Sunken</enum>
-              </property>
+             <widget class="QLabel" name="label_24">
               <property name="text">
-               <string>待转换文件：</string>
+               <string>待转换文件夹：</string>
               </property>
              </widget>
             </item>
@@ -910,6 +902,40 @@
               <property name="icon">
                <iconset resource="Resource/ico.qrc">
                 <normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_26" stretch="1,10,0">
+            <item>
+             <widget class="QLabel" name="label_23">
+              <property name="text">
+               <string>待转换文件名：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="edit_trans_filename">
+              <property name="dragEnabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QCheckBox" name="chebox_trans_sfile">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>单个文件转换</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -999,7 +1025,7 @@
                   <string>Change-Level(TS/OPT)</string>
                  </property>
                  <property name="checked">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -1025,6 +1051,9 @@
                  </property>
                  <property name="text">
                   <string>Full-IRC(TS)</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>

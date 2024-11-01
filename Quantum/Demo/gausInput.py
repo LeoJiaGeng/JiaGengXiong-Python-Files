@@ -9,6 +9,65 @@ class GauInput():
         pass
 
     # This function is called by the Gaussian
+    def create_one_gjf(self, filename, prefix = "", suffix = "", file_type="Unknow", read_type="GauOutFile"):
+        """读取指定文件夹内所有log文件，替换成新模板的输入文件，IRC和柔性SCAN自动屏蔽"""
+        name = os.path.splitext(os.path.basename(filename))[0]
+        folder = os.path.dirname(filename)
+        fileabsroute = filename
+        if read_type == "GauOutFile":
+            name_obj = ReFilenames("log")
+        elif read_type == "GauInFile":
+            name_obj = ReFilenames("gjf")
+        write_file = SaveFile()
+
+        # 设置文件的前后缀，默认gif文件
+        if prefix != "":
+            prefix = prefix + "-"
+        if suffix != "":
+            suffix = "-" + suffix
+
+        # 未传参则以读取文件为准，传参优先级最高！
+        type_flag = False
+        if file_type == "Unknow":
+            type_flag = True
+
+        if read_type == "GauOutFile":
+            read_file = self.read_from_outfile(fileabsroute)
+        elif read_type == "GauInFile":
+            read_file = self.read_from_inputfile(fileabsroute)
+        else:
+            print("Err! Unknow file type")
+
+        # 判断文件如果读取失败，则不生成文件！有输出提醒
+        if len(read_file) == 1:
+            print("Err! Nothing to read")
+            return 0
+        # 未传参则以读取文件为准，传参优先级最高！
+        if type_flag:
+            file_type = read_file[-1][0]
+
+        # 设置check的名称
+        chk_name = prefix + name + suffix 
+        # 设置新文件名，需要分开
+        new_file_name = os.path.join(folder, chk_name + ".gjf")
+
+        # 判断文件类型，进行写入
+        if file_type == "IRC-SPLIT":
+            chk_name_f = chk_name + "-f" 
+            new_file_name_f = os.path.join(folder, chk_name_f + ".gjf")
+            write_file.save(new_file_name_f, self.replace_contents(chk_name_f,read_file,"IRC-F"))
+            chk_name_r = chk_name + "-r" 
+            new_file_name_r = os.path.join(folder, chk_name_r + ".gjf")
+            write_file.save(new_file_name_r, self.replace_contents(chk_name_r,read_file,"IRC-R"))
+        elif file_type in ["TS", "OPT", "IRC", "HIGH-SP", "INPUT", "F-OPT"]:
+            write_file.save(new_file_name, self.replace_contents(chk_name,read_file,file_type))
+        else:
+            print("Err! Unknow file type")
+            return 0
+        return 1
+
+
+    # This function is called by the Gaussian
     def create_gjfs(self, foldername, prefix = "", suffix = "", file_type="Unknow", read_type="GauOutFile"):
         """读取指定文件夹内所有log文件，替换成新模板的输入文件，IRC和柔性SCAN自动屏蔽"""
         if read_type == "GauOutFile":
@@ -36,6 +95,7 @@ class GauInput():
                 read_file = self.read_from_inputfile(fileabsroute)
             else:
                 print("Err! Unknow file type")
+                return 0
 
             # 判断文件如果读取失败，则不生成文件！有输出提醒
             if len(read_file) == 1:
@@ -49,27 +109,19 @@ class GauInput():
             new_file_name = chk_name + ".gjf"
 
             # 判断文件类型，进行写入
-            if file_type == "OPT":
-                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"OPT"))
-            elif file_type == "TS":
-                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"TS"))
-            elif file_type == "IRC":
-                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"IRC"))
-            elif file_type == "IRC-SPLIT":
+            if file_type == "IRC-SPLIT":
                 chk_name_f = chk_name + "-f" 
                 new_file_name_f = chk_name_f + ".gjf"
                 write_file.save(new_file_name_f, self.replace_contents(chk_name_f,read_file,"IRC-F"))
                 chk_name_r = chk_name + "-r" 
                 new_file_name_r = chk_name_r + ".gjf"
                 write_file.save(new_file_name_r, self.replace_contents(chk_name_r,read_file,"IRC-R"))
-            elif file_type == "HIGH-SP":
-                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"HIGH-SP"))
-            elif file_type == "INPUT":
-                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"INPUT"))
-            elif file_type == "F-OPT":
-                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,"F-OPT"))
+            elif file_type in ["TS", "OPT", "IRC", "HIGH-SP", "INPUT", "F-OPT"]:
+                write_file.save(new_file_name, self.replace_contents(chk_name,read_file,file_type))
             else:
                 print("Err! Unknow file type")
+                return 0
+        return 1
 
     # 获取模板，替换模板中的数据，返回完整数据
     def replace_contents(self, chk_name, new_content, type=None):

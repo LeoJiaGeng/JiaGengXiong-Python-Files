@@ -63,6 +63,7 @@ class QmyApp(QmyWidget):
         self.ui.edit_trans_ruler.setText(self.config.get_config("transfer", "trans_ruler")["data"])
         self.ui.edit_trans_pre.setText(self.config.get_config("transfer", "trans_prefix")["data"])
         self.ui.combo_trans_suf.addItem(self.config.get_config("transfer", "trans_suffix")["data"])
+        self.ui.edit_trans_filename.setText(self.config.get_config("transfer", "trans_file_name")["data"])
 
         self.ui.edit_rename_folder.setText(self.config.get_config("rename", "rename_folder")["data"])
         self.ui.edit_rename_loc1.setText(self.config.get_config("rename", "rename_loc1")["data"])
@@ -87,6 +88,7 @@ class QmyApp(QmyWidget):
         self.config.set_config("transfer", "trans_update_folder", self.ui.combo_update_folder.currentText())
         self.config.set_config("transfer", "trans_prefix", self.ui.edit_trans_pre.text())
         self.config.set_config("transfer", "trans_suffix", self.ui.combo_trans_suf.currentText())
+        self.config.set_config("transfer", "trans_file_name", self.ui.edit_trans_filename.text())
 
     def save_rename_config(self): # store configuration in renaming interface
         """Save the contents of the line edit in renaming window"""
@@ -334,25 +336,37 @@ class QmyApp(QmyWidget):
 
     @pyqtSlot()
     def on_btn_creat_gauinput_clicked(self): # set gaussian input
-        folder = self.ui.combo_update_folder.currentText()
-        gausiput_obj = GauInput()
-        pre = self.ui.edit_trans_pre.text()
-        suf = self.ui.combo_trans_suf.currentText()
-        if (self.ui.radbtn_chalevel.isChecked()):
-            execType = "Unknow"
-        elif (self.ui.radbtn_fullirc.isChecked()):
-            execType = "IRC"
-        elif (self.ui.radbtn_apartirc.isChecked()):
-            execType = "IRC-SPLIT"
-        elif (self.ui.radbtn_frozopt.isChecked()): # 功能有问题，待修复
-            execType = "F-OPT"
-        elif (self.ui.radbtn_highsp.isChecked()):
-            execType = "HIGH-SP"
+        try:
+            folder = self.ui.combo_update_folder.currentText()
+            file_name = self.ui.edit_trans_filename.text()
+            gausiput_obj = GauInput()
+            pre = self.ui.edit_trans_pre.text()
+            suf = self.ui.combo_trans_suf.currentText()
+            if (self.ui.radbtn_chalevel.isChecked()):
+                execType = "Unknow"
+            elif (self.ui.radbtn_fullirc.isChecked()):
+                execType = "IRC"
+            elif (self.ui.radbtn_apartirc.isChecked()):
+                execType = "IRC-SPLIT"
+            elif (self.ui.radbtn_frozopt.isChecked()): # 功能有问题，待修复
+                execType = "F-OPT"
+            elif (self.ui.radbtn_highsp.isChecked()):
+                execType = "HIGH-SP"
 
-        read_file_type = self.ui.combo_trans_read_type.currentText()
-        gausiput_obj.create_gjfs(foldername=folder, prefix = pre, suffix = suf, file_type=execType, read_type=read_file_type)   
-        self.trans_log_show("文件创建成功！")
-        self.save_transfer_config() # save configuration after success
+            read_file_type = self.ui.combo_trans_read_type.currentText()
+            if self.ui.chebox_trans_sfile.isChecked():
+                ret = gausiput_obj.create_one_gjf(filename=file_name, prefix = pre, suffix = suf, file_type=execType, read_type=read_file_type)
+            else:
+                ret = gausiput_obj.create_gjfs(foldername=folder, prefix = pre, suffix = suf, file_type=execType, read_type=read_file_type)   
+            # 检查判断是否成功
+            if ret: 
+                self.trans_log_show("文件创建成功！")
+                self.save_transfer_config() # save configuration after success
+            else:
+                self.trans_log_show("文件创建失败！")
+        except Exception as e:
+            self.trans_log_show(str(e))
+            self.trans_log_show("Search ERR!")        
 
     @pyqtSlot()
     def on_btn_trans_open_folder_clicked(self): # select a folder save configuration and list files name
