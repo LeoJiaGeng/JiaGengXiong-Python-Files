@@ -836,7 +836,7 @@
       <attribute name="title">
        <string>转换</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
+      <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
         <widget class="QGroupBox" name="groupBox_3">
          <property name="minimumSize">
@@ -859,7 +859,7 @@
          <property name="title">
           <string>输入文件</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
+         <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,7,3">
             <property name="spacing">
@@ -1122,7 +1122,7 @@
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>Frozen-Opt(OPT)</string>
+                  <string>SPIN-TEST</string>
                  </property>
                 </widget>
                </item>
@@ -1153,7 +1153,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="edit_trans_pre"/>
+             <widget class="QLineEdit" name="edit_trans_pre">
+              <property name="acceptDrops">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
             <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
              <widget class="QLabel" name="label_16">
@@ -1319,264 +1323,171 @@
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_4">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>450</height>
+          </size>
+         </property>
          <property name="styleSheet">
           <string notr="true">QGroupBox{
-	color: rgb(0, 0, 255);
+	color: rgb(0, 170, 0);
 }</string>
          </property>
          <property name="title">
-          <string>批量转换</string>
+          <string>模板编辑</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_11">
+         <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,7,2">
+           <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,1,1,2,1,1,1">
             <item>
-             <widget class="QLabel" name="label_18">
-              <property name="enabled">
-               <bool>true</bool>
+             <spacer name="horizontalSpacer_20">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
-              <property name="minimumSize">
+              <property name="sizeHint" stdset="0">
                <size>
-                <width>0</width>
-                <height>23</height>
+                <width>40</width>
+                <height>20</height>
                </size>
               </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Sunken</enum>
-              </property>
-              <property name="text">
-               <string>文件路径：</string>
-              </property>
-             </widget>
+             </spacer>
             </item>
             <item>
-             <widget class="QLineEdit" name="edit_trans_folder"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_trans_open_folder">
+             <widget class="QPushButton" name="btn_trans_open_input">
               <property name="text">
-               <string>打开文件夹</string>
+               <string>载入新文件</string>
               </property>
               <property name="icon">
                <iconset resource="Resource/ico.qrc">
-                <normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</iconset>
+                <normaloff>:/ico/pictures/icos/DM_20230815124713_015.png</normaloff>:/ico/pictures/icos/DM_20230815124713_015.png</iconset>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_22">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QComboBox" name="combo_trans_template_type">
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string>IRC-template.txt</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>HIGH-SP-template.txt</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>INPUT-template.txt</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>IRC-F-template.txt</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>IRC-R-template.txt</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>OPT-template.txt</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>TS-template.txt</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>SPIN-TEST-template.txt</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_27">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_trans_save_template">
+              <property name="text">
+               <string>保存模板</string>
+              </property>
+              <property name="icon">
+               <iconset resource="Resource/ico.qrc">
+                <normaloff>:/ico/pictures/icos/DM_20230815124713_031.png</normaloff>:/ico/pictures/icos/DM_20230815124713_031.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_26">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="1,7,2">
-            <item>
-             <widget class="QLabel" name="label_10">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>23</height>
-               </size>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Sunken</enum>
-              </property>
-              <property name="text">
-               <string> 修改要求：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="edit_trans_ruler"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_check_new_name">
-              <property name="text">
-               <string>显示新文件</string>
-              </property>
-              <property name="icon">
-               <iconset resource="Resource/ico.qrc">
-                <normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QPlainTextEdit" name="plainTextEdit_trans_edit_template">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_9">
-            <property name="styleSheet">
-             <string notr="true">QGroupBox{
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_10">
+         <property name="styleSheet">
+          <string notr="true">QGroupBox{
 	color: rgb(0, 170, 0);
 }</string>
-            </property>
-            <property name="title">
-             <string>文件显示</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_14">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_13">
-               <item>
-                <widget class="QGroupBox" name="groupBox_5">
-                 <property name="title">
-                  <string>原文件名列表</string>
-                 </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_11">
-                  <property name="spacing">
-                   <number>0</number>
-                  </property>
-                  <property name="leftMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
-                   <number>0</number>
-                  </property>
-                  <item>
-                   <widget class="QPlainTextEdit" name="plainTextEdit_trans_origin"/>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_10" stretch="3,0,1,0,1,0,3">
-                 <item>
-                  <spacer name="verticalSpacer_3">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="btn_trans_refresh">
-                   <property name="text">
-                    <string>更新</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="Resource/ico.qrc">
-                     <normaloff>:/ico/pictures/icos/DM_20230815124713_009.png</normaloff>:/ico/pictures/icos/DM_20230815124713_009.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="btn_transfer">
-                   <property name="text">
-                    <string>转换</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="Resource/ico.qrc">
-                     <normaloff>:/ico/pictures/icos/DM_20230815124713_051.png</normaloff>:/ico/pictures/icos/DM_20230815124713_051.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="btn_trans_retract">
-                   <property name="text">
-                    <string>撤销</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="Resource/ico.qrc">
-                     <normaloff>:/ico/pictures/icos/DM_20230815124713_034.png</normaloff>:/ico/pictures/icos/DM_20230815124713_034.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QGroupBox" name="groupBox_6">
-                 <property name="title">
-                  <string>重命名列表</string>
-                 </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_10">
-                  <property name="leftMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
-                   <number>0</number>
-                  </property>
-                  <item>
-                   <widget class="QPlainTextEdit" name="plainTextEdit_trans_new"/>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="groupBox_10">
-               <property name="title">
-                <string>输出日志</string>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_15">
-                <item>
-                 <widget class="QPlainTextEdit" name="plainTextEdit_trans_log"/>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+         </property>
+         <property name="title">
+          <string>输出日志</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_15">
+          <item>
+           <widget class="QPlainTextEdit" name="plainTextEdit_trans_log"/>
           </item>
          </layout>
         </widget>
@@ -1853,6 +1764,12 @@
                   </property>
                   <item>
                    <widget class="QPlainTextEdit" name="plainTextEdit_rename_check">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>400</height>
+                     </size>
+                    </property>
                     <property name="styleSheet">
                      <string notr="true">QPlainTextEdit{
     color:rgb(255, 0, 0);
@@ -1987,7 +1904,7 @@
          <property name="title">
           <string>外部运行</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_16">
+         <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,7,2">
             <item>
@@ -2048,6 +1965,69 @@
                <string>运行</string>
               </property>
              </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <item>
+             <spacer name="horizontalSpacer_28">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_30">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="text">
+               <string>连续运行</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_31">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_29">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>

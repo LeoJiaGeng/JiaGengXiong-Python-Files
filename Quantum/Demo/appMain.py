@@ -59,11 +59,13 @@ class QmyApp(QmyWidget):
         self.ui.edit_file.setText(self.config.get_config("search", "search_file_name")["data"])
         
         self.ui.combo_update_folder.addItem(self.config.get_config("transfer", "trans_update_folder")["data"])
-        self.ui.edit_trans_folder.setText(self.config.get_config("transfer", "trans_folder_name")["data"])
-        self.ui.edit_trans_ruler.setText(self.config.get_config("transfer", "trans_ruler")["data"])
+        self.ui.edit_trans_filename.setText(self.config.get_config("transfer", "trans_file_name")["data"])
         self.ui.edit_trans_pre.setText(self.config.get_config("transfer", "trans_prefix")["data"])
         self.ui.combo_trans_suf.addItem(self.config.get_config("transfer", "trans_suffix")["data"])
-        self.ui.edit_trans_filename.setText(self.config.get_config("transfer", "trans_file_name")["data"])
+        abs_filename = "./Template/" + self.ui.combo_trans_template_type.currentText()
+        with open (abs_filename, 'r') as f:
+            for line in f.readlines():
+                self.ui.plainTextEdit_trans_edit_template.appendPlainText(line.strip())
 
         self.ui.edit_rename_folder.setText(self.config.get_config("rename", "rename_folder")["data"])
         self.ui.edit_rename_loc1.setText(self.config.get_config("rename", "rename_loc1")["data"])
@@ -83,12 +85,11 @@ class QmyApp(QmyWidget):
 
     def save_transfer_config(self): # store configuration in transferring interface
         """Save the contents of the line edit in transferring window"""
-        self.config.set_config("transfer", "trans_folder_name", self.ui.edit_trans_folder.text())
-        self.config.set_config("transfer", "trans_ruler", self.ui.edit_trans_ruler.text())
+        self.config.set_config("transfer", "trans_file_name", self.ui.edit_trans_filename.text())
         self.config.set_config("transfer", "trans_update_folder", self.ui.combo_update_folder.currentText())
         self.config.set_config("transfer", "trans_prefix", self.ui.edit_trans_pre.text())
         self.config.set_config("transfer", "trans_suffix", self.ui.combo_trans_suf.currentText())
-        self.config.set_config("transfer", "trans_file_name", self.ui.edit_trans_filename.text())
+
 
     def save_rename_config(self): # store configuration in renaming interface
         """Save the contents of the line edit in renaming window"""
@@ -364,74 +365,39 @@ class QmyApp(QmyWidget):
                 self.save_transfer_config() # save configuration after success
             else:
                 self.trans_log_show("文件创建失败！")
+
+            if not self.ui.chebox_trans_sfile.isChecked():
+                os.startfile(os.getcwd())
+
         except Exception as e:
             self.trans_log_show(str(e))
             self.trans_log_show("Search ERR!")        
 
     @pyqtSlot()
-    def on_btn_trans_open_folder_clicked(self): # select a folder save configuration and list files name
-        self.ui.plainTextEdit_trans_origin.clear()
-        selectedDir = self.open_folder()
-        if selectedDir != "":
-            self.ui.edit_trans_folder.setText(selectedDir)
-            self.show_trans_origin_content()
-        self.save_transfer_config()
-
-    def show_trans_origin_content(self): # show origin content
-        folder = self.ui.edit_trans_folder.text()
-        self.origin_name_list = [name for name in os.listdir(folder) if os.path.isfile(os.path.join(folder,name))] 
-        for name in self.origin_name_list:
-            self.trans_origin_content_show(name)
-
-    @pyqtSlot()
-    def on_btn_transfer_clicked(self): # show the process of transfer 
-        try:
-            self.back_temp = back_folder(self.ui.edit_trans_folder.text())
-            self.trans_log_show("文件已备份！")
-            rename(self.ui.edit_trans_folder.text(), self.origin_name_list, self.new_name_list)
-            for i, j in zip(self.origin_name_list, self.new_name_list):
-                log_content = i + " --> " + j
-                self.trans_log_show(log_content)
-            self.save_transfer_config()
-        except Exception as e:
-            self.trans_log_show(str(e))
-
-    @pyqtSlot()
-    def on_btn_trans_refresh_clicked(self): # only refresh original window
-        self.trans_origin_content_clear()
-        try:
-            self.show_trans_origin_content()
-        except Exception as e:
-            self.trans_log_show(str(e))
-
-    @pyqtSlot()
     def on_btn_trans_clear_clicked(self): # clear all windows
-        self.ui.plainTextEdit_trans_origin.clear()
-        self.ui.plainTextEdit_trans_new.clear()
         self.ui.plainTextEdit_trans_log.clear()
+        self.ui.plainTextEdit_trans_edit_template.clear()
 
-    @pyqtSlot()
-    def on_btn_check_new_name_clicked(self): # show new name list in the new window
+    @pyqtSlot(str)
+    def on_combo_trans_template_type_currentIndexChanged(self,curText): # 检测到列表选项变化时，更新模板内容
         try:
-            self.ui.plainTextEdit_trans_new.clear() 
-            ruler_list = list(self.ui.edit_trans_ruler.text().split(','))
-            self.new_name_list = []
-            for ruler in ruler_list:
-                file_name = ruler.strip().split(" ")[0]
-                time = ruler.strip().split(" ")[1]
-                for i in range(int(time)):
-                    self.new_name_list.append(file_name)
-                    self.trans_new_content_show(file_name)
-            self.save_transfer_config()
+            abs_filename = "./Template/" + curText
+            with open (abs_filename, 'r') as f:
+                self.ui.plainTextEdit_trans_edit_template.clear()
+                for line in f.readlines():
+                    self.ui.plainTextEdit_trans_edit_template.appendPlainText(line.strip())
         except Exception as e:
             self.trans_log_show(str(e))
 
     @pyqtSlot()
-    def on_btn_trans_retract_clicked(self): # refresh next time
+    def on_btn_trans_save_template_clicked(self): # save template button
         try:
-            old_folder = self.ui.edit_trans_folder.text()
-            recover_folder(self.back_temp, old_folder)
-            self.trans_log_show(f"文件夹从{self.back_temp}成功恢复到{old_folder}！")
+            filename = self.ui.combo_trans_template_type.currentText()
+            abs_filename = "./Template/" + filename
+            content = self.ui.plainTextEdit_trans_edit_template.toPlainText()
+            with open (abs_filename, 'w') as f:
+                f.write(content)
+            self.trans_log_show("保存模板成功！")
         except Exception as e:
             self.trans_log_show(str(e))
 
@@ -541,6 +507,16 @@ class QmyApp(QmyWidget):
         route = self.ui.lineTest_3.text() 
         print(os.system(route))
         self.ui.exe_plainTextEdit.appendPlainText("指令3运行已完成")
+
+    @pyqtSlot()
+    def on_btnTest_all_clicked(self): 
+        route = self.ui.lineTest_1.text() 
+        print(os.system(route))
+        route = self.ui.lineTest_2.text() 
+        print(os.system(route))
+        route = self.ui.lineTest_3.text() 
+        print(os.system(route))
+        self.ui.exe_plainTextEdit.appendPlainText("指令1、2、3运行已完成")
 
 class QuaThread(QThread): # create thread
     sinOut = pyqtSignal(str)  

@@ -14,10 +14,6 @@ class GauInput():
         name = os.path.splitext(os.path.basename(filename))[0]
         folder = os.path.dirname(filename)
         fileabsroute = filename
-        if read_type == "GauOutFile":
-            name_obj = ReFilenames("log")
-        elif read_type == "GauInFile":
-            name_obj = ReFilenames("gjf")
         write_file = SaveFile()
 
         # 设置文件的前后缀，默认gif文件
@@ -59,13 +55,14 @@ class GauInput():
             chk_name_r = chk_name + "-r" 
             new_file_name_r = os.path.join(folder, chk_name_r + ".gjf")
             write_file.save(new_file_name_r, self.replace_contents(chk_name_r,read_file,"IRC-R"))
-        elif file_type in ["TS", "OPT", "IRC", "HIGH-SP", "INPUT", "F-OPT"]:
+        elif file_type in ["TS", "OPT", "IRC", "HIGH-SP", "INPUT"]:
             write_file.save(new_file_name, self.replace_contents(chk_name,read_file,file_type))
+        elif file_type == "F-OPT":
+            self.create_spin_test(filename, file_type, read_type)
         else:
             print("Err! Unknow file type")
             return 0
         return 1
-
 
     # This function is called by the Gaussian
     def create_gjfs(self, foldername, prefix = "", suffix = "", file_type="Unknow", read_type="GauOutFile"):
@@ -116,7 +113,7 @@ class GauInput():
                 chk_name_r = chk_name + "-r" 
                 new_file_name_r = chk_name_r + ".gjf"
                 write_file.save(new_file_name_r, self.replace_contents(chk_name_r,read_file,"IRC-R"))
-            elif file_type in ["TS", "OPT", "IRC", "HIGH-SP", "INPUT", "F-OPT"]:
+            elif file_type in ["TS", "OPT", "IRC", "HIGH-SP", "INPUT", "F-OPT"]: # 批量转换不用该功能
                 write_file.save(new_file_name, self.replace_contents(chk_name,read_file,file_type))
             else:
                 print("Err! Unknow file type")
@@ -143,7 +140,7 @@ class GauInput():
         elif type == "INPUT":
             file_template = os.path.join(self.cur_folder, "Template/INPUT-template.txt")
         elif type == "F-OPT":
-            file_template = os.path.join(self.cur_folder, "Template/F-OPT-template.txt")
+            file_template = os.path.join(self.cur_folder, "Template/SPIN-TEST-template.txt")
         else:
             print("err! unknow file type")
             return []
@@ -199,6 +196,35 @@ class GauInput():
                     flag_times += 1
         ret_list.append(["INPUT", charge, multiplicity])
         return ret_list
+
+    # 单独写了个增加自旋的函数，修改太麻烦了！！！！
+    def create_spin_test(self, filename, file_type="Unknow", read_type="GauOutFile"):
+        name = os.path.splitext(os.path.basename(filename))[0]
+        folder = os.path.dirname(filename)
+        fileabsroute = filename
+        write_file = SaveFile() 
+
+        if read_type == "GauOutFile":
+            read_file = self.read_from_outfile(fileabsroute)
+        elif read_type == "GauInFile":
+            read_file = self.read_from_inputfile(fileabsroute)
+        else:
+            print("Err! Unknow file type")
+
+        # 先获取目前自旋多重度
+        cur_spin = int(read_file[-1][-1])
+        if cur_spin/2 == 0:
+            spin_list = list(range(0, 20, 2))
+        else:
+            spin_list = list(range(1, 21, 2))
+
+        for spin in spin_list:
+            read_file[-1][-1] = str(spin) # 更改自旋值
+            chk_name = name + "-spin" + str(spin)
+            # 设置新文件名，需要分开
+            new_file_name = os.path.join(folder, chk_name + ".gjf")      
+            write_file.save(new_file_name, self.replace_contents(chk_name,read_file,file_type))
+
 
 if __name__ == '__main__':
     A = GauInput()

@@ -1,7 +1,7 @@
 %chk=replace-name.chk
 %mem=50GB
 %nprocshared=64
-# m062x/6-31+g(d,p) irc(calcfc,lqa,maxpoints=100,reverse)
+# stable=opt m062x/6-31+g(d,p)
 
 Title Card Required
 
@@ -10,18 +10,11 @@ replace-coordinate
 
 
 
+
 --Link1--
 %chk=replace-name.chk
 %mem=50GB
 %nprocshared=64
-# opt=(maxstep=5,notrust) m062x/6-31+g(d,p) freq Geom=AllCheck Guess=Read scf=xqc 
-
-OPT AFTER REVERSE
-
-
-
-
-
-
+# opt(calcfc,ts,noeigen) freq m062x/6-31+g(d,p) Geom=AllCheck Guess=Read 
 
 
