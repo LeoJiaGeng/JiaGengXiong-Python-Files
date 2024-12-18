@@ -15,6 +15,8 @@ class Quantum(ReFilenames):
     COORD = 2
     CBS_ONE_ENERGY = 3
     CBS_MULTI_ENERGY = 4
+    OTHERS = 5
+	
     def __init__(self, type, file_name, standard_data1=0.0, standard_data2=0.0):
         super().__init__(type)
         self.file_name = file_name
@@ -87,6 +89,8 @@ class Quantum(ReFilenames):
             return FindInfo(name).get_coord()[:-1]
         elif (type == self.CBS_ONE_ENERGY):
             return FindInfo(name).get_cbs_sp_energy()
+        elif (type == self.OTHERS):
+            return FindInfo(name).get_others()
         elif (type == self.CBS_MULTI_ENERGY):
             compare_list = FindInfo(name).get_rocbs_energy()
             if check_list_all_zero(compare_list):
@@ -122,6 +126,11 @@ class Quantum(ReFilenames):
         else:
             print("cbs_type error")
 
+    @Decorator.exe_time("读取文件其他信息")
+    def save_others(self, filename = "整理好的量化其他信息文件.xls"):
+        full_data = [["文件名()", "RC_x_GHz", "RC_y_GHz", "RC_z_GHz", "RC_x_cm-1", "RC_y_cm-1", "RC_z_cm-1","MW", "num_freq"]]
+        return self.save_frame(full_data, filename, self.OTHERS) 
+
     @Decorator.exe_time("查找虚频")
     def print_eigenvectors(self):
         return FindInfo(self.file_name).eigenvectors() 
@@ -132,10 +141,10 @@ class Quantum(ReFilenames):
 
 if __name__ == "__main__":
     nameType = "log"
-    file_folder = r"E:\Organized Files\2022_10_10\all_data\TFAA\DL-CBS"
+    file_folder = r"E:\Research\AP\task-1130\二茂铁-AP\FeR2\Rate\R"
     # file_name = r"D:\data\C2F2O\C2F2_1.log"
     A = Quantum(nameType, file_folder)
     # B = Quantum(nameType, file_name)
     # print(B.print_eigenvectors())
-    A.save_cbs_energy()
+    A.save_others()
     # print(A.length)

@@ -200,6 +200,22 @@ class QmyApp(QmyWidget):
             self.save_content_show("Save ERR!")
 
     @pyqtSlot()
+    def on_btn_save_others_clicked(self): # save rotational constants MW num_freq button and configuration
+        try:
+            self.save_content_show("Saving RC MW num_freq... ...")
+            folder_name = self.ui.combo_save_folder.currentText()
+            self.quant = Quantum("log",folder_name)
+            write_file_name = self.ui.combo_save_filename.currentText() + ".xls"
+            write_file_path = os.path.join(folder_name, write_file_name)
+            self.quant.save_others(write_file_path)
+            self.save_content_show("Save OK!")
+            self.save_saving_config()
+        except Exception as e:
+            self.save_content_show(str(e))
+            self.save_content_show("Save ERR!")
+
+
+    @pyqtSlot()
     def on_btn_table_clear_clicked(self): # clear saving interface
         self.ui.tableInfo.clearContents()
 

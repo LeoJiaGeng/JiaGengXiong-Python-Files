@@ -39,7 +39,8 @@ class FindInfo():
                "OIii",
                "T1 Diagnostic"
                ]
-    
+
+    # 列表用于查找rocbs能量
     cbs_key = ["UMP4(SDQ)",
                "CCSD(T)",
                "EUMP2",
@@ -49,7 +50,13 @@ class FindInfo():
                "OIii",
                "T1 Diagnostic"
                ]
-    
+
+    # 列表用于查找其他信息，RC,MW,num_freq
+    others_key = ["Rotational constants",
+               "Molecular mass",
+               "Deg. of freedom"
+               ] 
+
     def __init__(self, filename):
         """传入文件名，可以得到需要条件的数组"""
         self.filename = filename
@@ -77,6 +84,45 @@ class FindInfo():
             return False
         else:
             return True
+
+    def rota_const(self, line):
+        """查找转动常数，这是浮点数"""
+        line_data = (line.split(":")[1]).strip()
+        line_detail = []
+        for i in list(line_data.split(" ")):
+            if i != "":
+                line_detail.append(float(i))    
+        return line_detail
+
+    def MW(self, line):
+        """查找分子量 """
+        line_data = (line.split(":")[1]).strip() 
+        return (line_data.split(" ")[0])
+
+    def num_freq(self, line):
+        """查找频率数目 """
+        line_data = (line.split("freedom")[1]).strip()
+        return line_data
+
+    def get_others(self):
+        """查找其他信息，包括分子量，转动常数，频率数目"""
+        others_list = [0] * 8
+        with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
+            file_lines = fileObj.readlines()
+            for line in file_lines:
+                if self.others_key[0] in line:
+                    others_list[0],others_list[1],others_list[2] = self.rota_const(line)
+                elif self.others_key[1] in line:
+                    others_list[6] = self.MW(line)
+                elif self.others_key[2] in line:
+                    others_list[7] = self.num_freq(line)
+        
+        # 读取的是GHZ，转换为cm-1，换算量是除以30
+        others_list[3] = round((others_list[0]/30.0),6)
+        others_list[4] = round((others_list[1]/30.0),6)
+        others_list[5] = round((others_list[2]/30.0),6)
+        print("文件{}其他数据查找完毕\n".format(self.filename))  
+        return others_list      
 
     def get_energy(self):
         """主程序，返回一个查询完的列表 """
@@ -374,8 +420,8 @@ class FindInfo():
                 
 if __name__ == "__main__":
     energy_dict_test = {}
-    A= FindInfo(r"C:\Users\DELL\Desktop\C4xianan\TFAA-1py-E\extract data\e-IM2.log")
-    print(A.get_coord())
+    A= FindInfo(r"E:\Research\AP\task-1130\二茂铁-AP\FeR2\Rate\R\2.log")
+    print(A.get_others())
     # print(A.get_rocbs_energy())
         
 
