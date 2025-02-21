@@ -104,6 +104,7 @@ class QmyApp(QmyWidget):
         self.ui.tableInfo.setAlternatingRowColors(True) # Alternate color for table 
         self.energy_list = [] # receiving energy list
         self.freq_list = [] # receiving frequency list
+        self.only_cur_dir = False # only current directory
 
 ##  ========== the function of saving window ==================  
      
@@ -131,12 +132,16 @@ class QmyApp(QmyWidget):
         if selectedDir:
             self.insert_combo(self.ui.combo_save_folder, selectedDir)
 
+    @pyqtSlot(bool)
+    def on_chebox_save_only_curdir_clicked(self,checked):
+        self.only_cur_dir = checked
+
     @pyqtSlot()
     def on_btn_save_energy_clicked(self): # save energy button and configuration
         try:
             self.save_content_show("Saving energy... ...")
             folder_name = self.ui.combo_save_folder.currentText()
-            self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text())
+            self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text(), only_curdir = self.only_cur_dir)
             write_file_name = self.ui.combo_save_filename.currentText() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.energy_list = self.quant.save_energy(write_file_path)
@@ -153,7 +158,7 @@ class QmyApp(QmyWidget):
         try:
             self.save_content_show("Saving cbs energy... ...")
             folder_name = self.ui.combo_save_folder.currentText()
-            self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text())
+            self.quant = Quantum("log",folder_name, self.ui.edit_standard_G.text(), self.ui.edit_standard_E.text(), only_curdir = self.only_cur_dir)
             write_file_name = self.ui.combo_save_filename.currentText() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
             if self.ui.chebox_one_step.isChecked():
@@ -173,7 +178,7 @@ class QmyApp(QmyWidget):
         try:
             self.save_content_show("Saving frequency... ...")
             folder_name = self.ui.combo_save_folder.currentText()
-            self.quant = Quantum("log",folder_name)
+            self.quant = Quantum("log",folder_name, only_curdir = self.only_cur_dir)
             write_file_name = self.ui.combo_save_filename.currentText() + ".docx"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.freq_list = self.quant.save_freq(write_file_path)
@@ -189,7 +194,7 @@ class QmyApp(QmyWidget):
         try:
             self.save_content_show("Saving coordinates... ...")
             folder_name = self.ui.combo_save_folder.currentText()
-            self.quant = Quantum("log",folder_name)
+            self.quant = Quantum("log",folder_name, only_curdir = self.only_cur_dir)
             write_file_name = self.ui.combo_save_filename.currentText() + ".docx"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.quant.save_cor(write_file_path)
@@ -204,7 +209,7 @@ class QmyApp(QmyWidget):
         try:
             self.save_content_show("Saving RC MW num_freq... ...")
             folder_name = self.ui.combo_save_folder.currentText()
-            self.quant = Quantum("log",folder_name)
+            self.quant = Quantum("log", folder_name, only_curdir = self.only_cur_dir)
             write_file_name = self.ui.combo_save_filename.currentText() + ".xls"
             write_file_path = os.path.join(folder_name, write_file_name)
             self.quant.save_others(write_file_path)

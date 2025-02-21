@@ -22,36 +22,42 @@ class ReFilenames():
     def suffix(self, name):
         self.__format_end = name
     
-    def get_all_files(self, dir, only_name = False, without_suffix = False):
-        '''获取文件夹内及其子文件夹中所有带有后缀为self.__format_end的文件'''
+    def _process_file(self, root_dir, file, only_name, without_suffix):
+        if not only_name:
+            file_name = os.path.join(root_dir, file)
+            self.file_list.append(file_name)
+        elif only_name and (not without_suffix):
+            self.file_list.append(file)
+        else:
+            only_file_name = file.split(".")[0]
+            self.file_list.append(only_file_name)
+
+    def get_all_files(self, dir, only_name=False, without_suffix=False, only_curdir=False):
+        '''获取文件夹内及其子文件夹中所有带有后缀为self.suffix的文件'''
         self.file_list = []
-        for root_dir, sub_dir, files in os.walk(dir):
-            # 对文件列表中的每一个文件夹进行处理
-            for file in files:
-                # 对每个文件夹中的文件进行处理
-                if file.endswith(self.suffix):
-                    # 寻找xlsx尾缀的文件
-                    if not only_name:
-                        file_name = os.path.join(root_dir, file)
-                        # 拼接文件名和根目录
-                        self.file_list.append(file_name)
-                    elif only_name and (not without_suffix):
-                        # 直接输出文件名
-                        self.file_list.append(file) 
-                    else:
-                        only_file_name = file.split(".")[0]
-                        self.file_list.append(only_file_name)
-        if self.file_list == []:
-            print("没有匹配到该后缀名的文件")             
+        if only_curdir:
+            # 只处理当前目录
+            for file in os.listdir(dir):
+                if os.path.isfile(os.path.join(dir, file)) and file.endswith(self.suffix):
+                    self._process_file(dir, file, only_name, without_suffix)
+        else:
+            # 处理当前目录及其子目录
+            for root_dir, _, files in os.walk(dir):
+                for file in files:
+                    if file.endswith(self.suffix):
+                        self._process_file(root_dir, file, only_name, without_suffix)
+
+        if not self.file_list:
+            print("没有匹配到该后缀名的文件")
         return self.file_list
 
     def sort_file_names(self):
         self.file_list.sort()
 
-    def filename_and_fileabsroute(self, foldername):
+    def filename_and_fileabsroute(self, foldername, only_curdir = False):
         '''获取文件夹内所有文件的名字和绝对路径'''
-        filename_list = self.get_all_files(foldername, True, True)
-        fileroute_list = self.get_all_files(foldername)
+        filename_list = self.get_all_files(foldername, only_name=True, without_suffix=True, only_curdir=only_curdir)
+        fileroute_list = self.get_all_files(foldername, only_curdir=only_curdir)
         return zip(filename_list, fileroute_list)
 
     def get_all_files_in_folder(self, foldername):

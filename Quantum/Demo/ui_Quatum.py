@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'e:\Python_Files\codehub\JiaGengXiong-Python-Files_1210\Quantum\Tools\..\Demo\ui_quatum.ui'
+# Form implementation generated from reading ui file 'E:\Python_Files\codehub\JiaGengXiong-Python-Files_12.18\Quantum\Tools\..\Demo\ui_quatum.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -67,9 +67,13 @@ class Ui_Form(object):
         self.btn_open_folder.setIcon(icon1)
         self.btn_open_folder.setObjectName("btn_open_folder")
         self.horizontalLayout_5.addWidget(self.btn_open_folder)
+        self.chebox_save_only_curdir = QtWidgets.QCheckBox(self.groupBox)
+        self.chebox_save_only_curdir.setObjectName("chebox_save_only_curdir")
+        self.horizontalLayout_5.addWidget(self.chebox_save_only_curdir)
         self.horizontalLayout_5.setStretch(0, 1)
-        self.horizontalLayout_5.setStretch(1, 8)
-        self.horizontalLayout_5.setStretch(2, 1)
+        self.horizontalLayout_5.setStretch(1, 7)
+        self.horizontalLayout_5.setStretch(2, 2)
+        self.horizontalLayout_5.setStretch(3, 1)
         self.verticalLayout_4.addLayout(self.horizontalLayout_5)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
@@ -900,6 +904,7 @@ class Ui_Form(object):
         self.groupBox.setTitle(_translate("Form", "功能区"))
         self.label_2.setText(_translate("Form", "<html><head/><body><p align=\"center\">搜索文件夹：</p></body></html>"))
         self.btn_open_folder.setText(_translate("Form", "打开文件夹"))
+        self.chebox_save_only_curdir.setText(_translate("Form", "仅父文件夹"))
         self.label_3.setText(_translate("Form", "保存文件名："))
         self.label_4.setText(_translate("Form", "基 准 值G："))
         self.label_9.setText(_translate("Form", "基 准 值E："))

@@ -17,20 +17,25 @@ class Quantum(ReFilenames):
     CBS_MULTI_ENERGY = 4
     OTHERS = 5
 	
-    def __init__(self, type, file_name, standard_data1=0.0, standard_data2=0.0):
+    def __init__(self, type, file_name, standard_data1=0.0, standard_data2=0.0, only_curdir=False):
         super().__init__(type)
         self.file_name = file_name
+        self.only_curdir = only_curdir
         self.full_data = []
-        self.files_names = self.get_all_files(file_name)
-        self.files_only_names = self.get_all_files(file_name, only_name = True, without_suffix = True)
-        self.standard_data1 = float(standard_data1) 
-        self.standard_data2 = float(standard_data2)
+        self.standard_data1 = self.is_number(standard_data1) 
+        self.standard_data2 = self.is_number(standard_data2)
+
+    def is_number(self, str_obj):
+        try:
+            return float(str_obj)  
+        except ValueError:  
+            return 0.0
 
     def read_file(self, head_data, save_type):
         # 储存框架！！！
         self.full_data = head_data
 
-        for full_name, name in zip(self.files_names, self.files_only_names):
+        for name, full_name in self.filename_and_fileabsroute(self.file_name, self.only_curdir):
             tranList = []
             tranList = [name] + self.save_content(full_name, save_type)   
             self.full_data.append(tranList)
@@ -46,10 +51,10 @@ class Quantum(ReFilenames):
             # 放置在words中，这个后续更新一下吧！！！
             # temp_list = []
             # for energy in self.full_data[1:]:
-                # cont_1 = "ZPE = " + str(energy[1])
-                # cont_2 = "HF = " + str(energy[3])
-                # temp_cont = [energy[0], cont_1, cont_2]
-                # temp_list.append(temp_cont)
+            #     cont_1 = "ZPE = " + str(energy[1])
+            #     cont_2 = "HF = " + str(energy[3])
+            #     temp_cont = [energy[0], cont_1, cont_2]
+            #     temp_list.append(temp_cont)
             # root_write_docx.write_table(temp_list, filename = new_filename)
             # return self.full_data[1:]
 
@@ -118,7 +123,7 @@ class Quantum(ReFilenames):
     @Decorator.exe_time("读取文件cbs能量")
     def save_cbs_energy(self, filename = "整理好的量化cbs能量文件.xls", cbs_type="ONE_LINK"):
         if cbs_type == "ONE_LINK":
-            full_data = [["文件名()","CBS_Energy"]]
+            full_data = [["文件名()","CBS_Energy","T1"]]
             return self.save_frame(full_data, filename, self.CBS_ONE_ENERGY)             
         elif cbs_type == "MULTI_LINKS":
             full_data = [["文件名()","MP4","CCSD(T)","MP2","MP4","HF","Int","OIii","T1","E"]]

@@ -280,12 +280,15 @@ class FindInfo():
 
     def get_cbs_sp_energy(self):
         """查找一步的CBS-SP的能量,返回一个查询完的列表 """
-        energy_list = [0] 
+        energy_list = [0]*2 
         with open(self.filename, mode="r", buffering=-1, encoding="utf-8") as fileObj:
             file_lines = fileObj.readlines()
             for line in file_lines:
                 if "E(CBS-QB3)=" in line:
                     energy_list[0] = float(line.split()[1])
+                if self.cbs_key[7] in line: # T1 value
+                    energy = list(line.strip().split(" "))[-1]
+                    energy_list[1] = (float(energy))
                     # break
 
         print("文件{}能量查找完毕\n".format(self.filename))

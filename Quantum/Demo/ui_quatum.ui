@@ -56,7 +56,7 @@
            <number>10</number>
           </property>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,8,1">
+           <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,7,2,1">
             <item>
              <widget class="QLabel" name="label_2">
               <property name="minimumSize">
@@ -123,6 +123,13 @@
               <property name="icon">
                <iconset resource="Resource/ico.qrc">
                 <normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</normaloff>:/ico/pictures/icos/DM_20230815124713_069.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="chebox_save_only_curdir">
+              <property name="text">
+               <string>仅父文件夹</string>
               </property>
              </widget>
             </item>
